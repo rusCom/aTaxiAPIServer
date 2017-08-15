@@ -1,7 +1,6 @@
-import com.sun.xml.internal.fastinfoset.algorithm.BooleanEncodingAlgorithm;
-import com.sun.xml.internal.ws.util.StreamUtils;
-import org.eclipse.jetty.server.Request;
-import org.eclipse.jetty.server.Server;
+import App.AppServer;
+import App.DataBaseResponse;
+import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 
 import javax.servlet.ServletException;
@@ -14,6 +13,8 @@ import java.util.Properties;
 
 import com.intersys.objects.CacheDatabase;
 import com.intersys.objects.Database;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
+
 
 import static java.lang.Thread.sleep;
 
@@ -22,8 +23,9 @@ public class APIServer extends AbstractHandler{
     private static String SeverType;
     private static AppServer appServer;
     private static Boolean LogView = false, LogViewData = false;
+    private static Integer Port;
 
-    public static Database getDatabase(){
+    static Database getDatabase(){
         return dataBase;
     }
 
@@ -35,28 +37,6 @@ public class APIServer extends AbstractHandler{
                        HttpServletResponse response)
             throws IOException, ServletException
     {
-        /*
-        System.out.println("target = " + target);
-        //System.out.println("token = " + request.getParameter("token"));
-        System.out.println("method = " + request.getMethod());
-        System.out.println(request.getHeaderNames().toString());
-        System.out.println("getBody =  " + request.getInputStream().toString());
-
-
-        String curDir = new File("").getAbsolutePath();
-        System.out.println(curDir);
-        OutputStream outputStream = null;
-        outputStream = new FileOutputStream(new File(curDir + "/download.jpg"));
-        int read = 0;
-        byte[] bytes = new byte[1024];
-
-        while ((read = request.getInputStream().read(bytes)) != -1) {
-            outputStream.write(bytes, 0, read);
-        }
-
-        System.out.println("Done!");
-
-        */
         DataBaseResponse dataBaseResponse = appServer.response(target, request);
 
         if (LogView){
@@ -64,6 +44,7 @@ public class APIServer extends AbstractHandler{
                 if (LogViewData){
                     System.out.println("date = " + getCurDateTime());
                     System.out.println("target = " + target);
+                    System.out.println("method = " + request.getMethod());
                     System.out.println("params = " + request.getParameterMap().toString());
                     System.out.println("status = " + dataBaseResponse.getStatus());
                     System.out.println("body = " + dataBaseResponse.getBody());
@@ -74,6 +55,7 @@ public class APIServer extends AbstractHandler{
             else {
                 System.out.println("date = " + getCurDateTime());
                 System.out.println("target = " + target);
+                System.out.println("method = " + request.getMethod());
                 System.out.println("params = " + request.getParameterMap().toString());
                 System.out.println("status = " + dataBaseResponse.getStatus());
                 System.out.println("body = " + dataBaseResponse.getBody());
@@ -107,11 +89,14 @@ public class APIServer extends AbstractHandler{
         String dataBaseUser = properties.getProperty("db.username");
         String dataBasePwd  = properties.getProperty("db.password");
 
-        int Port    = Integer.parseInt(properties.getProperty("server.port"));
-        SeverType   = properties.getProperty("server.type");
+        Port     = Integer.parseInt(properties.getProperty("server.port"));
+        SeverType    = properties.getProperty("server.type");
+        Boolean HTTPS = Boolean.parseBoolean(properties.getProperty("server.https"));
 
         LogView     = Boolean.parseBoolean(properties.getProperty("log.view"));
         LogViewData = Boolean.parseBoolean(properties.getProperty("log.view_data"));
+
+
 
         System.out.println(getCurDateTime() + "Properties loaded");
 
@@ -119,13 +104,55 @@ public class APIServer extends AbstractHandler{
         dataBase = CacheDatabase.getDatabase(dataBaseURL, dataBaseUser, dataBasePwd);
         System.out.println(getCurDateTime() + "Connecting to DataBase " + dataBaseURL + " success");
 
-        if (SeverType.equals("mobile_app"))appServer = new MobileAppServer();
+        switch (SeverType) {
+            case "mobile_app":
+                appServer = new MobileAppServer();
+                break;
+            case "geo":
+                appServer = new GEOAppServer();
+                break;
+            case "phone_gateway":
+                appServer = new PhoneGatewayAppServer();
+                break;
+            case "aksioma":
+                appServer = new AksiomaAppServer();
+                break;
+            case "ckassa":
+                appServer = new CKassaAppServer();
+                break;
+        }
 
         appServer.setDataBase(dataBase);
 
         System.out.println(getCurDateTime() + "Start server at port " + String.valueOf(Port));
-        Server server = new Server(Port);
+        Server server = new Server();
+        ServerConnector connector = new ServerConnector(server);
+
+
+        if (HTTPS){
+            HttpConfiguration https = new HttpConfiguration();
+            https.addCustomizer(new SecureRequestCustomizer());
+
+            SslContextFactory sslContextFactory = new SslContextFactory();
+            sslContextFactory.setKeyStorePath(curDir + "/keystore.jks");
+            sslContextFactory.setKeyStorePassword("rj45mlk64");
+            sslContextFactory.setKeyManagerPassword("rj45mlk64");
+            ServerConnector sslConnector = new ServerConnector(server,
+                    new SslConnectionFactory(sslContextFactory, "http/1.1"),
+                    new HttpConnectionFactory(https));
+            sslConnector.setPort(Port);
+            server.setConnectors(new Connector[] { connector, sslConnector });
+        }
+        else {
+            connector.setPort(Port);
+            server.addConnector(connector);
+        }
+
+
         server.setHandler(new APIServer());
+
+
+
         while (!server.isStarted()){
             try {
                 server.start();
@@ -139,7 +166,11 @@ public class APIServer extends AbstractHandler{
         server.join();
     }
 
-    public static String getBody(HttpServletRequest request) throws IOException {
+    public static Integer getPort() {
+        return Port;
+    }
+
+    static String getBody(HttpServletRequest request) throws IOException {
 
         String body = null;
         StringBuilder stringBuilder = new StringBuilder();

@@ -1,5 +1,7 @@
 
 import API.MobileAPP;
+import App.AppServer;
+import App.DataBaseResponse;
 import com.intersys.objects.CacheException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -7,17 +9,14 @@ import org.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
-class MobileAppServer extends AppServer{
+
+class MobileAppServer extends AppServer {
     @Override
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) {
 
         String[] targets = target.split("/");
         String DataBaseAnswer = "400^^";
-        /*
-        System.out.println("target = " + target);
-        System.out.println(baseRequest.getParameter("key"));
-        System.out.println(baseRequest.getParameter("phone"));
-        */
+
         try {
             switch (targets[1]){
                 case "profile":
@@ -38,7 +37,12 @@ class MobileAppServer extends AppServer{
                     break; // case "preferences"
                 case "orders":
                     switch (targets[2]){
-                        case "calc": DataBaseAnswer = OrdersCalc(baseRequest);
+                        case "calc": DataBaseAnswer = OrdersCalc(baseRequest);break;
+                        case "add": DataBaseAnswer = OrdersAdd(baseRequest);break;
+                        case "deny": DataBaseAnswer = OrdersDeny(baseRequest);break;
+                        case "history": DataBaseAnswer = OrdersHistory(baseRequest);break;
+                        case "feedback": DataBaseAnswer = OrdersFeedback(baseRequest);break;
+
                     }
                     break; // case "orders"
             }
@@ -52,6 +56,38 @@ class MobileAppServer extends AppServer{
         if (DataBaseAnswers.length == 1)return new DataBaseResponse(DataBaseAnswers[0]);
         else return new DataBaseResponse(DataBaseAnswers[0], DataBaseAnswers[1]);
     }
+
+    private String OrdersFeedback(HttpServletRequest baseRequest) throws CacheException{
+        if (baseRequest.getParameter("token") == null)return "400^^";
+        if (baseRequest.getParameter("guid") == null)return "400^^";
+        if (baseRequest.getParameter("rating") == null)return "400^^";
+        String note = "";
+        if (baseRequest.getParameter("note") != null)note = baseRequest.getParameter("note");
+        return MobileAPP.OrdersFeedback(APIServer.getDatabase(), baseRequest.getParameter("token"), baseRequest.getParameter("guid"), baseRequest.getParameter("rating"), note);
+
+    }
+
+    private String OrdersHistory(HttpServletRequest baseRequest) throws CacheException{
+        String guid = "";
+        if (baseRequest.getParameter("token") == null)return "400^^";
+        if (baseRequest.getParameter("guid") != null)guid = baseRequest.getParameter("guid");
+        return MobileAPP.OrdersHistory(APIServer.getDatabase(), baseRequest.getParameter("token"), guid);
+    }
+
+    private String OrdersDeny(HttpServletRequest baseRequest) throws CacheException {
+        String reason = "";
+        if (baseRequest.getParameter("reason") != null)reason = baseRequest.getParameter("reason");
+        return MobileAPP.OrdersDeny(APIServer.getDatabase(), baseRequest.getParameter("token"), reason, baseRequest.getParameter("lt"), baseRequest.getParameter("ln"));
+    }
+
+
+    private String OrdersAdd(HttpServletRequest baseRequest) throws CacheException {
+        String price = "";
+        if (baseRequest.getParameter("price") != null)price = baseRequest.getParameter("price");
+        return MobileAPP.OrdersAdd(APIServer.getDatabase(), baseRequest.getParameter("token"), baseRequest.getParameter("lt"),baseRequest.getParameter("ln"), "0", baseRequest.getParameter("note"), price);
+    }
+
+
 
     private String OrdersCalc(HttpServletRequest baseRequest){
         String DataBaseAnswer;
@@ -91,27 +127,26 @@ class MobileAppServer extends AppServer{
                 else RouteString += "^";
                 RouteString += route.getString("lt") + "^";
                 RouteString += route.getString("ln") + "^";
+                RouteString += route.getString("dsc") + "^";
                 RouteString += "***";
             }
 
 
-            //System.out.println(DataString);
-            //System.out.println(WishString);
-            //System.out.println(RouteString);
 
+            DataBaseAnswer = MobileAPP.OrdersCalc(APIServer.getDatabase(), baseRequest.getParameter("token"), baseRequest.getParameter("lt"), baseRequest.getParameter("ln"), DataString, WishString, RouteString);
+            if (DataBaseAnswer.split("\\^")[0].equals("200")){
+                JSONObject databaseResult = new JSONObject(DataBaseAnswer.split("\\^")[1]);
+                System.out.println(databaseResult.toString());
+                JSONObject result = new JSONObject();
+                result.put("uid", databaseResult.getString("calc_uid"));
+                result.put("distance", databaseResult.getJSONObject("order").getString("distance"));
+                result.put("price", databaseResult.getJSONObject("calc").getString("price_rounded"));
+                if (databaseResult.getJSONObject("order").has("duration"))result.put("duration", databaseResult.getJSONObject("order").getString("duration"));
+                //result.append("uid", databaseResult.getString("calc_uid"));
 
+                DataBaseAnswer = "200^" + result.toString() + "^";
+            }
 
-            DataBaseAnswer = MobileAPP.Calc(APIServer.getDatabase(), baseRequest.getParameter("token"), DataString, WishString, RouteString);
-            JSONObject databaseResult = new JSONObject(DataBaseAnswer.split("\\^")[1]);
-            System.out.println(databaseResult.toString());
-            JSONObject result = new JSONObject();
-            result.put("uid", databaseResult.getString("calc_uid"));
-            result.put("distance", databaseResult.getJSONObject("order").getString("distance"));
-            result.put("price", databaseResult.getJSONObject("calc").getString("price_rounded"));
-            if (databaseResult.getJSONObject("order").has("duration"))result.put("duration", databaseResult.getJSONObject("order").getString("duration"));
-            //result.append("uid", databaseResult.getString("calc_uid"));
-
-            DataBaseAnswer = "200^" + result.toString() + "^";
 
 
 
