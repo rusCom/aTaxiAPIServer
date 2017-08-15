@@ -84,7 +84,7 @@ class CKassaAppServer extends AppServer {
                 }
             }
             else {
-                responseDocument = responseDocument("10", "Запос выполнен с неразрешенного адреса");
+                return new DataBaseResponse("403");
             }
 
             if (responseDocument != null){

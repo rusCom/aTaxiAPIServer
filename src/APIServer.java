@@ -42,23 +42,25 @@ public class APIServer extends AbstractHandler{
         if (LogView){
             if (target.equals("/data")){
                 if (LogViewData){
-                    System.out.println("date = " + getCurDateTime());
-                    System.out.println("target = " + target);
-                    System.out.println("method = " + request.getMethod());
-                    System.out.println("params = " + request.getParameterMap().toString());
-                    System.out.println("status = " + dataBaseResponse.getStatus());
-                    System.out.println("body = " + dataBaseResponse.getBody());
+                    System.out.println("date    = " + getCurDateTime());
+                    System.out.println("address = " + request.getRemoteAddr());
+                    System.out.println("target  = " + target);
+                    System.out.println("method  = " + request.getMethod());
+                    System.out.println("params  = " + request.getParameterMap().toString());
+                    System.out.println("status  = " + dataBaseResponse.getStatus());
+                    System.out.println("body    = " + dataBaseResponse.getBody());
                     System.out.println("********************************************************");
 
                 }
             }
             else {
-                System.out.println("date = " + getCurDateTime());
-                System.out.println("target = " + target);
-                System.out.println("method = " + request.getMethod());
-                System.out.println("params = " + request.getParameterMap().toString());
-                System.out.println("status = " + dataBaseResponse.getStatus());
-                System.out.println("body = " + dataBaseResponse.getBody());
+                System.out.println("date    = " + getCurDateTime());
+                System.out.println("address = " + request.getRemoteAddr());
+                System.out.println("target  = " + target);
+                System.out.println("method  = " + request.getMethod());
+                System.out.println("params  = " + request.getParameterMap().toString());
+                System.out.println("status  = " + dataBaseResponse.getStatus());
+                System.out.println("body    = " + dataBaseResponse.getBody());
                 System.out.println("********************************************************");
 
             }
