@@ -1,7 +1,6 @@
 import App.AppServer;
 import App.DataBaseResponse;
-import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.server.handler.AbstractHandler;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,14 +12,17 @@ import java.util.Properties;
 
 import com.intersys.objects.CacheDatabase;
 import com.intersys.objects.Database;
+import org.eclipse.jetty.server.*;
+import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.util.thread.QueuedThreadPool;
 
 
 import static java.lang.Thread.sleep;
 
-public class APIServer extends AbstractHandler{
+public class APIServer extends AbstractHandler {
     private static Database dataBase;
-    private static String SeverType;
+    private static String SeverType, googleMatrixAPIKey;
     private static AppServer appServer;
     private static Boolean LogView = false, LogViewData = false;
     private static Integer Port;
@@ -70,11 +72,11 @@ public class APIServer extends AbstractHandler{
 
 
 
-        response.setContentType("text/html;charset=utf-8");
+        response.setContentType("application/json;charset=utf-8");
         response.setStatus(dataBaseResponse.getStatus());
         response.setHeader("Server", "aTaxi." + SeverType);
         baseRequest.setHandled(true);
-        response.getWriter().println(dataBaseResponse.getBody());
+        response.getWriter().print(dataBaseResponse.getBody());
 
 
     }
@@ -98,6 +100,8 @@ public class APIServer extends AbstractHandler{
         LogView     = Boolean.parseBoolean(properties.getProperty("log.view"));
         LogViewData = Boolean.parseBoolean(properties.getProperty("log.view_data"));
 
+        googleMatrixAPIKey = properties.getProperty("google.matrix_api_key");
+
 
 
         System.out.println(getCurDateTime() + "Properties loaded");
@@ -109,6 +113,9 @@ public class APIServer extends AbstractHandler{
         switch (SeverType) {
             case "mobile_app":
                 appServer = new MobileAppServer();
+                break;
+            case "web_app":
+                appServer = new WebAppServer();
                 break;
             case "geo":
                 appServer = new GEOAppServer();
@@ -122,12 +129,20 @@ public class APIServer extends AbstractHandler{
             case "ckassa":
                 appServer = new CKassaAppServer();
                 break;
+            case "taximeter":
+                appServer = new TaximeterAppServer();
+                break;
         }
+
 
         appServer.setDataBase(dataBase);
 
-        System.out.println(getCurDateTime() + "Start server at port " + String.valueOf(Port));
-        Server server = new Server();
+        System.out.println(getCurDateTime() + "Start " + SeverType + " server at port " + String.valueOf(Port));
+
+
+
+
+        Server server = new Server(new QueuedThreadPool(512, 32, 120));
         ServerConnector connector = new ServerConnector(server);
 
 
@@ -147,11 +162,14 @@ public class APIServer extends AbstractHandler{
         }
         else {
             connector.setPort(Port);
-            server.addConnector(connector);
+            server.setConnectors(new Connector[] {connector});
         }
 
 
         server.setHandler(new APIServer());
+
+
+
 
 
 
@@ -164,11 +182,15 @@ public class APIServer extends AbstractHandler{
                 sleep(5*1000);
             }
         }
-        System.out.println(getCurDateTime() + "Started server at port " + String.valueOf(Port) + " success");
+        System.out.println(getCurDateTime() + "Started " + SeverType + " server at port " + String.valueOf(Port) + " success");
         server.join();
     }
 
-    public static Integer getPort() {
+    static String getGoogleMatrixAPIKey() {
+        return googleMatrixAPIKey;
+    }
+
+    static Integer getPort() {
         return Port;
     }
 
@@ -208,5 +230,11 @@ public class APIServer extends AbstractHandler{
 
     private static String getCurDateTime(){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " ";
+    }
+
+    static String getParameter(HttpServletRequest baseRequest, String name){
+        String result = " ";
+        if (baseRequest.getParameter(name) != null)result = baseRequest.getParameter(name);
+        return result;
     }
 }

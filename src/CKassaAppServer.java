@@ -21,22 +21,27 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.net.URLDecoder;
 
 class CKassaAppServer extends AppServer {
     @Override
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) {
         Document responseDocument = null;
+        String signCode;
 
         try {
             if (checkAddress(baseRequest.getRemoteAddr())){
-                String Body = APIServer.getBody(baseRequest);
+                String Body = URLDecoder.decode(APIServer.getBody(baseRequest).split("params=")[1], "UTF-8");
+                //System.out.println("!!!Body = " + Body);
+                if (Body.equals(""))return new DataBaseResponse("200");
+                //getParamsString(Body);
                 DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
                 DocumentBuilder builder = factory.newDocumentBuilder();
                 Document document = builder.parse(new ByteArrayInputStream(Body.getBytes("utf-8")));
                 Element requestElement = document.getDocumentElement();
-                String signCode = requestElement.getElementsByTagName("sign").item(0).getTextContent();
+                signCode = getElementValue(requestElement, "sign"); //requestElement.getElementsByTagName("sign").item(0).getTextContent();
                 Element paramsElement = (Element)requestElement.getElementsByTagName("params").item(0);
-                if (CheckSign(signCode, paramsElement)){
+                if (CheckSign(signCode, Body)){
 
                     String act = paramsElement.getElementsByTagName("act").item(0).getTextContent();
                     switch (act) {
@@ -48,7 +53,7 @@ class CKassaAppServer extends AppServer {
                                     getElementValue(paramsElement, "agent_code"),
                                     getElementValue(paramsElement, "serv_code"),
                                     getElementValue(paramsElement, "agent_date")).split("\\^");
-                            responseDocument = responseDocument(dataBaseResponse);
+                            responseDocument = responseDocument(signCode, dataBaseResponse);
                             break;
                         }
                         case "2": {
@@ -63,7 +68,7 @@ class CKassaAppServer extends AppServer {
                                     getElementValue(paramsElement, "serv_code"),
                                     getElementValue(paramsElement, "agent_date")
                             ).split("\\^");
-                            responseDocument = responseDocument(dataBaseResponse);
+                            responseDocument = responseDocument(signCode, dataBaseResponse);
                             break;
                         }
                         case "4":
@@ -71,7 +76,7 @@ class CKassaAppServer extends AppServer {
                                     String.valueOf(APIServer.getPort()),
                                     getElementValue(paramsElement, "pay_id")
                             ).split("\\^");
-                            responseDocument = responseDocument(dataBaseResponse);
+                            responseDocument = responseDocument(signCode, dataBaseResponse);
                             break;
                         default:
                             System.out.println("act = " + act);
@@ -80,7 +85,7 @@ class CKassaAppServer extends AppServer {
 
                 }
                 else {
-                    responseDocument = responseDocument("13", "Неверная цифровая подпись");
+                    responseDocument = responseDocument(signCode, "13", "Неверная цифровая подпись");
                 }
             }
             else {
@@ -127,7 +132,7 @@ class CKassaAppServer extends AppServer {
         return result;
     }
 
-    private Document responseDocument(String[] params) throws ParserConfigurationException, CacheException {
+    private Document responseDocument(String sign, String[] params) throws ParserConfigurationException, CacheException {
         String result = "", resultText = "", clientName = "", account = "", regID = "", regDate = "";
         if ((params[0] != null) && (!params[0].equals(""))){result       = params[0];}
 
@@ -136,15 +141,15 @@ class CKassaAppServer extends AppServer {
         if ((params.length > 3) && (params[3] != null) && (!params[3].equals(""))){account      = params[3];}
         if ((params.length > 4) && (params[4] != null) && (!params[4].equals(""))){regID        = params[4];}
         if ((params.length > 5) && (params[5] != null) && (!params[5].equals(""))){regDate      = params[5];}
-        return responseDocument(result, resultText,  clientName, account, regID, regDate);
+        return responseDocument(sign, result, resultText,  clientName, account, regID, regDate);
     }
 
-    private Document responseDocument(String errorCode, String errorText) throws ParserConfigurationException, CacheException {
-        return responseDocument(errorCode, errorText, "","", "", "");
+    private Document responseDocument(String sign, String errorCode, String errorText) throws ParserConfigurationException, CacheException {
+        return responseDocument(sign, errorCode, errorText, "","", "", "");
     }
 
 
-    private Document responseDocument(String errorCode, String errorText, String clientName, String account, String reg_id, String reg_date) throws ParserConfigurationException, CacheException {
+    private Document responseDocument(String sign, String errorCode, String errorText, String clientName, String account, String reg_id, String reg_date) throws ParserConfigurationException, CacheException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         // root elements
@@ -194,7 +199,7 @@ class CKassaAppServer extends AppServer {
 
         if (!errorCode.equals("10") && !errorCode.equals("13")) {
             Element signElement = doc.createElement("sign");
-            signElement.appendChild(doc.createTextNode(getSign(paramsElement)));
+            signElement.appendChild(doc.createTextNode(getSign(paramsElement, sign)));
             responseElement.appendChild(signElement);
         }
 
@@ -203,12 +208,15 @@ class CKassaAppServer extends AppServer {
 
     }
 
-    private Boolean CheckSign(String Sign, Element paramsElement) throws CacheException {
-        String params = extractTextChildren(paramsElement);
+    private Boolean CheckSign(String Sign, String body) throws CacheException {
+        String params = body.split("<params>")[1].split("</params>")[0];
         String password = CKassa.GetPassword(APIServer.getDatabase(), String.valueOf(APIServer.getPort()));
         String md5 = DigestUtils.md5Hex(params + password).toUpperCase();
         Sign = Sign.toUpperCase();
-        System.out.println(md5);
+        System.out.println("CheckSign params   = " + params);
+        System.out.println("CheckSign password = " + password);
+        System.out.println("CheckSign md5      = " + md5);
+        System.out.println("CheckSign Sign     = " + Sign);
         return md5.equals(Sign);
     }
 
@@ -225,10 +233,10 @@ class CKassaAppServer extends AppServer {
         return result;
     }
 
-    private String getSign(Element paramsElement) throws CacheException {
+    private String getSign(Element paramsElement, String sign) throws CacheException {
         String params = extractTextChildren(paramsElement);
         String password = CKassa.GetPassword(APIServer.getDatabase(), String.valueOf(APIServer.getPort()));
-        return DigestUtils.md5Hex(params + password).toUpperCase();
+        return DigestUtils.md5Hex(params + sign + password).toUpperCase();
     }
 
 }

@@ -8,7 +8,7 @@ package User;
 **/
 
 public class GEO extends com.intersys.classes.RegisteredObject implements java.io.Serializable {
-    private static final long serialVersionUID = 6694;
+    private static final long serialVersionUID = 4013;
     private static String CACHE_CLASS_NAME = "User.GEO";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
@@ -124,6 +124,120 @@ That is 'isclass' is a primary superclass of this object.</p>
         return res.getInteger();
     }
     /**
+     <p>Runs method DistanceGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inBeginLatitude represented as java.lang.String
+     @param inBeginLongitude represented as java.lang.String
+     @param inEndLatitude represented as java.lang.String
+     @param inEndLongitude represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#DistanceGet"> Method DistanceGet</A>
+    */
+    public static java.lang.String DistanceGet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inBeginLatitude, java.lang.String inBeginLongitude, java.lang.String inEndLatitude, java.lang.String inEndLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[5];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inBeginLatitude);
+        args[2] = new com.intersys.cache.Dataholder(inBeginLongitude);
+        args[3] = new com.intersys.cache.Dataholder(inEndLatitude);
+        args[4] = new com.intersys.cache.Dataholder(inEndLongitude);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DistanceGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DistanceSet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inBeginLatitude represented as java.lang.String
+     @param inBeginLongitude represented as java.lang.String
+     @param inEndLatitude represented as java.lang.String
+     @param inEndLongitude represented as java.lang.String
+     @param inDistance represented as java.lang.String
+     @param inDuration represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#DistanceSet"> Method DistanceSet</A>
+    */
+    public static java.lang.String DistanceSet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inBeginLatitude, java.lang.String inBeginLongitude, java.lang.String inEndLatitude, java.lang.String inEndLongitude, java.lang.String inDistance, java.lang.String inDuration) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[7];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inBeginLatitude);
+        args[2] = new com.intersys.cache.Dataholder(inBeginLongitude);
+        args[3] = new com.intersys.cache.Dataholder(inEndLatitude);
+        args[4] = new com.intersys.cache.Dataholder(inEndLongitude);
+        args[5] = new com.intersys.cache.Dataholder(inDistance);
+        args[6] = new com.intersys.cache.Dataholder(inDuration);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DistanceSet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method GEOAutocomplete in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inCity represented as java.lang.String
+     @param inSearch represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GEOAutocomplete"> Method GEOAutocomplete</A>
+    */
+    public static java.lang.String GEOAutocomplete (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inCity, java.lang.String inSearch) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inCity);
+        args[2] = new com.intersys.cache.Dataholder(inSearch);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GEOAutocomplete",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method GEOHouses in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inStreet represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GEOHouses"> Method GEOHouses</A>
+    */
+    public static java.lang.String GEOHouses (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inStreet) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inStreet);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GEOHouses",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method GeocodeGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inLatitude represented as java.lang.String
+     @param inLongitude represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GeocodeGet"> Method GeocodeGet</A>
+    */
+    public static java.lang.String GeocodeGet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inLatitude);
+        args[2] = new com.intersys.cache.Dataholder(inLongitude);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GeocodeGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method GeocodeSet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inLatitude represented as java.lang.String
+     @param inLongitude represented as java.lang.String
+     @param inUID represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GeocodeSet"> Method GeocodeSet</A>
+    */
+    public static java.lang.String GeocodeSet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inUID) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inLatitude);
+        args[2] = new com.intersys.cache.Dataholder(inLongitude);
+        args[3] = new com.intersys.cache.Dataholder(inUID);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GeocodeSet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
      <p>Runs method GetAndroidAppHouseSearch in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inSearchString represented as java.lang.String
@@ -192,6 +306,50 @@ That is 'isclass' is a primary superclass of this object.</p>
         return res.getString();
     }
     /**
+     <p>Runs method GetForDistanceMatrix in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GetForDistanceMatrix"> Method GetForDistanceMatrix</A>
+    */
+    public static java.lang.String GetForDistanceMatrix (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GetForDistanceMatrix",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method GetForYandexGeoCoder in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GetForYandexGeoCoder"> Method GetForYandexGeoCoder</A>
+    */
+    public static java.lang.String GetForYandexGeoCoder (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GetForYandexGeoCoder",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method GetForYandexSearch in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GetForYandexSearch"> Method GetForYandexSearch</A>
+    */
+    public static java.lang.String GetForYandexSearch (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GetForYandexSearch",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method GetForYandexSearchOper in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#GetForYandexSearchOper"> Method GetForYandexSearchOper</A>
+    */
+    public static java.lang.String GetForYandexSearchOper (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GetForYandexSearchOper",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
      <p>Runs method GetLocationPoint in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inLatitude represented as java.lang.String
@@ -204,6 +362,57 @@ That is 'isclass' is a primary superclass of this object.</p>
         args[0] = new com.intersys.cache.Dataholder(inLatitude);
         args[1] = new com.intersys.cache.Dataholder(inLongitude);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"GetLocationPoint",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method PlacesAutoComplete in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inLocality represented as java.lang.String
+     @param inSearch represented as java.lang.String
+     @param inLatitude represented as java.lang.String
+     @param inLongitude represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesAutoComplete"> Method PlacesAutoComplete</A>
+    */
+    public static java.lang.String PlacesAutoComplete (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inLocality, java.lang.String inSearch, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[5];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inLocality);
+        args[2] = new com.intersys.cache.Dataholder(inSearch);
+        args[3] = new com.intersys.cache.Dataholder(inLatitude);
+        args[4] = new com.intersys.cache.Dataholder(inLongitude);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesAutoComplete",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method PlacesHouses in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inStreet represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesHouses"> Method PlacesHouses</A>
+    */
+    public static java.lang.String PlacesHouses (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inStreet) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inStreet);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesHouses",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method PlacesPopular in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inLocality represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesPopular"> Method PlacesPopular</A>
+    */
+    public static java.lang.String PlacesPopular (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inLocality) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inLocality);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesPopular",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }
     /**
@@ -283,6 +492,38 @@ That is 'isclass' is a primary superclass of this object.</p>
         return;
     }
     /**
+     <p>Runs method SetForYandexSearchOper in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inClassID represented as java.lang.String
+     @param inText represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#SetForYandexSearchOper"> Method SetForYandexSearchOper</A>
+    */
+    public static void SetForYandexSearchOper (com.intersys.objects.Database db, java.lang.String inClassID, java.lang.String inText) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inClassID);
+        args[1] = new com.intersys.cache.Dataholder(inText);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"SetForYandexSearchOper",args,com.intersys.objects.Database.RET_NONE);
+        return;
+    }
+    /**
+     <p>Runs method SetFromUandexGeoCoder in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inLatitude represented as java.lang.String
+     @param inLongitude represented as java.lang.String
+     @param inText represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#SetFromUandexGeoCoder"> Method SetFromUandexGeoCoder</A>
+    */
+    public static java.lang.String SetFromUandexGeoCoder (com.intersys.objects.Database db, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inText) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
+        args[0] = new com.intersys.cache.Dataholder(inLatitude);
+        args[1] = new com.intersys.cache.Dataholder(inLongitude);
+        args[2] = new com.intersys.cache.Dataholder(inText);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"SetFromUandexGeoCoder",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
      <p>Runs method SetLocationPoint in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inLatitude represented as java.lang.String
@@ -322,6 +563,19 @@ That is 'isclass' is a primary superclass of this object.</p>
         args[5] = new com.intersys.cache.Dataholder(inPlaceType);
         args[6] = new com.intersys.cache.Dataholder(inPlaceTypes);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"SetObjectsFromGoogle",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method SetYandexObject in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inData represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#SetYandexObject"> Method SetYandexObject</A>
+    */
+    public static java.lang.String SetYandexObject (com.intersys.objects.Database db, java.lang.String inData) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
+        args[0] = new com.intersys.cache.Dataholder(inData);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"SetYandexObject",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }
 }
