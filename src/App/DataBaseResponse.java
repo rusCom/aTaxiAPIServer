@@ -30,12 +30,12 @@ public class DataBaseResponse {
     public String getBody() {
         if (body.equals("") || body.equals("0")){
             switch (getStatus()){
-                case HttpServletResponse.SC_OK:body = "<b>200 OK</b>";break;
-                case HttpServletResponse.SC_BAD_REQUEST:body = "<b>400 Bad Request</b>";break;
-                case HttpServletResponse.SC_UNAUTHORIZED:body = "<b>401 Unauthorized</b>";break;
-                case HttpServletResponse.SC_FORBIDDEN:body = "<b>403 Forbidden</b>";break;
-                case HttpServletResponse.SC_NOT_FOUND:body = "<b>404 Not Found</b>";break;
-                case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:body = "<b>500 Internal Server Error</b>";break;
+                case HttpServletResponse.SC_OK:body = "200 OK";break;
+                case HttpServletResponse.SC_BAD_REQUEST:body = "400 Bad Request";break;
+                case HttpServletResponse.SC_UNAUTHORIZED:body = "401 Unauthorized";break;
+                case HttpServletResponse.SC_FORBIDDEN:body = "403 Forbidden";break;
+                case HttpServletResponse.SC_NOT_FOUND:body = "404 Not Found";break;
+                case HttpServletResponse.SC_INTERNAL_SERVER_ERROR:body = "500 Internal Server Error";break;
             }
         }
         return body;

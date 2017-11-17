@@ -132,6 +132,9 @@ public class APIServer extends AbstractHandler {
             case "taximeter":
                 appServer = new TaximeterAppServer();
                 break;
+            case "dispatcher":
+                appServer = new DispatcherAppServer();
+                break;
         }
 
 
