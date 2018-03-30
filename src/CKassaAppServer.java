@@ -28,8 +28,33 @@ class CKassaAppServer extends AppServer {
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) {
         Document responseDocument = null;
         String signCode;
+        String[] targets = target.split("/");
+        //if (targets.length == 0)return new DataBaseResponse("400");
+        if (targets.length > 0)
+        {
+            // ООО Сервис
+            if (targets[1].equals("oooservice")){
+                try {
+                    return new DataBaseResponse("200",
+                            CKassa.OOOService(
+                                    APIServer.getDatabase(),
+                                    APIServer.getParameter(baseRequest, "command"),
+                                    APIServer.getParameter(baseRequest, "txn_id"),
+                                    APIServer.getParameter(baseRequest, "account"),
+                                    APIServer.getParameter(baseRequest, "sum"),
+                                    APIServer.getParameter(baseRequest, "account1"),
+                                    APIServer.getParameter(baseRequest, "account2")
+                            ));
+                } catch (CacheException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        }
+
 
         try {
+
             if (checkAddress(baseRequest.getRemoteAddr())){
                 String Body = URLDecoder.decode(APIServer.getBody(baseRequest).split("params=")[1], "UTF-8");
                 //System.out.println("!!!Body = " + Body);

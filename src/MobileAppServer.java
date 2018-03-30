@@ -39,9 +39,9 @@ class MobileAppServer extends AppServer {
                     switch (targets[2]){
                         case "calc": DataBaseAnswer = OrdersCalc(baseRequest);break;
                         case "add": DataBaseAnswer = OrdersAdd(baseRequest);break;
-                        case "deny": DataBaseAnswer = OrdersDeny(baseRequest);break;
-                        case "history": DataBaseAnswer = OrdersHistory(baseRequest);break;
-                        case "feedback": DataBaseAnswer = OrdersFeedback(baseRequest);break;
+                        case "deny": DataBaseAnswer = MobileAPP.OrdersDeny(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "reason"), APIServer.getParameter(baseRequest, "lt"), APIServer.getParameter(baseRequest, "ln"));break;
+                        case "history": DataBaseAnswer = MobileAPP.OrdersHistory(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "guid"));break;
+                        case "feedback": DataBaseAnswer = MobileAPP.OrdersFeedback(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "guid"), APIServer.getParameter(baseRequest, "rating"), APIServer.getParameter(baseRequest, "note"));break;
 
                     }
                     break; // case "orders"
@@ -55,29 +55,6 @@ class MobileAppServer extends AppServer {
 
         if (DataBaseAnswers.length == 1)return new DataBaseResponse(DataBaseAnswers[0]);
         else return new DataBaseResponse(DataBaseAnswers[0], DataBaseAnswers[1]);
-    }
-
-    private String OrdersFeedback(HttpServletRequest baseRequest) throws CacheException{
-        if (baseRequest.getParameter("token") == null)return "400^^";
-        if (baseRequest.getParameter("guid") == null)return "400^^";
-        if (baseRequest.getParameter("rating") == null)return "400^^";
-        String note = "";
-        if (baseRequest.getParameter("note") != null)note = baseRequest.getParameter("note");
-        return MobileAPP.OrdersFeedback(APIServer.getDatabase(), baseRequest.getParameter("token"), baseRequest.getParameter("guid"), baseRequest.getParameter("rating"), note);
-
-    }
-
-    private String OrdersHistory(HttpServletRequest baseRequest) throws CacheException{
-        String guid = "";
-        if (baseRequest.getParameter("token") == null)return "400^^";
-        if (baseRequest.getParameter("guid") != null)guid = baseRequest.getParameter("guid");
-        return MobileAPP.OrdersHistory(APIServer.getDatabase(), baseRequest.getParameter("token"), guid);
-    }
-
-    private String OrdersDeny(HttpServletRequest baseRequest) throws CacheException {
-        String reason = "";
-        if (baseRequest.getParameter("reason") != null)reason = baseRequest.getParameter("reason");
-        return MobileAPP.OrdersDeny(APIServer.getDatabase(), baseRequest.getParameter("token"), reason, baseRequest.getParameter("lt"), baseRequest.getParameter("ln"));
     }
 
 
@@ -146,9 +123,6 @@ class MobileAppServer extends AppServer {
 
                 DataBaseAnswer = "200^" + result.toString() + "^";
             }
-
-
-
 
 
         } catch (IOException e) {

@@ -5,6 +5,7 @@ import User.GEO;
 import com.intersys.objects.CacheException;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -12,8 +13,8 @@ import org.json.JSONObject;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.*;
+import java.util.ArrayList;
 
 class GEOAppServer extends AppServer {
     @Override
@@ -33,7 +34,6 @@ class GEOAppServer extends AppServer {
                 case "set_google_distance":DataBaseAnswer = setGoogleDistance(baseRequest);break;
                 case "get_android_cache_data":
                     DataBaseAnswer = GEO.GetAndroidAppSearch(APIServer.getDatabase(), baseRequest.getParameter("search").trim(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));
-                    //System.out.println("!!! get_android_cache_data " + DataBaseAnswer);
                     break;
                 case "get_android_house_search":DataBaseAnswer = GEO.GetAndroidAppHouseSearch(APIServer.getDatabase(), baseRequest.getParameter("search").trim(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));break;
                 case "get_android_location_point":DataBaseAnswer = GEO.GetLocationPoint(APIServer.getDatabase(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));break;
@@ -55,9 +55,19 @@ class GEOAppServer extends AppServer {
                         case "autocomplete":DataBaseAnswer = GEO.PlacesAutoComplete(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"), APIServer.getParameter(baseRequest, "text"), APIServer.getParameter(baseRequest, "lt"), APIServer.getParameter(baseRequest, "ln"));break;
                         case "houses":DataBaseAnswer = GEO.PlacesHouses(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "street"));break;
                         case "popular":DataBaseAnswer = GEO.PlacesPopular(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"));break;
+                        case "google":DataBaseAnswer = GooglePlaces(baseRequest);break;
                     }
                     break;
                 case "geocode":DataBaseAnswer = Geocode(baseRequest);break;
+                case "dispatcher":DataBaseAnswer = DispatcherData(baseRequest);break;
+                case "edit":
+                    switch (targets[2]){
+                        case "airports":DataBaseAnswer = EditAirports(baseRequest);break;
+
+                    }
+                    break;
+
+                //case "autocomplete":
             }
 
         } catch (CacheException e) {
@@ -68,6 +78,132 @@ class GEOAppServer extends AppServer {
         String[] DataBaseAnswers = DataBaseAnswer.split("\\^");
         if (DataBaseAnswers.length == 1)return new DataBaseResponse(DataBaseAnswers[0]);
         else return new DataBaseResponse(DataBaseAnswers[0], DataBaseAnswers[1]);
+    }
+
+
+    private String EditAirports(HttpServletRequest baseRequest){
+        String DataBaseAnswer = "500^";
+        try {
+            DataBaseAnswer = GEO.EditAirports(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), "");
+        } catch (CacheException e) {
+            e.printStackTrace();
+        }
+        return DataBaseAnswer;
+    }
+
+
+    private String GooglePlaces(HttpServletRequest baseRequest){
+        String DataBaseAnswer = "500^";
+        String key = APIServer.getParameter(baseRequest, "key");
+        String text = APIServer.getParameter(baseRequest, "text");
+        String lt = APIServer.getParameter(baseRequest, "lt");
+        String ln = APIServer.getParameter(baseRequest, "ln");
+
+        try {
+            String resp = GEO.PlacesGoogleGet(APIServer.getDatabase(), key, text, lt, ln);
+            //System.out.println(resp);
+            if (resp.equals("404")){
+                String place_id = "", main_text = "", secondary_text = "", type = "";
+                JSONObject prediction, structured_formatting;
+                JSONArray types;
+                String urlString = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + URLEncoder.encode(text, "UTF-8") + "&location=" + lt + "," + ln + "&radius=500&types=geocode|establishment&language=ru-RU&key=" + APIServer.getGooglePlacesAPIKey();
+                System.out.println(urlString);
+                URL url = new URL(urlString);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+                conn.setDoOutput(true);
+                InputStream inputStream = conn.getInputStream();
+                resp = IOUtils.toString(inputStream, "UTF-8");
+                JSONObject respJSON = new JSONObject(resp);
+                JSONArray result = new JSONArray();
+                if (respJSON.has("status")) {
+                    if (respJSON.getString("status").equals("OK"))
+                        if (respJSON.has("predictions")){
+                            JSONArray predictions = respJSON.getJSONArray("predictions");
+                            for (int itemID = 0; itemID < predictions.length(); itemID++){
+                                prediction = predictions.getJSONObject(itemID);
+                                if (prediction.has("place_id"))place_id = prediction.getString("place_id");
+                                if (prediction.has("structured_formatting")){
+                                    structured_formatting = prediction.getJSONObject("structured_formatting");
+                                    if (structured_formatting.has("main_text"))main_text = structured_formatting.getString("main_text");
+                                    if (structured_formatting.has("secondary_text"))secondary_text = structured_formatting.getString("secondary_text");
+                                }
+                                if (prediction.has("types")){
+                                    types = prediction.getJSONArray("types");
+                                    if (types.length() > 0){
+                                        type = types.getString(0);
+                                    }
+                                }
+                                if ((!place_id.equals("")) && (!main_text.equals("")) && (!secondary_text.equals("")) && (!type.equals(""))){
+                                    String data = GEO.ObjectsSetGoogle(APIServer.getDatabase(), key, place_id, main_text, secondary_text, "","",type);
+                                    if (!data.equals("")){
+                                        JSONObject d = new JSONObject(data);
+                                        result.put(d);
+                                    }
+                                }
+
+                            } // for (int itemID = 0; itemID < predictions.length(); itemID++){
+                        }
+
+                        GEO.PlacesGoogleSet(APIServer.getDatabase(), key, text, lt, ln, result.toString());
+                        //System.out.println("save cash");
+
+                }
+
+                resp = result.toString();
+            }
+
+            DataBaseAnswer = "200^"+resp+"^";
+        } catch (IOException | CacheException e) {
+            e.printStackTrace();
+        }
+
+
+        return DataBaseAnswer;
+    }
+
+    private String DispatcherData(HttpServletRequest baseRequest){
+
+        String DataBaseAnswer;
+        String lastID = "0";
+        ArrayList<JSONArray> resultsArray = new ArrayList<>();
+        JSONArray tResults;
+        try {
+            do {
+                String t = GEO.Dispathcer(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"), lastID);
+                System.out.println(t);
+                tResults = new JSONArray(GEO.Dispathcer(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"), lastID));
+                resultsArray.add(tResults);
+                System.out.println(tResults.length());
+                if (tResults.length() > 0){
+                    JSONObject lastObject = tResults.getJSONObject(tResults.length() - 1);
+                    //System.out.println("!!!" + lastObject.toString());
+                    lastID = lastObject.getString("uid");
+                    System.out.println("!!!" + lastID);
+                }
+
+            }while (tResults.length() > 0);
+        }catch (CacheException e) {
+            e.printStackTrace();
+        }
+
+        JSONArray result = getMergeJsonArrays(resultsArray);
+        DataBaseAnswer = "200^" + result.toString() + "^";
+
+        return DataBaseAnswer;
+    }
+
+    private JSONArray getMergeJsonArrays(ArrayList<JSONArray> jsonArrays) throws JSONException
+    {
+        JSONArray MergedJsonArrays= new JSONArray();
+        for(JSONArray tmpArray:jsonArrays)
+        {
+            for(int i=0;i<tmpArray.length();i++)
+            {
+                MergedJsonArrays.put(tmpArray.get(i));
+            }
+        }
+        return MergedJsonArrays;
     }
 
     private String Geocode(HttpServletRequest baseRequest){
@@ -152,6 +288,7 @@ class GEOAppServer extends AppServer {
             try {
                 Integer distance = 0, tDistance;
                 JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
+
                 JSONArray route = data.getJSONArray("route");
                 for (int itemID = 1; itemID < route.length(); itemID++){
                     JSONObject l_item = route.getJSONObject(itemID - 1);

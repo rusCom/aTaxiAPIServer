@@ -33,6 +33,7 @@ public class WebAppServer extends AppServer {
                         case "deny":DataBaseAnswer = WebAPP.OrdersDeny(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "reason"));break;
                     }
                     break; // case "orders":
+
             }
 
         } catch (CacheException e) {
@@ -91,7 +92,8 @@ public class WebAppServer extends AppServer {
 
 
 
-            DataBaseAnswer = MobileAPP.OrdersCalc(APIServer.getDatabase(), baseRequest.getParameter("token"), baseRequest.getParameter("lt"), baseRequest.getParameter("ln"), DataString, WishString, RouteString);
+            DataBaseAnswer = WebAPP.OrdersCalc(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "token"), DataString, WishString, RouteString);
+            System.out.println("!!!" + DataBaseAnswer);
             if (DataBaseAnswer.split("\\^")[0].equals("200")){
                 JSONObject databaseResult = new JSONObject(DataBaseAnswer.split("\\^")[1]);
                 System.out.println(databaseResult.toString());

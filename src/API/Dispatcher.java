@@ -8,7 +8,7 @@ package API;
 **/
 
 public class Dispatcher extends com.intersys.classes.RegisteredObject implements java.io.Serializable {
-    private static final long serialVersionUID = 5865;
+    private static final long serialVersionUID = 2180;
     private static String CACHE_CLASS_NAME = "API.Dispatcher";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
@@ -124,6 +124,186 @@ That is 'isclass' is a primary superclass of this object.</p>
         return res.getInteger();
     }
     /**
+     <p>Runs method ClientCardGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inCard represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#ClientCardGet"> Method ClientCardGet</A>
+    */
+    public static java.lang.String ClientCardGet (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inCard) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inCard);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"ClientCardGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method ClientGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inCard represented as java.lang.String
+     @param inPhone represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#ClientGet"> Method ClientGet</A>
+    */
+    public static java.lang.String ClientGet (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inCard, java.lang.String inPhone) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inCard);
+        args[2] = new com.intersys.cache.Dataholder(inPhone);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"ClientGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method ClientPhoneGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inPhone represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#ClientPhoneGet"> Method ClientPhoneGet</A>
+    */
+    public static java.lang.String ClientPhoneGet (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inPhone) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inPhone);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"ClientPhoneGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataCurOrders in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     default argument inLastID set to "0"
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #DataCurOrders(com.intersys.objects.Database,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataCurOrders"> Method DataCurOrders</A>
+    */
+    public static java.lang.String DataCurOrders (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataCurOrders",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataCurOrders in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inLastID represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataCurOrders"> Method DataCurOrders</A>
+    */
+    public static java.lang.String DataCurOrders (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLastID) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inLastID);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataCurOrders",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataDoneOrders in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     default argument inLastID set to "0"
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #DataDoneOrders(com.intersys.objects.Database,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataDoneOrders"> Method DataDoneOrders</A>
+    */
+    public static java.lang.String DataDoneOrders (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataDoneOrders",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataDoneOrders in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inLastID represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataDoneOrders"> Method DataDoneOrders</A>
+    */
+    public static java.lang.String DataDoneOrders (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLastID) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inLastID);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataDoneOrders",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataDrivers in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     default argument inLastID set to "0"
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #DataDrivers(com.intersys.objects.Database,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataDrivers"> Method DataDrivers</A>
+    */
+    public static java.lang.String DataDrivers (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataDrivers",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataDrivers in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inLastID represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataDrivers"> Method DataDrivers</A>
+    */
+    public static java.lang.String DataDrivers (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLastID) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inLastID);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataDrivers",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataHisOrders in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataHisOrders"> Method DataHisOrders</A>
+    */
+    public static java.lang.String DataHisOrders (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataHisOrders",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataPriorOrders in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     default argument inLastID set to "0"
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #DataPriorOrders(com.intersys.objects.Database,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataPriorOrders"> Method DataPriorOrders</A>
+    */
+    public static java.lang.String DataPriorOrders (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataPriorOrders",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DataPriorOrders in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inLastID represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#DataPriorOrders"> Method DataPriorOrders</A>
+    */
+    public static java.lang.String DataPriorOrders (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLastID) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inLastID);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DataPriorOrders",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
      <p>Runs method DriversGet in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inToken represented as java.lang.String
@@ -142,15 +322,32 @@ That is 'isclass' is a primary superclass of this object.</p>
      <p>Runs method OrderGet in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inToken represented as java.lang.String
-     @param inOrderUID represented as java.lang.String
+     @param inOrderID represented as java.lang.String
+     @param inPhone represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#OrderGet"> Method OrderGet</A>
     */
-    public static java.lang.String OrderGet (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inOrderUID) throws com.intersys.objects.CacheException {
+    public static java.lang.String OrderGet (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inOrderID, java.lang.String inPhone) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inOrderID);
+        args[2] = new com.intersys.cache.Dataholder(inPhone);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"OrderGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method OrderReestrGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inOrderID represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Dispatcher#OrderReestrGet"> Method OrderReestrGet</A>
+    */
+    public static java.lang.String OrderReestrGet (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inOrderID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
         args[0] = new com.intersys.cache.Dataholder(inToken);
-        args[1] = new com.intersys.cache.Dataholder(inOrderUID);
-        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"OrderGet",args,com.intersys.objects.Database.RET_PRIM);
+        args[1] = new com.intersys.cache.Dataholder(inOrderID);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"OrderReestrGet",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }
     /**

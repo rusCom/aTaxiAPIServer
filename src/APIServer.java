@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
@@ -16,13 +17,15 @@ import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.json.JSONArray;
+import org.json.JSONException;
 
 
 import static java.lang.Thread.sleep;
 
 public class APIServer extends AbstractHandler {
     private static Database dataBase;
-    private static String SeverType, googleMatrixAPIKey;
+    private static String SeverType, googleMatrixAPIKey, googlePlacesAPIKey;
     private static AppServer appServer;
     private static Boolean LogView = false, LogViewData = false;
     private static Integer Port;
@@ -101,6 +104,7 @@ public class APIServer extends AbstractHandler {
         LogViewData = Boolean.parseBoolean(properties.getProperty("log.view_data"));
 
         googleMatrixAPIKey = properties.getProperty("google.matrix_api_key");
+        googlePlacesAPIKey = properties.getProperty("google.places_api_key");
 
 
 
@@ -189,8 +193,25 @@ public class APIServer extends AbstractHandler {
         server.join();
     }
 
+    static JSONArray getMergeJsonArrays(ArrayList<JSONArray> jsonArrays) throws JSONException
+    {
+        JSONArray MergedJsonArrays= new JSONArray();
+        for(JSONArray tmpArray:jsonArrays)
+        {
+            for(int i=0;i<tmpArray.length();i++)
+            {
+                MergedJsonArrays.put(tmpArray.get(i));
+            }
+        }
+        return MergedJsonArrays;
+    }
+
     static String getGoogleMatrixAPIKey() {
         return googleMatrixAPIKey;
+    }
+
+    static String getGooglePlacesAPIKey() {
+        return googlePlacesAPIKey;
     }
 
     static Integer getPort() {
