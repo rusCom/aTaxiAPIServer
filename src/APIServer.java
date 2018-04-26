@@ -27,13 +27,16 @@ public class APIServer extends AbstractHandler {
     private static Database dataBase;
     private static String SeverType, googleMatrixAPIKey, googlePlacesAPIKey;
     private static AppServer appServer;
-    private static Boolean LogView = false, LogViewData = false;
+    private static Boolean LogView = false, LogViewData = false, IsTest  = false;
     private static Integer Port;
 
     static Database getDatabase(){
         return dataBase;
     }
 
+    public static Boolean getIsTest() {
+        return IsTest;
+    }
 
     @Override
     public void handle(String target,
@@ -100,6 +103,8 @@ public class APIServer extends AbstractHandler {
         SeverType    = properties.getProperty("server.type");
         Boolean HTTPS = Boolean.parseBoolean(properties.getProperty("server.https"));
 
+        IsTest = Boolean.parseBoolean(properties.getProperty("server.test"));
+
         LogView     = Boolean.parseBoolean(properties.getProperty("log.view"));
         LogViewData = Boolean.parseBoolean(properties.getProperty("log.view_data"));
 
@@ -112,6 +117,7 @@ public class APIServer extends AbstractHandler {
 
         System.out.println(getCurDateTime() + "Connecting to DataBase " + dataBaseURL);
         dataBase = CacheDatabase.getDatabase(dataBaseURL, dataBaseUser, dataBasePwd);
+
         System.out.println(getCurDateTime() + "Connecting to DataBase " + dataBaseURL + " success");
 
         switch (SeverType) {
@@ -249,6 +255,10 @@ public class APIServer extends AbstractHandler {
         }
 
         body = stringBuilder.toString();
+        if (IsTest){
+            System.out.println("!!!body    = " + body);
+        }
+
         return body;
     }
 

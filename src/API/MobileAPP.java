@@ -4,11 +4,11 @@ package API;
 /**
  * Cache' Java Class Generated for class API.MobileAPP on version Cache for Windows (x86-32) 2010.2.2 (Build 600) Wed Dec 8 2010 16:51:00 EST.<br>
  *
- * @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP</A>
+ * @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP</A>
 **/
 
 public class MobileAPP extends com.intersys.classes.Persistent {
-    private static final long serialVersionUID = 591;
+    private static final long serialVersionUID = 7586;
     private static String CACHE_CLASS_NAME = "API.MobileAPP";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
@@ -135,7 +135,7 @@ public class MobileAPP extends com.intersys.classes.Persistent {
       <code>Concurrency</code>.
 
       Here are concurrency values, see Object Concurrency Options in your on-line Cache' documentation for more information.
-      @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
+      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
 
       <TABLE border="1"
       summary="Object Concurrency Options.">
@@ -176,7 +176,7 @@ public class MobileAPP extends com.intersys.classes.Persistent {
       <code>Concurrency</code>.
 
       Here are concurrency values, see Object Concurrency Options in your on-line Cache' documentation for more information.
-      @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
+      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
 
       <TABLE border="1"
       summary="Object Concurrency Options.">
@@ -268,7 +268,7 @@ public class MobileAPP extends com.intersys.classes.Persistent {
       <code>Concurrency</code>.
 
       Here are concurrency values, see Object Concurrency Options in your on-line Cache' documentation for more information.
-      @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
+      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
 
       <TABLE border="1"
       summary="Object Concurrency Options.">
@@ -308,7 +308,7 @@ public class MobileAPP extends com.intersys.classes.Persistent {
       <code>Concurrency</code>.
 
       Here are concurrency values, see Object Concurrency Options in your on-line Cache' documentation for more information.
-      @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
+      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
 
       <TABLE border="1"
       summary="Object Concurrency Options.">
@@ -452,7 +452,7 @@ public class MobileAPP extends com.intersys.classes.Persistent {
        <code>Concurrency</code>.
 
       Here are concurrency values, see Object Concurrency Options in your on-line Cache' documentation for more information.
-      @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
+      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
 
       <TABLE border="1"
       summary="Object Concurrency Options.">
@@ -511,7 +511,7 @@ public class MobileAPP extends com.intersys.classes.Persistent {
        <code>Concurrency</code>.
 
       Here are concurrency values, see Object Concurrency Options in your on-line Cache' documentation for more information.
-      @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
+      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/DocBook.UI.Page.cls?KEY=GOBJ_concurrency"> Object Concurrency Options.</A>
 
       <TABLE border="1"
       summary="Object Concurrency Options.">
@@ -649,7 +649,7 @@ with the pre-package behaviour of %ClassName.</p>
      @param db represented as com.intersys.objects.Database
      @param fullname represented as java.lang.Boolean
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%ClassName"> Method %ClassName</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%ClassName"> Method %ClassName</A>
     */
     public static java.lang.String sys_ClassName (com.intersys.objects.Database db, java.lang.Boolean fullname) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -668,7 +668,7 @@ with the pre-package behaviour of %ClassName.</p>
      @param db represented as com.intersys.objects.Database
      @param id represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%ComposeOid"> Method %ComposeOid</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%ComposeOid"> Method %ComposeOid</A>
     */
     public static void sys_ComposeOid (com.intersys.objects.Database db, java.lang.String id) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -694,7 +694,7 @@ transaction is committed, otherwise it is rolled back. </p>
      default argument concurrency set to -1
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #sys_Delete(com.intersys.objects.Database,com.intersys.objects.Oid,java.lang.Integer)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Delete"> Method %Delete</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Delete"> Method %Delete</A>
     */
     public static void sys_Delete (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
@@ -720,7 +720,7 @@ transaction is committed, otherwise it is rolled back. </p>
      default argument concurrency set to -1
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #sys_Delete(com.intersys.objects.Database,com.intersys.objects.Oid,java.lang.Integer)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Delete"> Method %Delete</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Delete"> Method %Delete</A>
     */
     public static void sys_Delete (com.intersys.objects.Database db, com.intersys.objects.Oid oid) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -746,7 +746,7 @@ transaction is committed, otherwise it is rolled back. </p>
      @param oid represented as com.intersys.objects.Oid
      @param concurrency represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Delete"> Method %Delete</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Delete"> Method %Delete</A>
     */
     public static void sys_Delete (com.intersys.objects.Database db, com.intersys.objects.Oid oid, java.lang.Integer concurrency) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -774,7 +774,7 @@ on the optional <var>concurrency</var> argument.
      @param deletecount represented as com.intersys.objects.StringHolder
      @param instancecount represented as com.intersys.objects.StringHolder
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%DeleteExtent"> Method %DeleteExtent</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%DeleteExtent"> Method %DeleteExtent</A>
     */
     public static void sys_DeleteExtent (com.intersys.objects.Database db, java.lang.Integer concurrency, com.intersys.objects.StringHolder deletecount, com.intersys.objects.StringHolder instancecount) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -804,7 +804,7 @@ on the optional <var>concurrency</var> argument.</p>
      default argument concurrency set to -1
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #sys_DeleteId(com.intersys.objects.Database,java.lang.String,java.lang.Integer)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%DeleteId"> Method %DeleteId</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%DeleteId"> Method %DeleteId</A>
     */
     public static void sys_DeleteId (com.intersys.objects.Database db, java.lang.String id) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -826,7 +826,7 @@ on the optional <var>concurrency</var> argument.</p>
      @param id represented as java.lang.String
      @param concurrency represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%DeleteId"> Method %DeleteId</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%DeleteId"> Method %DeleteId</A>
     */
     public static void sys_DeleteId (com.intersys.objects.Database db, java.lang.String id, java.lang.Integer concurrency) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -842,7 +842,7 @@ on the optional <var>concurrency</var> argument.</p>
      default argument oid set to ""
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #sys_Exists(com.intersys.objects.Database,com.intersys.objects.Oid)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Exists"> Method %Exists</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Exists"> Method %Exists</A>
     */
     public static java.lang.Boolean sys_Exists (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
@@ -854,7 +854,7 @@ on the optional <var>concurrency</var> argument.</p>
      @param db represented as com.intersys.objects.Database
      @param oid represented as com.intersys.objects.Oid
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Exists"> Method %Exists</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%Exists"> Method %Exists</A>
     */
     public static java.lang.Boolean sys_Exists (com.intersys.objects.Database db, com.intersys.objects.Oid oid) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -867,7 +867,7 @@ on the optional <var>concurrency</var> argument.</p>
      @param db represented as com.intersys.objects.Database
      @param id represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%ExistsId"> Method %ExistsId</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%ExistsId"> Method %ExistsId</A>
     */
     public static java.lang.Boolean sys_ExistsId (com.intersys.objects.Database db, java.lang.String id) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -882,7 +882,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param db represented as com.intersys.objects.Database
      @param isclass represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%IsA"> Method %IsA</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%IsA"> Method %IsA</A>
     */
     public static java.lang.Integer sys_IsA (com.intersys.objects.Database db, java.lang.String isclass) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -902,7 +902,7 @@ This method is not meant for production applications. It is meant to be a develo
 extent physical data.</p>
      @param db represented as com.intersys.objects.Database
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%KillExtent"> Method %KillExtent</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%KillExtent"> Method %KillExtent</A>
     */
     public static void sys_KillExtent (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
@@ -929,7 +929,7 @@ after the index filing is completed.
      default argument lockExtent set to 0
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #sys_SaveIndices(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.Boolean)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
     */
     public static void sys_SaveIndices (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
@@ -956,7 +956,7 @@ after the index filing is completed.
      default argument lockExtent set to 0
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #sys_SaveIndices(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.Boolean)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
     */
     public static void sys_SaveIndices (com.intersys.objects.Database db, java.lang.String pStartId) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -984,7 +984,7 @@ after the index filing is completed.
      default argument lockExtent set to 0
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #sys_SaveIndices(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.Boolean)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
     */
     public static void sys_SaveIndices (com.intersys.objects.Database db, java.lang.String pStartId, java.lang.String pEndId) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1012,7 +1012,7 @@ after the index filing is completed.
      @param pEndId represented as java.lang.String
      @param lockExtent represented as java.lang.Boolean
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#%SaveIndices"> Method %SaveIndices</A>
     */
     public static void sys_SaveIndices (com.intersys.objects.Database db, java.lang.String pStartId, java.lang.String pEndId, java.lang.Boolean lockExtent) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1028,7 +1028,7 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inToken represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ClientTokenReplace"> Method ClientTokenReplace</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ClientTokenReplace"> Method ClientTokenReplace</A>
     */
     public static java.lang.String ClientTokenReplace (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1043,7 +1043,7 @@ after the index filing is completed.
      @param inLatitude represented as java.lang.String
      @param inLongitude represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Data"> Method Data</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Data"> Method Data</A>
     */
     public static java.lang.String Data (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1059,7 +1059,7 @@ after the index filing is completed.
      @param inDispatchingID represented as java.lang.Integer
      @param inCityID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetCategory"> Method GetCategory</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetCategory"> Method GetCategory</A>
     */
     public static java.lang.String GetCategory (com.intersys.objects.Database db, java.lang.Integer inDispatchingID, java.lang.Integer inCityID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1073,7 +1073,7 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inClientID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetClientProfile"> Method GetClientProfile</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetClientProfile"> Method GetClientProfile</A>
     */
     public static java.lang.String GetClientProfile (com.intersys.objects.Database db, java.lang.Integer inClientID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1086,7 +1086,7 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inDriverID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetDriver"> Method GetDriver</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetDriver"> Method GetDriver</A>
     */
     public static java.lang.String GetDriver (com.intersys.objects.Database db, java.lang.Integer inDriverID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1101,7 +1101,7 @@ after the index filing is completed.
      @param inLatitude represented as java.lang.Double
      @param inLongitude represented as java.lang.Double
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetDrivers"> Method GetDrivers</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetDrivers"> Method GetDrivers</A>
     */
     public static java.lang.String GetDrivers (com.intersys.objects.Database db, java.lang.Integer inCityID, java.lang.Double inLatitude, java.lang.Double inLongitude) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1116,7 +1116,7 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inOrderID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetHisOrder"> Method GetHisOrder</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetHisOrder"> Method GetHisOrder</A>
     */
     public static java.lang.String GetHisOrder (com.intersys.objects.Database db, java.lang.Integer inOrderID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1129,7 +1129,7 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inToken represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetOrder"> Method GetOrder</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetOrder"> Method GetOrder</A>
     */
     public static java.lang.String GetOrder (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1143,7 +1143,7 @@ after the index filing is completed.
      @param inDispatchingID represented as java.lang.Integer
      @param inCityID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetPayTypes"> Method GetPayTypes</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetPayTypes"> Method GetPayTypes</A>
     */
     public static java.lang.String GetPayTypes (com.intersys.objects.Database db, java.lang.Integer inDispatchingID, java.lang.Integer inCityID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1160,7 +1160,7 @@ after the index filing is completed.
      default argument inClientID set to 0
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #GetPrefernces(com.intersys.objects.Database,java.lang.Integer,java.lang.Integer,java.lang.Integer)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetPrefernces"> Method GetPrefernces</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetPrefernces"> Method GetPrefernces</A>
     */
     public static java.lang.String GetPrefernces (com.intersys.objects.Database db, java.lang.Integer inDispatchingID, java.lang.Integer inCityID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1176,7 +1176,7 @@ after the index filing is completed.
      @param inCityID represented as java.lang.Integer
      @param inClientID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetPrefernces"> Method GetPrefernces</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetPrefernces"> Method GetPrefernces</A>
     */
     public static java.lang.String GetPrefernces (com.intersys.objects.Database db, java.lang.Integer inDispatchingID, java.lang.Integer inCityID, java.lang.Integer inClientID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1191,7 +1191,7 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inRouteID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetRoutePoint"> Method GetRoutePoint</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetRoutePoint"> Method GetRoutePoint</A>
     */
     public static java.lang.String GetRoutePoint (com.intersys.objects.Database db, java.lang.Integer inRouteID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1205,7 +1205,7 @@ after the index filing is completed.
      @param inDispatchingID represented as java.lang.Integer
      @param inCityID represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetTaxiWish"> Method GetTaxiWish</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#GetTaxiWish"> Method GetTaxiWish</A>
     */
     public static java.lang.String GetTaxiWish (com.intersys.objects.Database db, java.lang.Integer inDispatchingID, java.lang.Integer inCityID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1221,7 +1221,7 @@ after the index filing is completed.
      default argument concurrency set to -1
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #IDKEYDelete(com.intersys.objects.Database,java.lang.String,java.lang.Integer)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYDelete"> Method IDKEYDelete</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYDelete"> Method IDKEYDelete</A>
     */
     public static void IDKEYDelete (com.intersys.objects.Database db, java.lang.String K1) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1236,7 +1236,7 @@ after the index filing is completed.
      @param K1 represented as java.lang.String
      @param concurrency represented as java.lang.Integer
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYDelete"> Method IDKEYDelete</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYDelete"> Method IDKEYDelete</A>
     */
     public static void IDKEYDelete (com.intersys.objects.Database db, java.lang.String K1, java.lang.Integer concurrency) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1253,7 +1253,7 @@ after the index filing is completed.
      default argument id set to ""
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #IDKEYExists(com.intersys.objects.Database,java.lang.String,com.intersys.objects.StringHolder)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYExists"> Method IDKEYExists</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYExists"> Method IDKEYExists</A>
     */
     public static java.lang.Boolean IDKEYExists (com.intersys.objects.Database db, java.lang.String K1) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1267,7 +1267,7 @@ after the index filing is completed.
      @param K1 represented as java.lang.String
      @param id represented as com.intersys.objects.StringHolder
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYExists"> Method IDKEYExists</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYExists"> Method IDKEYExists</A>
     */
     public static java.lang.Boolean IDKEYExists (com.intersys.objects.Database db, java.lang.String K1, com.intersys.objects.StringHolder id) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1287,7 +1287,7 @@ after the index filing is completed.
      default argument sc set to $$$OK
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #IDKEYOpen(com.intersys.objects.Database,java.lang.String,java.lang.Integer,com.intersys.objects.StatusCodeHolder)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYOpen"> Method IDKEYOpen</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYOpen"> Method IDKEYOpen</A>
     */
     public static API.MobileAPP IDKEYOpen (com.intersys.objects.Database db, java.lang.String K1) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1306,7 +1306,7 @@ after the index filing is completed.
      default argument sc set to $$$OK
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #IDKEYOpen(com.intersys.objects.Database,java.lang.String,java.lang.Integer,com.intersys.objects.StatusCodeHolder)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYOpen"> Method IDKEYOpen</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYOpen"> Method IDKEYOpen</A>
     */
     public static API.MobileAPP IDKEYOpen (com.intersys.objects.Database db, java.lang.String K1, java.lang.Integer concurrency) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1325,7 +1325,7 @@ after the index filing is completed.
      @param concurrency represented as java.lang.Integer
      @param sc represented as com.intersys.objects.StatusCodeHolder
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYOpen"> Method IDKEYOpen</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#IDKEYOpen"> Method IDKEYOpen</A>
     */
     public static API.MobileAPP IDKEYOpen (com.intersys.objects.Database db, java.lang.String K1, java.lang.Integer concurrency, com.intersys.objects.StatusCodeHolder sc) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1350,8 +1350,10 @@ after the index filing is completed.
      @param inCalcID represented as java.lang.String
      @param inNote represented as java.lang.String
      @param inPrice represented as java.lang.String
+     default argument inIsTest set to 0
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersAdd"> Method OrdersAdd</A>
+     @see #OrdersAdd(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.Integer)
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersAdd"> Method OrdersAdd</A>
     */
     public static java.lang.String OrdersAdd (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inCalcID, java.lang.String inNote, java.lang.String inPrice) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[6];
@@ -1365,6 +1367,31 @@ after the index filing is completed.
         return res.getString();
     }
     /**
+     <p>Runs method OrdersAdd in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inToken represented as java.lang.String
+     @param inLatitude represented as java.lang.String
+     @param inLongitude represented as java.lang.String
+     @param inCalcID represented as java.lang.String
+     @param inNote represented as java.lang.String
+     @param inPrice represented as java.lang.String
+     @param inIsTest represented as java.lang.Integer
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersAdd"> Method OrdersAdd</A>
+    */
+    public static java.lang.String OrdersAdd (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inCalcID, java.lang.String inNote, java.lang.String inPrice, java.lang.Integer inIsTest) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[7];
+        args[0] = new com.intersys.cache.Dataholder(inToken);
+        args[1] = new com.intersys.cache.Dataholder(inLatitude);
+        args[2] = new com.intersys.cache.Dataholder(inLongitude);
+        args[3] = new com.intersys.cache.Dataholder(inCalcID);
+        args[4] = new com.intersys.cache.Dataholder(inNote);
+        args[5] = new com.intersys.cache.Dataholder(inPrice);
+        args[6] = new com.intersys.cache.Dataholder(inIsTest);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"OrdersAdd",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
      <p>Runs method OrdersCalc in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inToken represented as java.lang.String
@@ -1374,7 +1401,7 @@ after the index filing is completed.
      @param inWish represented as java.lang.String
      @param inRoute represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersCalc"> Method OrdersCalc</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersCalc"> Method OrdersCalc</A>
     */
     public static java.lang.String OrdersCalc (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inData, java.lang.String inWish, java.lang.String inRoute) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[6];
@@ -1395,7 +1422,7 @@ after the index filing is completed.
      @param inLatitude represented as java.lang.String
      @param inLongitude represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersDeny"> Method OrdersDeny</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersDeny"> Method OrdersDeny</A>
     */
     public static java.lang.String OrdersDeny (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inReason, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
@@ -1414,7 +1441,7 @@ after the index filing is completed.
      @param inRating represented as java.lang.String
      @param inNote represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersFeedback"> Method OrdersFeedback</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersFeedback"> Method OrdersFeedback</A>
     */
     public static java.lang.String OrdersFeedback (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inGUID, java.lang.String inRating, java.lang.String inNote) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
@@ -1431,7 +1458,7 @@ after the index filing is completed.
      @param inToken represented as java.lang.String
      @param inLastGUID represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersHistory"> Method OrdersHistory</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#OrdersHistory"> Method OrdersHistory</A>
     */
     public static java.lang.String OrdersHistory (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLastGUID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1450,7 +1477,7 @@ after the index filing is completed.
      default argument inData set to 0
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #Preferences(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Preferences"> Method Preferences</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Preferences"> Method Preferences</A>
     */
     public static java.lang.String Preferences (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1470,7 +1497,7 @@ after the index filing is completed.
      default argument inData set to 0
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #Preferences(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Preferences"> Method Preferences</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Preferences"> Method Preferences</A>
     */
     public static java.lang.String Preferences (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inProfile) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
@@ -1490,7 +1517,7 @@ after the index filing is completed.
      @param inProfile represented as java.lang.String
      @param inData represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Preferences"> Method Preferences</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#Preferences"> Method Preferences</A>
     */
     public static java.lang.String Preferences (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inProfile, java.lang.String inData) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[5];
@@ -1508,7 +1535,7 @@ after the index filing is completed.
      @param inToken represented as java.lang.String
      @param inPhone represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileCheckPhone"> Method ProfileCheckPhone</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileCheckPhone"> Method ProfileCheckPhone</A>
     */
     public static java.lang.String ProfileCheckPhone (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inPhone) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -1524,7 +1551,7 @@ after the index filing is completed.
      @param inPhone represented as java.lang.String
      @param inCode represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileCheckPhoneCode"> Method ProfileCheckPhoneCode</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileCheckPhoneCode"> Method ProfileCheckPhoneCode</A>
     */
     public static java.lang.String ProfileCheckPhoneCode (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inPhone, java.lang.String inCode) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1539,7 +1566,7 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inToken represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileGet"> Method ProfileGet</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileGet"> Method ProfileGet</A>
     */
     public static java.lang.String ProfileGet (com.intersys.objects.Database db, java.lang.String inToken) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -1552,13 +1579,32 @@ after the index filing is completed.
      @param db represented as com.intersys.objects.Database
      @param inKey represented as java.lang.String
      @param inPhone represented as java.lang.String
+     default argument inType set to "sms"
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileLogin"> Method ProfileLogin</A>
+     @see #ProfileLogin(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileLogin"> Method ProfileLogin</A>
     */
     public static java.lang.String ProfileLogin (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inPhone) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
         args[0] = new com.intersys.cache.Dataholder(inKey);
         args[1] = new com.intersys.cache.Dataholder(inPhone);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"ProfileLogin",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method ProfileLogin in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inPhone represented as java.lang.String
+     @param inType represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileLogin"> Method ProfileLogin</A>
+    */
+    public static java.lang.String ProfileLogin (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inPhone, java.lang.String inType) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inPhone);
+        args[2] = new com.intersys.cache.Dataholder(inType);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"ProfileLogin",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }
@@ -1569,7 +1615,7 @@ after the index filing is completed.
      @param inPhone represented as java.lang.String
      @param inCode represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileRegistration"> Method ProfileRegistration</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileRegistration"> Method ProfileRegistration</A>
     */
     public static java.lang.String ProfileRegistration (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inPhone, java.lang.String inCode) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -1586,7 +1632,7 @@ after the index filing is completed.
      @param inName represented as java.lang.String
      @param inEMail represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-V7V133H897X:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileSet"> Method ProfileSet</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.MobileAPP#ProfileSet"> Method ProfileSet</A>
     */
     public static java.lang.String ProfileSet (com.intersys.objects.Database db, java.lang.String inToken, java.lang.String inName, java.lang.String inEMail) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];

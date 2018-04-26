@@ -61,7 +61,9 @@ class MobileAppServer extends AppServer {
     private String OrdersAdd(HttpServletRequest baseRequest) throws CacheException {
         String price = "";
         if (baseRequest.getParameter("price") != null)price = baseRequest.getParameter("price");
-        return MobileAPP.OrdersAdd(APIServer.getDatabase(), baseRequest.getParameter("token"), baseRequest.getParameter("lt"),baseRequest.getParameter("ln"), "0", baseRequest.getParameter("note"), price);
+        int isTest = 0;
+        if (APIServer.getIsTest())isTest = 1;
+        return MobileAPP.OrdersAdd(APIServer.getDatabase(), baseRequest.getParameter("token"), baseRequest.getParameter("lt"),baseRequest.getParameter("ln"), "0", baseRequest.getParameter("note"), price, isTest);
     }
 
 
