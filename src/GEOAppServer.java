@@ -94,63 +94,59 @@ class GEOAppServer extends AppServer {
 
     private String GooglePlaces(HttpServletRequest baseRequest){
         String DataBaseAnswer = "500^";
+        String urlString = "";
+        String method = APIServer.getParameter(baseRequest, "method");
         String key = APIServer.getParameter(baseRequest, "key");
         String text = APIServer.getParameter(baseRequest, "text");
         String lt = APIServer.getParameter(baseRequest, "lt");
         String ln = APIServer.getParameter(baseRequest, "ln");
+        String placeid = APIServer.getParameter(baseRequest, "placeid");
+
+        if (method.equals("details")) text = placeid;
+
+        if (text.equals(" ")) text = "!";
 
         try {
-            String resp = GEO.PlacesGoogleGet(APIServer.getDatabase(), key, text, lt, ln);
+            String resp = GEO.PlacesGoogleGet(APIServer.getDatabase(), key, method, text, lt, ln);
             //System.out.println(resp);
             if (resp.equals("404")){
-                String place_id = "", main_text = "", secondary_text = "", type = "";
-                JSONObject prediction, structured_formatting;
-                JSONArray types;
-                String urlString = "https://maps.googleapis.com/maps/api/place/autocomplete/json?input=" + URLEncoder.encode(text, "UTF-8") + "&location=" + lt + "," + ln + "&radius=500&types=geocode|establishment&language=ru-RU&key=" + APIServer.getGooglePlacesAPIKey();
-                System.out.println(urlString);
-                URL url = new URL(urlString);
-                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                conn.setRequestMethod("GET");
-                conn.setDoOutput(true);
-                InputStream inputStream = conn.getInputStream();
-                resp = IOUtils.toString(inputStream, "UTF-8");
-                JSONObject respJSON = new JSONObject(resp);
-                JSONArray result = new JSONArray();
-                if (respJSON.has("status")) {
-                    if (respJSON.getString("status").equals("OK"))
-                        if (respJSON.has("predictions")){
-                            JSONArray predictions = respJSON.getJSONArray("predictions");
-                            for (int itemID = 0; itemID < predictions.length(); itemID++){
-                                prediction = predictions.getJSONObject(itemID);
-                                if (prediction.has("place_id"))place_id = prediction.getString("place_id");
-                                if (prediction.has("structured_formatting")){
-                                    structured_formatting = prediction.getJSONObject("structured_formatting");
-                                    if (structured_formatting.has("main_text"))main_text = structured_formatting.getString("main_text");
-                                    if (structured_formatting.has("secondary_text"))secondary_text = structured_formatting.getString("secondary_text");
-                                }
-                                if (prediction.has("types")){
-                                    types = prediction.getJSONArray("types");
-                                    if (types.length() > 0){
-                                        type = types.getString(0);
-                                    }
-                                }
-                                if ((!place_id.equals("")) && (!main_text.equals("")) && (!secondary_text.equals("")) && (!type.equals(""))){
-                                    String data = GEO.ObjectsSetGoogle(APIServer.getDatabase(), key, place_id, main_text, secondary_text, "","",type);
-                                    if (!data.equals("")){
-                                        JSONObject d = new JSONObject(data);
-                                        result.put(d);
-                                    }
-                                }
+                System.out.println(method);
 
-                            } // for (int itemID = 0; itemID < predictions.length(); itemID++){
-                        }
+                if (method.equals("details")){
+                    urlString = "https://maps.googleapis.com/maps/api/place/details/json?key=" + APIServer.getGooglePlacesAPIKey() + "&language=ru-RU&placeid="+placeid;
+                }
+                if (method.equals("airports")){
+                    urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + APIServer.getGooglePlacesAPIKey() + "&location=" + lt + "," + ln + "&language=ru-RU&type=airport&radius=50000";
+                }
 
-                        GEO.PlacesGoogleSet(APIServer.getDatabase(), key, text, lt, ln, result.toString());
-                        //System.out.println("save cash");
+                if (method.equals("train_station")){
+                    urlString = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=" + APIServer.getGooglePlacesAPIKey() + "&location=" + lt + "," + ln + "&language=ru-RU&type=train_station&radius=50000";
+                }
+
+                if (method.equals("geocode")){
+                    urlString = "https://maps.googleapis.com/maps/api/geocode/json?key=" + APIServer.getGooglePlacesAPIKey() + "&latlng=" + lt + "," + ln + "&language=ru-RU";
+                }
+
+
+                if (method.equals("autocomplete")){
+                    urlString = "https://maps.googleapis.com/maps/api/place/autocomplete/json?key=" + APIServer.getGooglePlacesAPIKey() + "&location=" + lt + "," + ln + "&language=ru-RU&radius=50000&input=" + URLEncoder.encode(text, "UTF-8") + "&components=country:ru&strictbounds&types=geocode|establishment";
 
                 }
 
-                resp = result.toString();
+                if (!urlString.equals("")){
+                    System.out.println(urlString);
+                    URL url = new URL(urlString);
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("GET");
+                    conn.setDoOutput(true);
+                    InputStream inputStream = conn.getInputStream();
+                    resp = IOUtils.toString(inputStream, "UTF-8");
+                    GEO.PlacesGoogleSet(APIServer.getDatabase(), key, method, text, lt, ln, resp);
+                    System.out.println("set to database");
+                }
+
+
+
             }
 
             DataBaseAnswer = "200^"+resp+"^";
@@ -161,6 +157,8 @@ class GEOAppServer extends AppServer {
 
         return DataBaseAnswer;
     }
+
+
 
     private String DispatcherData(HttpServletRequest baseRequest){
 

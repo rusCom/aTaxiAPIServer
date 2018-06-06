@@ -8,7 +8,7 @@ package User;
 **/
 
 public class GEO extends com.intersys.classes.RegisteredObject implements java.io.Serializable {
-    private static final long serialVersionUID = 3792;
+    private static final long serialVersionUID = 6875;
     private static String CACHE_CLASS_NAME = "User.GEO";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
@@ -505,18 +505,20 @@ That is 'isclass' is a primary superclass of this object.</p>
      <p>Runs method PlacesGoogleGet in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inKey represented as java.lang.String
+     @param inMethod represented as java.lang.String
      @param inText represented as java.lang.String
      @param inLatitude represented as java.lang.String
      @param inLongitude represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesGoogleGet"> Method PlacesGoogleGet</A>
     */
-    public static java.lang.String PlacesGoogleGet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inText, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
-        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
+    public static java.lang.String PlacesGoogleGet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inMethod, java.lang.String inText, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[5];
         args[0] = new com.intersys.cache.Dataholder(inKey);
-        args[1] = new com.intersys.cache.Dataholder(inText);
-        args[2] = new com.intersys.cache.Dataholder(inLatitude);
-        args[3] = new com.intersys.cache.Dataholder(inLongitude);
+        args[1] = new com.intersys.cache.Dataholder(inMethod);
+        args[2] = new com.intersys.cache.Dataholder(inText);
+        args[3] = new com.intersys.cache.Dataholder(inLatitude);
+        args[4] = new com.intersys.cache.Dataholder(inLongitude);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesGoogleGet",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }
@@ -524,6 +526,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      <p>Runs method PlacesGoogleSet in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inKey represented as java.lang.String
+     @param inMethod represented as java.lang.String
      @param inText represented as java.lang.String
      @param inLatitude represented as java.lang.String
      @param inLongitude represented as java.lang.String
@@ -531,13 +534,14 @@ That is 'isclass' is a primary superclass of this object.</p>
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesGoogleSet"> Method PlacesGoogleSet</A>
     */
-    public static java.lang.String PlacesGoogleSet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inText, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inResult) throws com.intersys.objects.CacheException {
-        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[5];
+    public static java.lang.String PlacesGoogleSet (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inMethod, java.lang.String inText, java.lang.String inLatitude, java.lang.String inLongitude, java.lang.String inResult) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[6];
         args[0] = new com.intersys.cache.Dataholder(inKey);
-        args[1] = new com.intersys.cache.Dataholder(inText);
-        args[2] = new com.intersys.cache.Dataholder(inLatitude);
-        args[3] = new com.intersys.cache.Dataholder(inLongitude);
-        args[4] = new com.intersys.cache.Dataholder(inResult);
+        args[1] = new com.intersys.cache.Dataholder(inMethod);
+        args[2] = new com.intersys.cache.Dataholder(inText);
+        args[3] = new com.intersys.cache.Dataholder(inLatitude);
+        args[4] = new com.intersys.cache.Dataholder(inLongitude);
+        args[5] = new com.intersys.cache.Dataholder(inResult);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesGoogleSet",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }
@@ -561,13 +565,54 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param db represented as com.intersys.objects.Database
      @param inKey represented as java.lang.String
      @param inLocality represented as java.lang.String
+     default argument inLatitude set to ""
+     default argument inLongitude set to ""
      @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #PlacesPopular(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesPopular"> Method PlacesPopular</A>
     */
     public static java.lang.String PlacesPopular (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inLocality) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
         args[0] = new com.intersys.cache.Dataholder(inKey);
         args[1] = new com.intersys.cache.Dataholder(inLocality);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesPopular",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method PlacesPopular in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inLocality represented as java.lang.String
+     @param inLatitude represented as java.lang.String
+     default argument inLongitude set to ""
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #PlacesPopular(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesPopular"> Method PlacesPopular</A>
+    */
+    public static java.lang.String PlacesPopular (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inLocality, java.lang.String inLatitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inLocality);
+        args[2] = new com.intersys.cache.Dataholder(inLatitude);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesPopular",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method PlacesPopular in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inKey represented as java.lang.String
+     @param inLocality represented as java.lang.String
+     @param inLatitude represented as java.lang.String
+     @param inLongitude represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=GEO&CLASSNAME=User.GEO#PlacesPopular"> Method PlacesPopular</A>
+    */
+    public static java.lang.String PlacesPopular (com.intersys.objects.Database db, java.lang.String inKey, java.lang.String inLocality, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
+        args[0] = new com.intersys.cache.Dataholder(inKey);
+        args[1] = new com.intersys.cache.Dataholder(inLocality);
+        args[2] = new com.intersys.cache.Dataholder(inLatitude);
+        args[3] = new com.intersys.cache.Dataholder(inLongitude);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"PlacesPopular",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }

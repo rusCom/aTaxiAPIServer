@@ -20,6 +20,7 @@ public class PhoneGatewayAppServer extends AppServer {
                 case "set_delivered":DataBaseAnswer = PhoneGatway.SetDelivered(APIServer.getDatabase(), targets[2]);break;
                 case "incoming_call":DataBaseAnswer = PhoneGatway.IncomingCall(APIServer.getDatabase(), baseRequest.getParameter("phone"));break;
                 case "incoming_sms":DataBaseAnswer = PhoneGatway.IncomingSMS(APIServer.getDatabase(), baseRequest.getParameter("phone"), baseRequest.getParameter("text"));break;
+                case "adwords_compaign":DataBaseAnswer = PhoneGatway.AdwordsCompaign(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "customer_id"), APIServer.getParameter(baseRequest, "city_id"));break;
 
             }
         }catch (CacheException e) {

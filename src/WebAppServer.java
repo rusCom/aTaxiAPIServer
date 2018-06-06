@@ -90,6 +90,8 @@ public class WebAppServer extends AppServer {
                 RouteString += "***";
             }
 
+            System.out.println("routes" + routes.toString());
+
 
 
             DataBaseAnswer = WebAPP.OrdersCalc(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "token"), DataString, WishString, RouteString);
