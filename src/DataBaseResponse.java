@@ -1,19 +1,31 @@
-package App;
-
 import javax.servlet.http.HttpServletResponse;
 
-
 public class DataBaseResponse {
-    private String status, body;
+    private String status = "", body = "", file = null;
 
-    public DataBaseResponse(String status) {
-        this.status = status;
-        body = "";
+    public DataBaseResponse(String DataBaseAnswer) {
+
+        String[] DataBaseAnswers = DataBaseAnswer.split("\\^");
+        status = DataBaseAnswers[0];
+        if (DataBaseAnswers.length > 1){
+            body = DataBaseAnswers[1];
+        }
+
+        if (DataBaseAnswers.length > 2){
+            file = DataBaseAnswers[2];
+        }
+
+
+
     }
 
     public DataBaseResponse(String status, String body) {
         this.status = status;
         this.body = body;
+    }
+
+    public String getFile() {
+        return file;
     }
 
     public int getStatus() {

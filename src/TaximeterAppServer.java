@@ -1,6 +1,4 @@
 import API.Taximeter;
-import App.AppServer;
-import App.DataBaseResponse;
 import com.intersys.objects.CacheException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,17 +19,17 @@ public class TaximeterAppServer extends AppServer {
 
            if (target.split("=")[0].equals("/gettype")){
                 Map<String, String> params = parseParams(baseRequest.getRequestURI());
-                DataBaseAnswer = Taximeter.DataType(APIServer.getDatabase(), params.get("token"), params.get("type"), params.get("data"));
+                DataBaseAnswer = Taximeter.DataType(getDataBase(), params.get("token"), params.get("type"), params.get("data"));
             }
             else if (target.split("=")[0].equals("/get")){
                 Map<String, String> params = parseParams(baseRequest.getRequestURI());
-                DataBaseAnswer = Taximeter.Data(APIServer.getDatabase(), params.get("token"), params.get("location"));
+                DataBaseAnswer = Taximeter.Data(getDataBase(), params.get("token"), params.get("location"));
             }
 
             switch (targets[1]){
                 case "orders":{
                     switch (targets[2]){
-                        case "check":DataBaseAnswer = Taximeter.OrdersCheck(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "order_id"));break;
+                        case "check":DataBaseAnswer = Taximeter.OrdersCheck(getDataBase(), getParameter(baseRequest, "token"), getParameter(baseRequest, "order_id"));break;
                     }
                 }break;
 

@@ -1,7 +1,5 @@
 import API.Aksioma;
 import API.MobileAPP;
-import App.AppServer;
-import App.DataBaseResponse;
 import com.intersys.objects.CacheException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,17 +22,17 @@ class AksiomaAppServer extends AppServer {
                         case "POST":DataBaseAnswer = loginPOST(baseRequest);break;
                     }
                     break;
-                case "faq":DataBaseAnswer = Aksioma.FAQ(APIServer.getDatabase(), baseRequest.getParameter("access_token"));break;
-                case "class":DataBaseAnswer = Aksioma.Class(APIServer.getDatabase(), baseRequest.getParameter("access_token"));break;
+                case "faq":DataBaseAnswer = Aksioma.FAQ(getDataBase(), baseRequest.getParameter("access_token"));break;
+                case "class":DataBaseAnswer = Aksioma.Class(getDataBase(), baseRequest.getParameter("access_token"));break;
                 case "manual":
                     switch (targets[2]){
                         case "service":DataBaseAnswer = manualService(baseRequest);break;
-                        case "status":DataBaseAnswer = Aksioma.ManualStatus(APIServer.getDatabase(), baseRequest.getParameter("access_token"));break;
+                        case "status":DataBaseAnswer = Aksioma.ManualStatus(getDataBase(), baseRequest.getParameter("access_token"));break;
                     }
                     break;
                 case "user":
                     switch (targets[2]){
-                        case "pay":DataBaseAnswer = Aksioma.UserPay(APIServer.getDatabase(), baseRequest.getParameter("access_token"));break;
+                        case "pay":DataBaseAnswer = Aksioma.UserPay(getDataBase(), baseRequest.getParameter("access_token"));break;
                     }
                     break;
 
@@ -66,7 +64,7 @@ class AksiomaAppServer extends AppServer {
         String DataBaseAnswer;
         try {
             String[] gps = baseRequest.getParameter("gps").split(",");
-            DataBaseAnswer = Aksioma.ManualService(APIServer.getDatabase(), baseRequest.getParameter("access_token"), gps[0], gps[1], baseRequest.getParameter("tariff"));
+            DataBaseAnswer = Aksioma.ManualService(getDataBase(), baseRequest.getParameter("access_token"), gps[0], gps[1], baseRequest.getParameter("tariff"));
 
         }  catch (CacheException e) {
             e.printStackTrace();
@@ -79,9 +77,9 @@ class AksiomaAppServer extends AppServer {
     private String loginPOST(HttpServletRequest baseRequest){
         String DataBaseAnswer;
         try {
-            JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
+            JSONObject data = new JSONObject(getBody(baseRequest));
             System.out.println(data.toString());
-            DataBaseAnswer = MobileAPP.ProfileRegistration(APIServer.getDatabase(), baseRequest.getParameter("api_key"), data.getString("phone"), data.getString("code"));
+            DataBaseAnswer = MobileAPP.ProfileRegistration(getDataBase(), baseRequest.getParameter("api_key"), data.getString("phone"), data.getString("code"));
             String[] DataBaseAnswers = DataBaseAnswer.split("\\^");
 
             JSONObject result = new JSONObject();
@@ -101,7 +99,7 @@ class AksiomaAppServer extends AppServer {
     }
 
     private String loginGET(HttpServletRequest baseRequest) throws CacheException {
-        String DataBaseAnswer = MobileAPP.ProfileLogin(APIServer.getDatabase(), baseRequest.getParameter("api_key"), baseRequest.getParameter("phone"));
+        String DataBaseAnswer = MobileAPP.ProfileLogin(getDataBase(), baseRequest.getParameter("api_key"), baseRequest.getParameter("phone"));
         String[] DataBaseAnswers = DataBaseAnswer.split("\\^");
         JSONObject result = new JSONObject();
         if (DataBaseAnswers[0].equals("200"))result.put("message", "На указанный Вами номер было отправлено СМС сообщение");

@@ -1,6 +1,3 @@
-
-import App.AppServer;
-import App.DataBaseResponse;
 import User.GEO;
 import com.intersys.objects.CacheException;
 import org.apache.commons.io.IOUtils;
@@ -33,28 +30,28 @@ class GEOAppServer extends AppServer {
                 case "set_android_house_search":DataBaseAnswer = setAndroidAppHouseSearch(baseRequest);break;
                 case "set_google_distance":DataBaseAnswer = setGoogleDistance(baseRequest);break;
                 case "get_android_cache_data":
-                    DataBaseAnswer = GEO.GetAndroidAppSearch(APIServer.getDatabase(), baseRequest.getParameter("search").trim(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));
+                    DataBaseAnswer = GEO.GetAndroidAppSearch(getDataBase(), baseRequest.getParameter("search").trim(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));
                     break;
-                case "get_android_house_search":DataBaseAnswer = GEO.GetAndroidAppHouseSearch(APIServer.getDatabase(), baseRequest.getParameter("search").trim(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));break;
-                case "get_android_location_point":DataBaseAnswer = GEO.GetLocationPoint(APIServer.getDatabase(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));break;
-                case "get_distance":DataBaseAnswer = GEO.GetDistance(APIServer.getDatabase(), baseRequest.getParameter("blt"), baseRequest.getParameter("bln"), baseRequest.getParameter("elt"), baseRequest.getParameter("eln"));break;
-                case "geo_autocomplete":DataBaseAnswer = GEO.GEOAutocomplete(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"), APIServer.getParameter(baseRequest, "text"));break;
-                case "geo_houses":DataBaseAnswer = GEO.GEOHouses(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "street"));break;
+                case "get_android_house_search":DataBaseAnswer = GEO.GetAndroidAppHouseSearch(getDataBase(), baseRequest.getParameter("search").trim(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));break;
+                case "get_android_location_point":DataBaseAnswer = GEO.GetLocationPoint(getDataBase(), baseRequest.getParameter("latitude"), baseRequest.getParameter("longitude"));break;
+                case "get_distance":DataBaseAnswer = GEO.GetDistance(getDataBase(), baseRequest.getParameter("blt"), baseRequest.getParameter("bln"), baseRequest.getParameter("elt"), baseRequest.getParameter("eln"));break;
+                case "geo_autocomplete":DataBaseAnswer = GEO.GEOAutocomplete(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "city"), getParameter(baseRequest, "text"));break;
+                case "geo_houses":DataBaseAnswer = GEO.GEOHouses(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "street"));break;
                 case "distance":
                     switch (targets[2]){
                         case "get":DataBaseAnswer = DistanceGet(baseRequest);break;
-                        case "set":DataBaseAnswer = GEO.DistanceSet(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"),
-                                APIServer.getParameter(baseRequest, "blt"), APIServer.getParameter(baseRequest, "bln"),
-                                APIServer.getParameter(baseRequest, "elt"), APIServer.getParameter(baseRequest, "eln"),
-                                APIServer.getParameter(baseRequest, "distance"), APIServer.getParameter(baseRequest, "duration")
+                        case "set":DataBaseAnswer = GEO.DistanceSet(getDataBase(), getParameter(baseRequest, "key"),
+                                getParameter(baseRequest, "blt"), getParameter(baseRequest, "bln"),
+                                getParameter(baseRequest, "elt"), getParameter(baseRequest, "eln"),
+                                getParameter(baseRequest, "distance"), getParameter(baseRequest, "duration")
                             );break;
                     }
                     break;
                 case "places":
                     switch (targets[2]){
-                        case "autocomplete":DataBaseAnswer = GEO.PlacesAutoComplete(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"), APIServer.getParameter(baseRequest, "text"), APIServer.getParameter(baseRequest, "lt"), APIServer.getParameter(baseRequest, "ln"));break;
-                        case "houses":DataBaseAnswer = GEO.PlacesHouses(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "street"));break;
-                        case "popular":DataBaseAnswer = GEO.PlacesPopular(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"));break;
+                        case "autocomplete":DataBaseAnswer = GEO.PlacesAutoComplete(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "city"), getParameter(baseRequest, "text"), getParameter(baseRequest, "lt"), getParameter(baseRequest, "ln"));break;
+                        case "houses":DataBaseAnswer = GEO.PlacesHouses(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "street"));break;
+                        case "popular":DataBaseAnswer = GEO.PlacesPopular(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "city"));break;
                         case "google":DataBaseAnswer = GooglePlaces(baseRequest);break;
                     }
                     break;
@@ -84,7 +81,7 @@ class GEOAppServer extends AppServer {
     private String EditAirports(HttpServletRequest baseRequest){
         String DataBaseAnswer = "500^";
         try {
-            DataBaseAnswer = GEO.EditAirports(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), "");
+            DataBaseAnswer = GEO.EditAirports(getDataBase(), getParameter(baseRequest, "key"), "");
         } catch (CacheException e) {
             e.printStackTrace();
         }
@@ -95,19 +92,19 @@ class GEOAppServer extends AppServer {
     private String GooglePlaces(HttpServletRequest baseRequest){
         String DataBaseAnswer = "500^";
         String urlString = "";
-        String method = APIServer.getParameter(baseRequest, "method");
-        String key = APIServer.getParameter(baseRequest, "key");
-        String text = APIServer.getParameter(baseRequest, "text");
-        String lt = APIServer.getParameter(baseRequest, "lt");
-        String ln = APIServer.getParameter(baseRequest, "ln");
-        String placeid = APIServer.getParameter(baseRequest, "placeid");
+        String method = getParameter(baseRequest, "method");
+        String key = getParameter(baseRequest, "key");
+        String text = getParameter(baseRequest, "text");
+        String lt = getParameter(baseRequest, "lt");
+        String ln = getParameter(baseRequest, "ln");
+        String placeid = getParameter(baseRequest, "placeid");
 
         if (method.equals("details")) text = placeid;
 
         if (text.equals(" ")) text = "!";
 
         try {
-            String resp = GEO.PlacesGoogleGet(APIServer.getDatabase(), key, method, text, lt, ln);
+            String resp = GEO.PlacesGoogleGet(getDataBase(), key, method, text, lt, ln);
             //System.out.println(resp);
             if (resp.equals("404")){
                 System.out.println(method);
@@ -141,7 +138,7 @@ class GEOAppServer extends AppServer {
                     conn.setDoOutput(true);
                     InputStream inputStream = conn.getInputStream();
                     resp = IOUtils.toString(inputStream, "UTF-8");
-                    GEO.PlacesGoogleSet(APIServer.getDatabase(), key, method, text, lt, ln, resp);
+                    GEO.PlacesGoogleSet(getDataBase(), key, method, text, lt, ln, resp);
                     System.out.println("set to database");
                 }
 
@@ -168,9 +165,9 @@ class GEOAppServer extends AppServer {
         JSONArray tResults;
         try {
             do {
-                String t = GEO.Dispathcer(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"), lastID);
+                String t = GEO.Dispathcer(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "city"), lastID);
                 System.out.println(t);
-                tResults = new JSONArray(GEO.Dispathcer(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "city"), lastID));
+                tResults = new JSONArray(GEO.Dispathcer(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "city"), lastID));
                 resultsArray.add(tResults);
                 System.out.println(tResults.length());
                 if (tResults.length() > 0){
@@ -207,11 +204,11 @@ class GEOAppServer extends AppServer {
     private String Geocode(HttpServletRequest baseRequest){
         String DataBaseAnswer = "500^^";
         try {
-            DataBaseAnswer = GEO.GeocodeGet(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "lt"), APIServer.getParameter(baseRequest, "ln"));
+            DataBaseAnswer = GEO.GeocodeGet(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "lt"), getParameter(baseRequest, "ln"));
             if (DataBaseAnswer.equals("404")){
-                YandexGeoCoder(APIServer.getParameter(baseRequest, "lt"), APIServer.getParameter(baseRequest, "ln"));
+                YandexGeoCoder(getParameter(baseRequest, "lt"), getParameter(baseRequest, "ln"));
             }
-            DataBaseAnswer = GEO.GeocodeGet(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "lt"), APIServer.getParameter(baseRequest, "ln"));
+            DataBaseAnswer = GEO.GeocodeGet(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "lt"), getParameter(baseRequest, "ln"));
             //System.out.println(DataBaseAnswer);
         } catch (CacheException e) {
             e.printStackTrace();
@@ -246,12 +243,12 @@ class GEOAppServer extends AppServer {
                 String Text = data.getString("text");
                 String Data = Name + "|" + Description + "|" + Latitude + "|" + Longitude + "|" + Kind + "|" + Text + "|";
                 //System.out.println(Data);
-                GEO.SetYandexObject(APIServer.getDatabase(), Data);
+                GEO.SetYandexObject(getDataBase(), Data);
                 if (itemID == 0){resultText = Text;}
 
             }
             if (!resultText.equals("")){
-                GEO.GeocodeSet(APIServer.getDatabase(), "", lt, ln, resultText);
+                GEO.GeocodeSet(getDataBase(), "", lt, ln, resultText);
             }
 
             //GEO.SetForYandexSearchOper(dataBase, ClassID, resultText);
@@ -263,14 +260,14 @@ class GEOAppServer extends AppServer {
 
     private String DistanceGet(HttpServletRequest baseRequest){
         if (baseRequest.getMethod().toUpperCase().equals("GET")){
-            if (APIServer.getParameter(baseRequest, "blt").equals(" "))return "400^^";
-            if (APIServer.getParameter(baseRequest, "bln").equals(" "))return "400^^";
-            if (APIServer.getParameter(baseRequest, "elt").equals(" "))return "400^^";
-            if (APIServer.getParameter(baseRequest, "eln").equals(" "))return "400^^";
+            if (getParameter(baseRequest, "blt").equals(" "))return "400^^";
+            if (getParameter(baseRequest, "bln").equals(" "))return "400^^";
+            if (getParameter(baseRequest, "elt").equals(" "))return "400^^";
+            if (getParameter(baseRequest, "eln").equals(" "))return "400^^";
             try {
-                Integer Distance = Integer.valueOf(GEO.DistanceGet(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "blt"), APIServer.getParameter(baseRequest, "bln"), APIServer.getParameter(baseRequest, "elt"), APIServer.getParameter(baseRequest, "eln")));
+                Integer Distance = Integer.valueOf(GEO.DistanceGet(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "blt"), getParameter(baseRequest, "bln"), getParameter(baseRequest, "elt"), getParameter(baseRequest, "eln")));
                 if (Distance == -1){
-                    Distance = Integer.valueOf(GoogleDistanceMatrix(APIServer.getParameter(baseRequest, "blt"), APIServer.getParameter(baseRequest, "bln"), APIServer.getParameter(baseRequest, "elt"), APIServer.getParameter(baseRequest, "eln")));
+                    Distance = Integer.valueOf(GoogleDistanceMatrix(getParameter(baseRequest, "blt"), getParameter(baseRequest, "bln"), getParameter(baseRequest, "elt"), getParameter(baseRequest, "eln")));
                 }
                 JSONObject answer = new JSONObject();
                 answer.put("response", "OK");
@@ -285,13 +282,13 @@ class GEOAppServer extends AppServer {
         else if (baseRequest.getMethod().toUpperCase().equals("POST")){
             try {
                 Integer distance = 0, tDistance;
-                JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
+                JSONObject data = new JSONObject(getBody(baseRequest));
 
                 JSONArray route = data.getJSONArray("route");
                 for (int itemID = 1; itemID < route.length(); itemID++){
                     JSONObject l_item = route.getJSONObject(itemID - 1);
                     JSONObject c_item = route.getJSONObject(itemID);
-                    tDistance = Integer.valueOf(GEO.DistanceGet(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"),
+                    tDistance = Integer.valueOf(GEO.DistanceGet(getDataBase(), getParameter(baseRequest, "key"),
                             String.valueOf(l_item.get("lt")), String.valueOf(l_item.get("ln")),
                             String.valueOf(c_item.get("lt")), String.valueOf(c_item.get("ln"))
                             ));
@@ -353,7 +350,7 @@ class GEOAppServer extends AppServer {
                     } //if (respJSON.has("rows")){
                 } //if (respJSON.getString("status").equals("OK")){
             //GEO.SetDistance(dataBase, search[1], search[2], search[3], search[4], distance);
-            GEO.DistanceSet(APIServer.getDatabase(), "", blt, bln, elt, eln, distance, duration);
+            GEO.DistanceSet(getDataBase(), "", blt, bln, elt, eln, distance, duration);
 
 
         return distance;
@@ -365,8 +362,8 @@ class GEOAppServer extends AppServer {
 
     private String setGoogleDistance(HttpServletRequest baseRequest){
         try {
-            JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
-            GEO.SetDistance(APIServer.getDatabase(), data.getString("blt"), data.getString("bln"), data.getString("elt"), data.getString("eln"), data.getString("dst"));
+            JSONObject data = new JSONObject(getBody(baseRequest));
+            GEO.SetDistance(getDataBase(), data.getString("blt"), data.getString("bln"), data.getString("elt"), data.getString("eln"), data.getString("dst"));
         } catch (IOException | CacheException e) {
             e.printStackTrace();
         }
@@ -376,10 +373,10 @@ class GEOAppServer extends AppServer {
 
     private String setAndroidLocationPoint(HttpServletRequest baseRequest) throws CacheException {
         try {
-            JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
+            JSONObject data = new JSONObject(getBody(baseRequest));
             JSONObject place = data.getJSONObject("point");
-            String ObjectID = GEO.SetObjectsFromGoogle(APIServer.getDatabase(), place.getString("place_id"), place.getString("name"), place.getString("description"), place.getString("latitude"), place.getString("longitude"), place.getString("place_type"), place.getString("place_types"));
-            GEO.SetLocationPoint(APIServer.getDatabase(), data.getString("latitude"), data.getString("longitude"), ObjectID);
+            String ObjectID = GEO.SetObjectsFromGoogle(getDataBase(), place.getString("place_id"), place.getString("name"), place.getString("description"), place.getString("latitude"), place.getString("longitude"), place.getString("place_type"), place.getString("place_types"));
+            GEO.SetLocationPoint(getDataBase(), data.getString("latitude"), data.getString("longitude"), ObjectID);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -389,14 +386,14 @@ class GEOAppServer extends AppServer {
     private String setAndroidAppHouseSearch(HttpServletRequest baseRequest) throws CacheException {
         try {
             String PlacesID = "", PlaceID;
-            JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
+            JSONObject data = new JSONObject(getBody(baseRequest));
             JSONArray places = data.getJSONArray("places");
             for (int itemID = 0; itemID < places.length(); itemID ++){
                 JSONObject place = places.getJSONObject(itemID);
-                PlaceID = GEO.SetObjectsFromGoogle(APIServer.getDatabase(), place.getString("place_id"), place.getString("name"), place.getString("description"), place.getString("latitude"), place.getString("longitude"), place.getString("place_type"), place.getString("place_types"));
+                PlaceID = GEO.SetObjectsFromGoogle(getDataBase(), place.getString("place_id"), place.getString("name"), place.getString("description"), place.getString("latitude"), place.getString("longitude"), place.getString("place_type"), place.getString("place_types"));
                 PlacesID += PlaceID + "|";
             }
-            if (!PlacesID.equals(""))GEO.SetAndroidAppHouseSearch(APIServer.getDatabase(), data.getString("search_string").trim(), data.getString("latitude"), data.getString("longitude"), PlacesID);
+            if (!PlacesID.equals(""))GEO.SetAndroidAppHouseSearch(getDataBase(), data.getString("search_string").trim(), data.getString("latitude"), data.getString("longitude"), PlacesID);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -408,14 +405,14 @@ class GEOAppServer extends AppServer {
     private String setAndroidAppCacheData(HttpServletRequest baseRequest) throws CacheException {
         try {
             String PlacesID = "", PlaceID;
-            JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
+            JSONObject data = new JSONObject(getBody(baseRequest));
             JSONArray places = data.getJSONArray("places");
             for (int itemID = 0; itemID < places.length(); itemID ++){
                 JSONObject place = places.getJSONObject(itemID);
-                PlaceID = GEO.SetObjectsFromGoogle(APIServer.getDatabase(), place.getString("place_id"), place.getString("name"), place.getString("description"), place.getString("latitude"), place.getString("longitude"), place.getString("place_type"), place.getString("place_types"));
+                PlaceID = GEO.SetObjectsFromGoogle(getDataBase(), place.getString("place_id"), place.getString("name"), place.getString("description"), place.getString("latitude"), place.getString("longitude"), place.getString("place_type"), place.getString("place_types"));
                 PlacesID += PlaceID + "|";
             }
-            if (!PlacesID.equals(""))GEO.SetAndroidAppSearch(APIServer.getDatabase(), data.getString("search_string").trim(), data.getString("latitude"), data.getString("longitude"), PlacesID);
+            if (!PlacesID.equals(""))GEO.SetAndroidAppSearch(getDataBase(), data.getString("search_string").trim(), data.getString("latitude"), data.getString("longitude"), PlacesID);
 
         } catch (IOException e) {
             e.printStackTrace();

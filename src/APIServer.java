@@ -1,17 +1,18 @@
-import App.AppServer;
-import App.DataBaseResponse;
+import API.BaseAPI;
 
 
-import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Properties;
 
 import com.intersys.objects.CacheDatabase;
+import com.intersys.objects.CacheException;
 import com.intersys.objects.Database;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -21,21 +22,25 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 
+
 import static java.lang.Thread.sleep;
 
 public class APIServer extends AbstractHandler {
     private static Database dataBase;
     private static String SeverType, googleMatrixAPIKey, googlePlacesAPIKey;
     private static AppServer appServer;
-    private static Boolean LogView = false, LogViewData = false, IsTest  = false;
+    private static Boolean IsTest  = false, UTF8 = false;
     private static Integer Port;
+    private static PrintWriter logPrintWriter, logDataPrintWriter, exceptionPrintWriter;
+    private static String curDir;
 
-    static Database getDatabase(){
-        return dataBase;
-    }
 
     public static Boolean getIsTest() {
         return IsTest;
+    }
+
+    public static Database getDataBase() {
+        return dataBase;
     }
 
     @Override
@@ -43,55 +48,105 @@ public class APIServer extends AbstractHandler {
                        Request baseRequest,
                        HttpServletRequest request,
                        HttpServletResponse response)
-            throws IOException, ServletException
+            throws IOException
     {
-        DataBaseResponse dataBaseResponse = appServer.response(target, request);
+        String exceptionAsString = "";
+        DataBaseResponse dataBaseResponse;
+        try {
+            switch (target){
+                case "/preferences":dataBaseResponse = appServer.Preferences(request);break;
+                case "/profile":dataBaseResponse = appServer.Profile(request);break;
+                case "/profile/registration":dataBaseResponse = appServer.ProfileRegistration(request);break;
 
-        if (LogView){
-            if (target.equals("/data")){
-                if (LogViewData){
-                    System.out.println("date    = " + getCurDateTime());
-                    System.out.println("address = " + request.getRemoteAddr());
-                    System.out.println("target  = " + target);
-                    System.out.println("method  = " + request.getMethod());
-                    System.out.println("params  = " + request.getParameterMap().toString());
-                    System.out.println("status  = " + dataBaseResponse.getStatus());
-                    System.out.println("body    = " + dataBaseResponse.getBody());
-                    System.out.println("********************************************************");
-
-                }
+                default:dataBaseResponse = appServer.response(target, request);
             }
-            else {
-                System.out.println("date    = " + getCurDateTime());
-                System.out.println("address = " + request.getRemoteAddr());
-                System.out.println("target  = " + target);
-                System.out.println("method  = " + request.getMethod());
-                System.out.println("params  = " + request.getParameterMap().toString());
-                System.out.println("status  = " + dataBaseResponse.getStatus());
-                System.out.println("body    = " + dataBaseResponse.getBody());
-                System.out.println("********************************************************");
-
-            }
-
+        } catch (CacheException | IOException e) {
+            StringWriter sw = new StringWriter();
+            e.printStackTrace(new PrintWriter(sw));
+            exceptionAsString = sw.toString();
+            dataBaseResponse = new DataBaseResponse("500");
         }
 
+        StringBuilder logText = new StringBuilder();
+        logText.append("date").append("\t").append("= ").append(getCurDateTime()).append("\n");
+        logText.append("address").append("\t").append("= ").append(request.getRemoteAddr()).append("\n");
+        logText.append("target").append("\t").append("= ").append(target).append("\n");
+        logText.append("method").append("\t").append("= ").append(request.getMethod()).append("\n");
+        logText.append("params").append("\t").append("= ").append(request.getParameterMap().toString()).append("\n");
+        logText.append("status").append("\t").append("= ").append(dataBaseResponse.getStatus()).append("\n");
+        logText.append("body").append("\t").append("= ").append(dataBaseResponse.getBody()).append("\n");
+        logText.append("excep").append("\t").append("= ").append(exceptionAsString).append("\n");
+        logText.append("********************************************************").append("\n");
 
+        if (!exceptionAsString.equals("")){
+            getExceptionPrintWriter().println(logText);
+            getExceptionPrintWriter().flush();
+            if (appServer.getAppSettings().getString("log_view").equals("console")){
+                System.out.println(logText);
+            }
+        }
+        else if (appServer.getAppSettings().getString("log_view").equals("file") && appServer.getAppSettings().getString("log_view_data").equals("true") && target.equals("/data")){
+            if (IsTest){System.out.println(logText);}
+            else {
+                getLogDataPrintWriter().println(logText);
+                getLogDataPrintWriter().flush();
+            }
+        }
+        else if (appServer.getAppSettings().getString("log_view").equals("file") && !target.equals("/data")){
+            if (IsTest){System.out.println(logText);}
+            else {
+                getLogDataPrintWriter().println(logText);
+                getLogDataPrintWriter().flush();
+            }
+        }
+        else if (appServer.getAppSettings().getString("log_view").equals("console") && appServer.getAppSettings().getString("log_view_data").equals("true") && target.equals("/data")){
+            System.out.println(logText);
+        }
+        else if (appServer.getAppSettings().getString("log_view").equals("console") && !target.equals("/data")){
+            System.out.println(logText);
+        }
 
-
-        response.setContentType("application/json;charset=utf-8");
+        if (dataBaseResponse.getStatus() == HttpServletResponse.SC_OK){
+            if (dataBaseResponse.getBody().equals("200 OK")){response.setContentType("application/text;charset=utf-8");}
+            else {response.setContentType("application/json;charset=utf-8");}
+        }
+        else {response.setContentType("application/text;charset=utf-8");}
         response.setStatus(dataBaseResponse.getStatus());
         response.setHeader("Server", "aTaxi." + SeverType);
         baseRequest.setHandled(true);
-        response.getWriter().print(dataBaseResponse.getBody());
 
+        if (dataBaseResponse.getFile() == null){
 
+            response.getWriter().print(dataBaseResponse.getBody());
+        }
+        else {
+            File file = new File(dataBaseResponse.getFile());
+            String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+            //System.out.println("File location on server: " + file.getAbsolutePath());
+            //System.out.println("File mimeType: " + mimeType);
+            InputStream fis = new FileInputStream(file);
+            response.setContentType(mimeType != null? mimeType:"application/octet-stream");
+            response.setContentLength((int) file.length());
+            response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+            ServletOutputStream os = response.getOutputStream();
+            byte[] bufferData = new byte[1024];
+            int read;
+            while((read = fis.read(bufferData))!= -1){
+                os.write(bufferData, 0, read);
+            }
+            os.flush();
+            os.close();
+            fis.close();
+            //System.out.println("File downloaded at client successfully");
+        }
     }
+
 
     public static void main(String[] args) throws Exception
     {
         // Читаем настройки из файла
         Properties properties = new Properties();
-        String curDir = new File("").getAbsolutePath();
+        curDir = new File("").getAbsolutePath();
         FileInputStream fis = new FileInputStream(curDir + "/server.properties");
         properties.load(fis);
 
@@ -104,9 +159,9 @@ public class APIServer extends AbstractHandler {
         Boolean HTTPS = Boolean.parseBoolean(properties.getProperty("server.https"));
 
         IsTest = Boolean.parseBoolean(properties.getProperty("server.test"));
+        UTF8 = Boolean.parseBoolean(properties.getProperty("server.utf8"));
 
-        LogView     = Boolean.parseBoolean(properties.getProperty("log.view"));
-        LogViewData = Boolean.parseBoolean(properties.getProperty("log.view_data"));
+        new File(curDir + "/log/").mkdir();
 
         googleMatrixAPIKey = properties.getProperty("google.matrix_api_key");
         googlePlacesAPIKey = properties.getProperty("google.places_api_key");
@@ -120,16 +175,26 @@ public class APIServer extends AbstractHandler {
 
         System.out.println(getCurDateTime() + "Connecting to DataBase " + dataBaseURL + " success");
 
+
+
         switch (SeverType) {
-            case "mobile_app":
+            case "TaximeterRegistration":
+                appServer = new TaximeterRegistrationAppServer();
+                break;
+            case "MobileAPP":
                 appServer = new MobileAppServer();
                 break;
             case "web_app":
                 appServer = new WebAppServer();
                 break;
+            case "GEO":
+                appServer = new GEO2AppServer();
+                break;
+                /*
             case "geo":
                 appServer = new GEOAppServer();
                 break;
+                */
             case "phone_gateway":
                 appServer = new PhoneGatewayAppServer();
                 break;
@@ -145,10 +210,22 @@ public class APIServer extends AbstractHandler {
             case "dispatcher":
                 appServer = new DispatcherAppServer();
                 break;
+
         }
 
 
         appServer.setDataBase(dataBase);
+        appServer.setSeverType(SeverType);
+        try {
+            BaseAPI.Initialize(dataBase, SeverType);
+
+        } catch (CacheException e) {
+            e.printStackTrace();
+        }
+
+
+
+
 
         System.out.println(getCurDateTime() + "Start " + SeverType + " server at port " + String.valueOf(Port));
 
@@ -224,51 +301,39 @@ public class APIServer extends AbstractHandler {
         return Port;
     }
 
-    static String getBody(HttpServletRequest request) throws IOException {
-
-        String body = null;
-        StringBuilder stringBuilder = new StringBuilder();
-        BufferedReader bufferedReader = null;
-
-        try {
-            InputStream inputStream = request.getInputStream();
-            if (inputStream != null) {
-                bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                char[] charBuffer = new char[128];
-                int bytesRead = -1;
-                while ((bytesRead = bufferedReader.read(charBuffer)) > 0) {
-                    stringBuilder.append(charBuffer, 0, bytesRead);
-                }
-            } else {
-                stringBuilder.append("");
-            }
-        } catch (IOException ex) {
-            throw ex;
-        } finally {
-            if (bufferedReader != null) {
-                try {
-                    bufferedReader.close();
-                } catch (IOException ex) {
-                    throw ex;
-                }
-            }
-        }
-
-        body = stringBuilder.toString();
-        if (IsTest){
-            System.out.println("!!!body    = " + body);
-        }
-
-        return body;
-    }
-
-    private static String getCurDateTime(){
+    public static String getCurDateTime(){
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " ";
     }
 
-    static String getParameter(HttpServletRequest baseRequest, String name){
-        String result = " ";
-        if (baseRequest.getParameter(name) != null)result = baseRequest.getParameter(name);
-        return result;
+    private static PrintWriter getExceptionPrintWriter() throws FileNotFoundException {
+        if (exceptionPrintWriter == null){
+            String logFileName     = curDir + "/log/" + getCurDateTime().replace(" ", "_").replace(":", "_").replace("-", "_") + "exception_log.txt";// + String.format("%s%s", getCurDateTime(), "log.txt");
+            exceptionPrintWriter = new PrintWriter(new File(logFileName));
+        }
+        return exceptionPrintWriter;
+    }
+
+    public static String getCurDir() {
+        return curDir;
+    }
+
+    private static PrintWriter getLogPrintWriter() throws FileNotFoundException {
+        if (logPrintWriter == null){
+            String logFileName     = curDir + "/log/" + getCurDateTime().replace(" ", "_").replace(":", "_").replace("-", "_") + "log.txt";// + String.format("%s%s", getCurDateTime(), "log.txt");
+            logPrintWriter = new PrintWriter(new File(logFileName));
+        }
+        return logPrintWriter;
+    }
+
+    private static PrintWriter getLogDataPrintWriter() throws FileNotFoundException {
+        if (logDataPrintWriter == null){
+            String logFileName     = curDir + "/log/" + getCurDateTime().replace(" ", "_").replace(":", "_").replace("-", "_") + "data_log.txt";// + String.format("%s%s", getCurDateTime(), "log.txt");
+            logDataPrintWriter = new PrintWriter(new File(logFileName));
+        }
+        return logDataPrintWriter;
+    }
+
+    public static Boolean getUTF8() {
+        return UTF8;
     }
 }

@@ -1,6 +1,4 @@
 import API.CKassa;
-import App.AppServer;
-import App.DataBaseResponse;
 import com.intersys.objects.CacheException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.w3c.dom.Document;
@@ -37,13 +35,13 @@ class CKassaAppServer extends AppServer {
                 try {
                     return new DataBaseResponse("200",
                             CKassa.OOOService(
-                                    APIServer.getDatabase(),
-                                    APIServer.getParameter(baseRequest, "command"),
-                                    APIServer.getParameter(baseRequest, "txn_id"),
-                                    APIServer.getParameter(baseRequest, "account"),
-                                    APIServer.getParameter(baseRequest, "sum"),
-                                    APIServer.getParameter(baseRequest, "account1"),
-                                    APIServer.getParameter(baseRequest, "account2")
+                                    getDataBase(),
+                                    getParameter(baseRequest, "command"),
+                                    getParameter(baseRequest, "txn_id"),
+                                    getParameter(baseRequest, "account"),
+                                    getParameter(baseRequest, "sum"),
+                                    getParameter(baseRequest, "account1"),
+                                    getParameter(baseRequest, "account2")
                             ));
                 } catch (CacheException e) {
                     e.printStackTrace();
@@ -56,7 +54,7 @@ class CKassaAppServer extends AppServer {
         try {
 
             if (checkAddress(baseRequest.getRemoteAddr())){
-                String Body = URLDecoder.decode(APIServer.getBody(baseRequest).split("params=")[1], "UTF-8");
+                String Body = URLDecoder.decode(getBody(baseRequest).split("params=")[1], "UTF-8");
                 //System.out.println("!!!Body = " + Body);
                 if (Body.equals(""))return new DataBaseResponse("200");
                 //getParamsString(Body);
@@ -71,7 +69,7 @@ class CKassaAppServer extends AppServer {
                     String act = paramsElement.getElementsByTagName("act").item(0).getTextContent();
                     switch (act) {
                         case "1": {
-                            String[] dataBaseResponse = CKassa.CheckPayment(APIServer.getDatabase(),
+                            String[] dataBaseResponse = CKassa.CheckPayment(getDataBase(),
                                     String.valueOf(APIServer.getPort()),
                                     getElementValue(paramsElement, "account"),
                                     getElementValue(paramsElement, "pay_amount"),
@@ -82,7 +80,7 @@ class CKassaAppServer extends AppServer {
                             break;
                         }
                         case "2": {
-                            String[] dataBaseResponse = CKassa.SetPayment(APIServer.getDatabase(),
+                            String[] dataBaseResponse = CKassa.SetPayment(getDataBase(),
                                     String.valueOf(APIServer.getPort()),
                                     getElementValue(paramsElement, "account"),
                                     getElementValue(paramsElement, "pay_amount"),
@@ -97,7 +95,7 @@ class CKassaAppServer extends AppServer {
                             break;
                         }
                         case "4":
-                            String[] dataBaseResponse = CKassa.GetPayment(APIServer.getDatabase(),
+                            String[] dataBaseResponse = CKassa.GetPayment(getDataBase(),
                                     String.valueOf(APIServer.getPort()),
                                     getElementValue(paramsElement, "pay_id")
                             ).split("\\^");
@@ -136,7 +134,7 @@ class CKassaAppServer extends AppServer {
     }
 
     private Boolean checkAddress(String address) throws CacheException {
-        String[] remoteAddresses = CKassa.GetRemoteAddresses(APIServer.getDatabase(), String.valueOf(APIServer.getPort())).split("\\^");
+        String[] remoteAddresses = CKassa.GetRemoteAddresses(getDataBase(), String.valueOf(APIServer.getPort())).split("\\^");
         for (String remoteAddress : remoteAddresses)
             if (remoteAddress.equals(address))
                 return true;
@@ -235,7 +233,7 @@ class CKassaAppServer extends AppServer {
 
     private Boolean CheckSign(String Sign, String body) throws CacheException {
         String params = body.split("<params>")[1].split("</params>")[0];
-        String password = CKassa.GetPassword(APIServer.getDatabase(), String.valueOf(APIServer.getPort()));
+        String password = CKassa.GetPassword(getDataBase(), String.valueOf(APIServer.getPort()));
         String md5 = DigestUtils.md5Hex(params + password).toUpperCase();
         Sign = Sign.toUpperCase();
         System.out.println("CheckSign params   = " + params);
@@ -260,7 +258,7 @@ class CKassaAppServer extends AppServer {
 
     private String getSign(Element paramsElement, String sign) throws CacheException {
         String params = extractTextChildren(paramsElement);
-        String password = CKassa.GetPassword(APIServer.getDatabase(), String.valueOf(APIServer.getPort()));
+        String password = CKassa.GetPassword(getDataBase(), String.valueOf(APIServer.getPort()));
         return DigestUtils.md5Hex(params + sign + password).toUpperCase();
     }
 

@@ -1,7 +1,4 @@
-import API.MobileAPP;
 import API.WebAPP;
-import App.AppServer;
-import App.DataBaseResponse;
 import com.intersys.objects.CacheException;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -17,20 +14,20 @@ public class WebAppServer extends AppServer {
 
         try {
             switch (targets[1]){
-                case "preferences":DataBaseAnswer = WebAPP.Preferences(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "lt"),APIServer.getParameter(baseRequest, "ln"),APIServer.getParameter(baseRequest, "city"));break;
+                case "preferences":DataBaseAnswer = WebAPP.Preferences(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "token"), getParameter(baseRequest, "lt"),getParameter(baseRequest, "ln"),getParameter(baseRequest, "city"));break;
                 case "profile":
                     switch (targets[2]){
-                        case "login":DataBaseAnswer = WebAPP.ProfileLogin(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "phone"), APIServer.getParameter(baseRequest, "type"));break;
-                        case "registration":DataBaseAnswer = WebAPP.ProfileRegistration(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "phone"), APIServer.getParameter(baseRequest, "code"));break;
-                        case "get":DataBaseAnswer = WebAPP.ProfileGet(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"));break;
+                        case "login":DataBaseAnswer = WebAPP.ProfileLogin(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "phone"), getParameter(baseRequest, "type"));break;
+                        case "registration":DataBaseAnswer = WebAPP.ProfileRegistration(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "phone"), getParameter(baseRequest, "code"));break;
+                        case "get":DataBaseAnswer = WebAPP.ProfileGet(getDataBase(), getParameter(baseRequest, "token"));break;
                     }
                     break; //case "profile":
-                case "data":DataBaseAnswer = WebAPP.Data(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "city"));break;
+                case "data":DataBaseAnswer = WebAPP.Data(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "token"), getParameter(baseRequest, "city"));break;
                 case "orders":
                     switch (targets[2]){
                         case "calc":DataBaseAnswer = OrdersCalc(baseRequest);break;
-                        case "add":DataBaseAnswer = WebAPP.OrdersAdd(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "calc"), APIServer.getParameter(baseRequest, "note"), APIServer.getParameter(baseRequest, "price"), APIServer.getParameter(baseRequest, "test"));break;
-                        case "deny":DataBaseAnswer = WebAPP.OrdersDeny(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "token"), APIServer.getParameter(baseRequest, "reason"));break;
+                        case "add":DataBaseAnswer = WebAPP.OrdersAdd(getDataBase(), getParameter(baseRequest, "token"), getParameter(baseRequest, "calc"), getParameter(baseRequest, "note"), getParameter(baseRequest, "price"), getParameter(baseRequest, "test"));break;
+                        case "deny":DataBaseAnswer = WebAPP.OrdersDeny(getDataBase(), getParameter(baseRequest, "token"), getParameter(baseRequest, "reason"));break;
                     }
                     break; // case "orders":
 
@@ -51,7 +48,7 @@ public class WebAppServer extends AppServer {
     private String OrdersCalc(HttpServletRequest baseRequest){
         String DataBaseAnswer;
         try {
-            JSONObject data = new JSONObject(APIServer.getBody(baseRequest));
+            JSONObject data = new JSONObject(getBody(baseRequest));
             String DataString = "";
             if (data.has("date"))DataString += data.getString("date") + "^";
             else {DataString += "^";}
@@ -94,7 +91,7 @@ public class WebAppServer extends AppServer {
 
 
 
-            DataBaseAnswer = WebAPP.OrdersCalc(APIServer.getDatabase(), APIServer.getParameter(baseRequest, "key"), APIServer.getParameter(baseRequest, "token"), DataString, WishString, RouteString);
+            DataBaseAnswer = WebAPP.OrdersCalc(getDataBase(), getParameter(baseRequest, "key"), getParameter(baseRequest, "token"), DataString, WishString, RouteString);
             System.out.println("!!!" + DataBaseAnswer);
             if (DataBaseAnswer.split("\\^")[0].equals("200")){
                 JSONObject databaseResult = new JSONObject(DataBaseAnswer.split("\\^")[1]);
