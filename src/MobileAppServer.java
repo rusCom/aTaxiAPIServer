@@ -23,7 +23,8 @@ class MobileAppServer extends AppServer {
             switch (targets[1]){
                 case "profile":
                     switch (targets[2]){
-                        case "login":DataBaseAnswer = MobileAPP.ProfileLogin(getDataBase(), baseRequest.getParameter("key"), baseRequest.getParameter("phone"));break;
+                        case "login":DataBaseAnswer = MobileAPP.ProfileLogin(getDataBase(), baseRequest.getParameter("key"), baseRequest.getParameter("phone"), baseRequest.getParameter("type"));break;
+                        case "registration":DataBaseAnswer = MobileAPP.ProfileRegistration(getDataBase(), baseRequest.getParameter("key"), baseRequest.getParameter("phone"), baseRequest.getParameter("code"));break;
                         case "get":DataBaseAnswer = MobileAPP.ProfileGet(getDataBase(), baseRequest.getParameter("token"));break;
                         case "check_phone":DataBaseAnswer = MobileAPP.ProfileCheckPhone(getDataBase(), baseRequest.getParameter("token"), baseRequest.getParameter("phone"));break;
                         case "check_phone_code":DataBaseAnswer = MobileAPP.ProfileCheckPhoneCode(getDataBase(), baseRequest.getParameter("token"), baseRequest.getParameter("phone"), baseRequest.getParameter("code"));break;
@@ -102,15 +103,23 @@ class MobileAppServer extends AppServer {
 
     private String OrdersCalc(HttpServletRequest baseRequest) throws IOException, CacheException {
         String DataBaseAnswer;
-        JSONObject result = new JSONObject(), distance, data, wish, databaseResult = new JSONObject();
+        JSONObject result = new JSONObject(), data, wish, databaseResult = new JSONObject();
         JSONArray routes;
-        String RouteString = "", DataString = "", WishString = "";
+        String RouteString = "", DataString = "", WishString = "", distance = "0";
 
             data = new JSONObject(getBody(baseRequest));
             if (data.has("date"))DataString += data.getString("date") + "^";
             else {DataString += "^";}
             routes = data.getJSONArray("route");
-            distance = getDistance().DistanceGet(routes);
+            // System.out.println(data);
+            if (data.has("distance")){
+                if (String.valueOf(data.get("distance")).equals("0")){distance = String.valueOf(getDistance().DistanceGet(routes).get("distance"));}
+                else if (String.valueOf(data.get("distance")).equals("")){distance = String.valueOf(getDistance().DistanceGet(routes).get("distance"));}
+                else {distance = String.valueOf(data.get("distance"));}
+            }
+            else {
+                distance = String.valueOf(getDistance().DistanceGet(routes).get("distance"));
+            }
 
             for (int itemID = 0; itemID < routes.length(); itemID++){
                 JSONObject route = routes.getJSONObject(itemID);
@@ -127,8 +136,8 @@ class MobileAppServer extends AppServer {
 
 
             DataString += data.getString("category") + "^";
-            DataString += String.valueOf(distance.get("distance")) + "^";
-            DataString += String.valueOf(distance.get("duration")) + "^";
+            DataString += distance + "^";
+            DataString += "0^";
             DataString += data.getString("pay") + "^";
 
             wish = data.getJSONObject("wish");
@@ -147,6 +156,7 @@ class MobileAppServer extends AppServer {
 
 
             DataString += routes.length() + "^";
+
 
 
 
