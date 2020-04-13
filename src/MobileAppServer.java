@@ -31,6 +31,9 @@ class MobileAppServer extends AppServer {
                         case "set":DataBaseAnswer = ProfileSet(baseRequest);
                     }
                     break; // case "profile"
+                case "preferences":
+                    DataBaseAnswer = MobileAPP.Preferences(getDataBase(), getParameter(baseRequest, "token"), getParameter(baseRequest, "lt"), getParameter(baseRequest, "ln"), getParameter(baseRequest, "profile"), getParameter(baseRequest, "data"));
+                    break;
                 case "data":
                     DataBaseAnswer = MobileAPP.Data(getDataBase(), baseRequest.getParameter("token"), baseRequest.getParameter("lt"),baseRequest.getParameter("ln"));
                     break; // case "data"
