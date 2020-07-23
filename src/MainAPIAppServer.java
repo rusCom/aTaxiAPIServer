@@ -15,6 +15,8 @@ public class MainAPIAppServer extends AppServer {
                 break;
             case "/asterisk/action":DataBaseAnswer= MainAPI.AsteriskAction(getDataBase(), getParameter(baseRequest, "action"), getParameter(baseRequest, "uid"), getParameter(baseRequest, "trunk"), getParameter(baseRequest, "phone"), getParameter(baseRequest, "param"));
                 break;
+            case "/driver/covidreference":DataBaseAnswer = MainAPI.DriverCovidReference(getDataBase(), getParameter(baseRequest, "token"));
+                break;
         }
         return new DataBaseResponse(DataBaseAnswer);
     }

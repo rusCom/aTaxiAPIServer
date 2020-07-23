@@ -1,4 +1,5 @@
 
+import API.Booking;
 import API.MobileAPP;
 import com.intersys.objects.CacheException;
 import org.json.JSONArray;
@@ -14,7 +15,7 @@ import java.io.PrintWriter;
 class MobileAppServer extends AppServer {
     private static PrintWriter logCalcPrintWriter;
     @Override
-    public DataBaseResponse response(String target, HttpServletRequest baseRequest) {
+    public DataBaseResponse response(String target, HttpServletRequest baseRequest)  {
 
         String[] targets = target.split("/");
         String DataBaseAnswer = "400^^";
@@ -62,6 +63,8 @@ class MobileAppServer extends AppServer {
         }
 
         return new DataBaseResponse(DataBaseAnswer);
+
+
     }
 
     private String SravnitaxiEstimate(HttpServletRequest baseRequest) throws CacheException, IOException {

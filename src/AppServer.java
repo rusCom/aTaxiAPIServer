@@ -4,6 +4,7 @@ import com.intersys.objects.Database;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.IOUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServlet;
@@ -30,11 +31,13 @@ public class AppServer extends HttpServlet {
     JSONObject authorization;
     HttpServletRequest baseRequest;
     DataBaseResponse response;
+    JSONObject bodyData;
 
 
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) throws Exception {
         this.target = target;
         this.baseRequest = baseRequest;
+        authorization = new JSONObject();
         if (baseRequest.getHeader("authorization") != null) {
             String[] authHeader = baseRequest.getHeader("authorization").split(" ");
             // System.out.println(authHeader[1]);
@@ -87,6 +90,32 @@ public class AppServer extends HttpServlet {
         return response;
     }
 
+    String bodyField(String field, String def){
+        String res = bodyField(field);
+        if (res.equals(""))return def;
+        return res;
+    }
+
+    JSONArray bodyJSONArray(String field){
+        if (response.respBody == null){
+            response.respBody = body();
+        }
+        if (response.respBody.has(field)){
+            return response.respBody.getJSONArray(field);
+        }
+        return new JSONArray();
+    }
+
+    String bodyField(String field){
+        if (response.respBody == null){
+            response.respBody = body();
+        }
+        if (response.respBody.has(field)){
+            return response.respBody.getString(field);
+        }
+        return "";
+    }
+
     JSONObject body() {
         String body;
         StringBuilder stringBuilder = new StringBuilder();
@@ -125,7 +154,7 @@ public class AppServer extends HttpServlet {
         }
 
         body = stringBuilder.toString();
-        System.out.println(body);
+        // System.out.println(body);
         JSONObject res = new JSONObject(body);
         return res;
     }

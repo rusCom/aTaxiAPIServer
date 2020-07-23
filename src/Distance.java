@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
+import static java.lang.Math.round;
+
 public class Distance {
     private Database dataBase;
 
@@ -16,6 +18,7 @@ public class Distance {
 
     public JSONObject distanceRoutes(JSONArray routes, String isTest){
         Integer dist = 0;
+        Integer duration = 0;
         String blunder = "0";
         if (isTest.equals("1"))blunder = "0.5";
         String routeString = "";
@@ -42,7 +45,14 @@ public class Distance {
             lLn = route.getString("ln");
         }
 
-        return new JSONObject().put("distance", dist.toString()).put("routeString", routeString);
+        duration = 50;
+
+        float speed = 50*1000/60/60;
+
+        duration = round(dist/speed);
+
+
+        return new JSONObject().put("distance", dist.toString()).put("duration", duration.toString()).put("routeString", routeString).put("speed", String.valueOf(speed));
     }
 
     public JSONObject DistanceGet(String blt, String bln, String elt, String eln) throws CacheException, IOException {

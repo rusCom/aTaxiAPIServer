@@ -75,7 +75,9 @@ public class APIServer extends AbstractHandler {
             logText.append("target").append("\t").append("= ").append(target).append("\n");
             logText.append("method").append("\t").append("= ").append(request.getMethod()).append("\n");
             logText.append("auth").append("\t").append("= ").append(dataBaseResponse.getAuthorization()).append("\n");
+            logText.append("rBody").append("\t").append("= ").append(dataBaseResponse.getRespBody()).append("\n");
             logText.append("params").append("\t").append("= ").append(request.getParameterMap().toString()).append("\n");
+
             logText.append("status").append("\t").append("= ").append(dataBaseResponse.getStatus()).append("\n");
             logText.append("body").append("\t").append("= ").append(dataBaseResponse.getBody(serverResponse)).append("\n");
             logText.append("excep").append("\t").append("= ").append(exceptionAsString).append("\n");
@@ -298,6 +300,9 @@ public class APIServer extends AbstractHandler {
                 break;
             case "Booking":
                 appServer = new BookingAppServer();
+                break;
+            case "Exchange":
+                appServer = new ExchangeAppServer();
                 break;
         }
 

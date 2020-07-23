@@ -8,6 +8,7 @@ public class DataBaseResponse {
     private String status = "", body = "", file = null;
     private Integer version = 1;
     JSONObject authorization;
+    JSONObject respBody;
 
     public DataBaseResponse(String DataBaseAnswer) {
         String[] DataBaseAnswers = DataBaseAnswer.split("\\^");
@@ -18,6 +19,11 @@ public class DataBaseResponse {
         if (DataBaseAnswers.length > 2){
             file = DataBaseAnswers[2];
         }
+    }
+
+    public String getRespBody() {
+        if (respBody == null){return "";}
+        return respBody.toString();
     }
 
     public String getAuthorization() {
