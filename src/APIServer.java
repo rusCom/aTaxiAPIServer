@@ -310,6 +310,7 @@ public class APIServer extends AbstractHandler {
         appServer.setDataBase(dataBase);
         appServer.setSeverType(SeverType);
         appServer.setTest(IsTest);
+        appServer.UTF = UTF8.toString();
         try {
             BaseAPI.Initialize(dataBase, SeverType);
 
@@ -410,6 +411,26 @@ public class APIServer extends AbstractHandler {
     static Boolean getUTF8() {
         return UTF8;
     }
+
+    static void httpGetThread(final String urlString){
+
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                httpGet(urlString);
+                System.out.println(urlString);
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.start();
+
+    }
+
+    static void consoleLog(Object TAG, String method, Object message){
+        System.out.println(getCurDateTime() + "##### " + TAG.getClass().getName() + "." + method + "." + message.toString());
+    }
+
+
 
     static JSONObject httpGet(String urlString) {
         JSONObject result = new JSONObject();

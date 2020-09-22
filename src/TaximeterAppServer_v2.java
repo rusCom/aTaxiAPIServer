@@ -2,11 +2,7 @@ import API.Taximeter2;
 import com.intersys.objects.CacheException;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.crypto.Data;
-
 import org.json.JSONObject;
-
-import java.util.Timer;
 
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 

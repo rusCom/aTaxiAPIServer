@@ -25,13 +25,16 @@ public class AppServer extends HttpServlet {
     private JSONObject appSettings = null;
     String SeverType, body = "", target;
     private Distance distance;
+    private GEO geo;
     private DataBaseResponse staticPreferences;
     private ServletFileUpload uploader = null;
     private Boolean IsTest;
+    String UTF = "false";
     JSONObject authorization;
     HttpServletRequest baseRequest;
     DataBaseResponse response;
     JSONObject bodyData;
+    boolean consolePrint = false;
 
 
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) throws Exception {
@@ -64,12 +67,16 @@ public class AppServer extends HttpServlet {
                 }
 
                 if (authorization.has("lt")) {
-                    if (authorization.get("lt") instanceof String) {}
-                    else{authorization.put("lt", String.valueOf(authorization.getDouble("lt")));}
+                    if (authorization.get("lt") instanceof String) {
+                    } else {
+                        authorization.put("lt", String.valueOf(authorization.getDouble("lt")));
+                    }
                 } // if (authorization.has("lt"))
                 if (authorization.has("ln")) {
-                    if (authorization.get("ln") instanceof String) {}
-                    else{authorization.put("ln", String.valueOf(authorization.getDouble("ln")));}
+                    if (authorization.get("ln") instanceof String) {
+                    } else {
+                        authorization.put("ln", String.valueOf(authorization.getDouble("ln")));
+                    }
                 } // if (authorization.has("ln"))
             }
         }
@@ -90,27 +97,27 @@ public class AppServer extends HttpServlet {
         return response;
     }
 
-    String bodyField(String field, String def){
+    String bodyField(String field, String def) {
         String res = bodyField(field);
-        if (res.equals(""))return def;
+        if (res.equals("")) return def;
         return res;
     }
 
-    JSONArray bodyJSONArray(String field){
-        if (response.respBody == null){
+    JSONArray bodyJSONArray(String field) {
+        if (response.respBody == null) {
             response.respBody = body();
         }
-        if (response.respBody.has(field)){
+        if (response.respBody.has(field)) {
             return response.respBody.getJSONArray(field);
         }
         return new JSONArray();
     }
 
-    String bodyField(String field){
-        if (response.respBody == null){
+    String bodyField(String field) {
+        if (response.respBody == null) {
             response.respBody = body();
         }
-        if (response.respBody.has(field)){
+        if (response.respBody.has(field)) {
             return response.respBody.getString(field);
         }
         return "";
@@ -367,6 +374,13 @@ public class AppServer extends HttpServlet {
             distance = new Distance(getDataBase());
         }
         return distance;
+    }
+
+    GEO getGEO() {
+        if (geo == null) {
+            geo = new GEO(getDataBase());
+        }
+        return geo;
     }
 
     ServletFileUpload getUploader() {

@@ -2,17 +2,17 @@ package API;
 
 
 /**
- * Cache' Java Class Generated for class API.JSON on version Cache for Windows (x86-32) 2010.2.2 (Build 600) Wed Dec 8 2010 16:51:00 EST.<br>
+ * Cache' Java Class Generated for class API.GEO2 on version Cache for Windows (x86-32) 2010.2.2 (Build 600) Wed Dec 8 2010 16:51:00 EST.<br>
  *
- * @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON</A>
+ * @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2</A>
 **/
 
-public class JSON extends com.intersys.classes.RegisteredObject implements java.io.Serializable {
-    private static final long serialVersionUID = 1758;
-    private static String CACHE_CLASS_NAME = "API.JSON";
+public class GEO2 extends API.JSON implements java.io.Serializable {
+    private static final long serialVersionUID = 65;
+    private static String CACHE_CLASS_NAME = "API.GEO2";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
-           <br>Use <code>API.JSON.open</code> instead!</br></p>
+           <br>Use <code>API.GEO2.open</code> instead!</br></p>
            <p>
            Used to construct a Java object, corresponding to existing object
            in Cache database.
@@ -20,16 +20,16 @@ public class JSON extends com.intersys.classes.RegisteredObject implements java.
            @see #_open(com.intersys.objects.Database, com.intersys.objects.Oid)
            @see #open(com.intersys.objects.Database, com.intersys.objects.Oid)
     */
-    public JSON (com.intersys.cache.CacheObject ref) throws com.intersys.objects.CacheException {
+    public GEO2 (com.intersys.cache.CacheObject ref) throws com.intersys.objects.CacheException {
         super (ref);
     }
-    public JSON (com.intersys.objects.Database db, String initstr) throws com.intersys.objects.CacheException {
+    public GEO2 (com.intersys.objects.Database db, String initstr) throws com.intersys.objects.CacheException {
         super (((com.intersys.cache.SysDatabase)db).newCacheObject (CACHE_CLASS_NAME,initstr));
     }
     /**
-       Creates a new instance of object "API.JSON" in Cache
+       Creates a new instance of object "API.GEO2" in Cache
        database and corresponding object of class
-       <code>API.JSON</code>.
+       <code>API.GEO2</code>.
 
        @param db <code>Database</code> object used for connection with
        Cache database.
@@ -39,11 +39,11 @@ public class JSON extends com.intersys.classes.RegisteredObject implements java.
               @see #_open(com.intersys.objects.Database, com.intersys.objects.Oid)
               @see #open(com.intersys.objects.Database, com.intersys.objects.Oid)
      */
-    public JSON (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
+    public GEO2 (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
         super (((com.intersys.cache.SysDatabase)db).newCacheObject (CACHE_CLASS_NAME));
     }
     /**
-       Returns class name of the class API.JSON as it is in
+       Returns class name of the class API.GEO2 as it is in
       Cache Database. Note, that this is a static method, so no
       object specific information can be returned. Use
       <code>getCacheClass().getName()</code> to get the class name
@@ -88,7 +88,7 @@ public class JSON extends com.intersys.classes.RegisteredObject implements java.
 
      */
     public static void checkAllMethods(com.intersys.objects.Database db ) throws com.intersys.objects.CacheException {
-        checkAllMethods(db, CACHE_CLASS_NAME, JSON.class);
+        checkAllMethods(db, CACHE_CLASS_NAME, GEO2.class);
     }
     /**
      <p>Runs method %ClassName in Cache.</p>
@@ -100,7 +100,7 @@ with the pre-package behaviour of %ClassName.</p>
      @param db represented as com.intersys.objects.Database
      @param fullname represented as java.lang.Boolean
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#%ClassName"> Method %ClassName</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#%ClassName"> Method %ClassName</A>
     */
     public static java.lang.String sys_ClassName (com.intersys.objects.Database db, java.lang.Boolean fullname) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -115,7 +115,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param db represented as com.intersys.objects.Database
      @param isclass represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#%IsA"> Method %IsA</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#%IsA"> Method %IsA</A>
     */
     public static java.lang.Integer sys_IsA (com.intersys.objects.Database db, java.lang.String isclass) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -130,7 +130,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      default argument inCode set to ""
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #Answer(com.intersys.objects.Database,java.lang.String,java.lang.String)
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#Answer"> Method Answer</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#Answer"> Method Answer</A>
     */
     public static void Answer (com.intersys.objects.Database db, java.lang.String GUID) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -144,7 +144,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param GUID represented as java.lang.String
      @param inCode represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#Answer"> Method Answer</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#Answer"> Method Answer</A>
     */
     public static void Answer (com.intersys.objects.Database db, java.lang.String GUID, java.lang.String inCode) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
@@ -154,11 +154,135 @@ That is 'isclass' is a primary superclass of this object.</p>
         return;
     }
     /**
+     <p>Runs method Distance in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inBeginLatitude represented as java.lang.String
+     @param inBeginLongitude represented as java.lang.String
+     @param inEndLatitude represented as java.lang.String
+     @param inEndLongitude represented as java.lang.String
+     default argument inBlunder set to 0.5
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #Distance(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#Distance"> Method Distance</A>
+    */
+    public static java.lang.String Distance (com.intersys.objects.Database db, java.lang.String inBeginLatitude, java.lang.String inBeginLongitude, java.lang.String inEndLatitude, java.lang.String inEndLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
+        args[0] = new com.intersys.cache.Dataholder(inBeginLatitude);
+        args[1] = new com.intersys.cache.Dataholder(inBeginLongitude);
+        args[2] = new com.intersys.cache.Dataholder(inEndLatitude);
+        args[3] = new com.intersys.cache.Dataholder(inEndLongitude);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"Distance",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method Distance in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inBeginLatitude represented as java.lang.String
+     @param inBeginLongitude represented as java.lang.String
+     @param inEndLatitude represented as java.lang.String
+     @param inEndLongitude represented as java.lang.String
+     @param inBlunder represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#Distance"> Method Distance</A>
+    */
+    public static java.lang.String Distance (com.intersys.objects.Database db, java.lang.String inBeginLatitude, java.lang.String inBeginLongitude, java.lang.String inEndLatitude, java.lang.String inEndLongitude, java.lang.String inBlunder) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[5];
+        args[0] = new com.intersys.cache.Dataholder(inBeginLatitude);
+        args[1] = new com.intersys.cache.Dataholder(inBeginLongitude);
+        args[2] = new com.intersys.cache.Dataholder(inEndLatitude);
+        args[3] = new com.intersys.cache.Dataholder(inEndLongitude);
+        args[4] = new com.intersys.cache.Dataholder(inBlunder);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"Distance",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DistanceDataToCalc in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inLatitude represented as java.lang.String
+     @param inLongitude represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#DistanceDataToCalc"> Method DistanceDataToCalc</A>
+    */
+    public static java.lang.String DistanceDataToCalc (com.intersys.objects.Database db, java.lang.String inLatitude, java.lang.String inLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[2];
+        args[0] = new com.intersys.cache.Dataholder(inLatitude);
+        args[1] = new com.intersys.cache.Dataholder(inLongitude);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DistanceDataToCalc",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DistanceGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inBeginLatitude represented as java.lang.String
+     @param inBeginLongitude represented as java.lang.String
+     @param inEndLatitude represented as java.lang.String
+     @param inEndLongitude represented as java.lang.String
+     default argument inBlunder set to 0.5
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see #DistanceGet(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#DistanceGet"> Method DistanceGet</A>
+    */
+    public static java.lang.String DistanceGet (com.intersys.objects.Database db, java.lang.String inBeginLatitude, java.lang.String inBeginLongitude, java.lang.String inEndLatitude, java.lang.String inEndLongitude) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
+        args[0] = new com.intersys.cache.Dataholder(inBeginLatitude);
+        args[1] = new com.intersys.cache.Dataholder(inBeginLongitude);
+        args[2] = new com.intersys.cache.Dataholder(inEndLatitude);
+        args[3] = new com.intersys.cache.Dataholder(inEndLongitude);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DistanceGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DistanceGet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inBeginLatitude represented as java.lang.String
+     @param inBeginLongitude represented as java.lang.String
+     @param inEndLatitude represented as java.lang.String
+     @param inEndLongitude represented as java.lang.String
+     @param inBlunder represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#DistanceGet"> Method DistanceGet</A>
+    */
+    public static java.lang.String DistanceGet (com.intersys.objects.Database db, java.lang.String inBeginLatitude, java.lang.String inBeginLongitude, java.lang.String inEndLatitude, java.lang.String inEndLongitude, java.lang.String inBlunder) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[5];
+        args[0] = new com.intersys.cache.Dataholder(inBeginLatitude);
+        args[1] = new com.intersys.cache.Dataholder(inBeginLongitude);
+        args[2] = new com.intersys.cache.Dataholder(inEndLatitude);
+        args[3] = new com.intersys.cache.Dataholder(inEndLongitude);
+        args[4] = new com.intersys.cache.Dataholder(inBlunder);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DistanceGet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
+     <p>Runs method DistanceSet in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inBeginLatitude represented as java.lang.String
+     @param inBeginLongitude represented as java.lang.String
+     @param inEndLatitude represented as java.lang.String
+     @param inEndLongitude represented as java.lang.String
+     @param inDistance represented as java.lang.String
+     @param inDuration represented as java.lang.String
+     @param inStatus represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#DistanceSet"> Method DistanceSet</A>
+    */
+    public static java.lang.String DistanceSet (com.intersys.objects.Database db, java.lang.String inBeginLatitude, java.lang.String inBeginLongitude, java.lang.String inEndLatitude, java.lang.String inEndLongitude, java.lang.String inDistance, java.lang.String inDuration, java.lang.String inStatus) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[7];
+        args[0] = new com.intersys.cache.Dataholder(inBeginLatitude);
+        args[1] = new com.intersys.cache.Dataholder(inBeginLongitude);
+        args[2] = new com.intersys.cache.Dataholder(inEndLatitude);
+        args[3] = new com.intersys.cache.Dataholder(inEndLongitude);
+        args[4] = new com.intersys.cache.Dataholder(inDistance);
+        args[5] = new com.intersys.cache.Dataholder(inDuration);
+        args[6] = new com.intersys.cache.Dataholder(inStatus);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"DistanceSet",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
      <p>Runs method FromUTF in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inText represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#FromUTF"> Method FromUTF</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#FromUTF"> Method FromUTF</A>
     */
     public static java.lang.String FromUTF (com.intersys.objects.Database db, java.lang.String inText) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -170,7 +294,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      <p>Runs method GUID in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#GUID"> Method GUID</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#GUID"> Method GUID</A>
     */
     public static java.lang.String GUID (com.intersys.objects.Database db) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[0];
@@ -182,7 +306,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param db represented as com.intersys.objects.Database
      @param inSQL represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#GenerationSQLArray"> Method GenerationSQLArray</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#GenerationSQLArray"> Method GenerationSQLArray</A>
     */
     public static java.lang.String GenerationSQLArray (com.intersys.objects.Database db, java.lang.String inSQL) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -195,7 +319,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param db represented as com.intersys.objects.Database
      @param inSQL represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#SQLQeurySet"> Method SQLQeurySet</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#SQLQeurySet"> Method SQLQeurySet</A>
     */
     public static void SQLQeurySet (com.intersys.objects.Database db, java.lang.String inSQL) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
@@ -210,7 +334,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param inFieldName represented as java.lang.String
      @param inFieldValue represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#addField"> Method addField</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#addField"> Method addField</A>
     */
     public static void addField (com.intersys.objects.Database db, java.lang.String inGUID, java.lang.String inFieldName, java.lang.String inFieldValue) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -227,7 +351,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param inFieldName represented as java.lang.String
      @param inQuery represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#addFieldSQLArray"> Method addFieldSQLArray</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#addFieldSQLArray"> Method addFieldSQLArray</A>
     */
     public static void addFieldSQLArray (com.intersys.objects.Database db, java.lang.String inGUID, java.lang.String inFieldName, java.lang.String inQuery) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -244,7 +368,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param inFieldName represented as java.lang.String
      @param inFieldValue represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#addToArray"> Method addToArray</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#addToArray"> Method addToArray</A>
     */
     public static void addToArray (com.intersys.objects.Database db, java.lang.String inGUID, java.lang.String inFieldName, java.lang.String inFieldValue) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
@@ -262,7 +386,7 @@ That is 'isclass' is a primary superclass of this object.</p>
      @param inFieldName represented as java.lang.String
      @param inFieldValue represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
-     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.JSON#addToNamedArray"> Method addToNamedArray</A>
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.GEO2#addToNamedArray"> Method addToNamedArray</A>
     */
     public static void addToNamedArray (com.intersys.objects.Database db, java.lang.String inGUID, java.lang.String inArrayName, java.lang.String inFieldName, java.lang.String inFieldValue) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];

@@ -1,5 +1,6 @@
 import API.Booking;
 import com.intersys.objects.CacheException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
@@ -39,6 +40,12 @@ public class BookingAppServer extends AppServer {
                             case "/orders/calc":
                                 dataBaseAnswer = ordersCalc();
                                 break;
+                            case "/orders/add":
+                                dataBaseAnswer = ordersAdd();
+                                break;
+                            case "/orders/deny":
+                                dataBaseAnswer = Booking.OrdersDeny(dataBase, param("token"), param("uid"), param("reason"), UTF);
+                                break;
                             default:
                                 dataBaseAnswer = "404";
                                 break;
@@ -52,22 +59,60 @@ public class BookingAppServer extends AppServer {
         return response;
     }
 
+    String ordersAdd() throws CacheException {
+        if (bodyField("uid").equals(""))return "400^Поле UID не установлено";
+        if (bodyField("payment").equals(""))return "400^Поле payment не установлено";
+        if (bodyField("tariff").equals(""))return "400^Поле tariff не установлено";
+
+        String data = "";
+        data += bodyField("uid") + "^";                // 1
+        data += param("deviceId") + "^";         // 2
+        data += bodyField("payment") + "^";             // 3
+        data += bodyField("tariff") + "^";              // 4
+        data += bodyField("price") + "^";               // 5
+        data += bodyField("orderNote") + "^";           // 6
+        data += bodyField("routeNote") + "^";           // 7
+        data += param("test") + "^";             // 8
+        APIServer.consoleLog(this, "ordersAdd", data);
+
+
+        return Booking.OrdersAdd(dataBase, data, UTF);
+    }
+
     String ordersCalc() throws CacheException {
         String data = "";
-        System.out.println(bodyJSONArray("route"));
-        JSONObject distance = getDistance().distanceRoutes(bodyJSONArray("route"), param("test"));
-        // System.out.println(distance);
+        JSONObject distance = getGEO().distanceRoutes(bodyJSONArray("route"), "0", Booking.GoogleKey(dataBase, param("dispatchingID")));
+
+        APIServer.consoleLog(this, "ordersCalc", distance);
         data += param("deviceId") + "^";                        // 1
         data += param("dispatchingID") + "^";                   // 2
         data += param("clientID") + "^";                        // 3
         data += distance.getString("distance") + "^";             // 4
         data += distance.getString("duration") + "^";             // 5
         data += bodyJSONArray("route").length() + "^";           // 6
-        data += bodyField("date", "") + "^";                // 7
+        data += bodyField("work_date", "") + "^";           // 7
         data += bodyField("payment", "cash") + "^";         // 8
 
-        // System.out.println(data);
-        // System.out.println(distance.getString("routeString"));
-        return Booking.OrdersCalc(dataBase, data, distance.getString("routeString"));
+        sendGEOStatistics(bodyJSONArray("route"));
+
+        return Booking.OrdersCalc(dataBase, data, distance.getString("routeString"), UTF);
+    }
+
+    private void sendGEOStatistics(final JSONArray orderRoute){
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+                for (int i=0; i < orderRoute.length(); i++) {
+                    JSONObject routePoint = orderRoute.getJSONObject(i);
+                    if (routePoint.has("place_id")){
+                        String urlString = "http://geo.toptaxi.org/check?place_id=" + routePoint.getString("place_id");
+                        APIServer.httpGet(urlString);
+                        // APIServer.consoleLog(this, "sendGEOStatistics", urlString);
+                    }
+                }
+            }
+        };
+        Thread thread = new Thread(task);
+        thread.start();
     }
 }
