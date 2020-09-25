@@ -41,7 +41,7 @@ public class MainAPIAppServer extends AppServer {
             // System.out.println(calcData[itemID + 2]);
             if (calcData[itemID].equals("1") || calcData[itemID].equals("28")){
                 String str = calcData[itemID + 2].split(" - ")[0];
-                String urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&key=AIzaSyBgy9ITUoRsk4YczKe9RCoiqSQLf-xIFtE&name=" + URLEncoder.encode(str, "UTF-8");
+                String urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
                 // System.out.println(urlString);
                 APIServer.httpGet(urlString);
             }

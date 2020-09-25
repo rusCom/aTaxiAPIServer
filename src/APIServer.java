@@ -111,30 +111,6 @@ public class APIServer extends AbstractHandler {
                         break;
                 }
             }
-            /*
-            else if (appServer.getAppSettings().getString("log_view").equals("file") && appServer.getAppSettings().getString("log_view_data").equals("true") && target.equals("/data")){
-                if (IsTest){System.out.println(logText);}
-                else {
-                    getLogDataPrintWriter().println(logText);
-                    getLogDataPrintWriter().flush();
-                }
-            }
-            else if (appServer.getAppSettings().getString("log_view").equals("file") && !target.equals("/data")){
-                if (IsTest){System.out.println(logText);}
-                else {
-                    getLogDataPrintWriter().println(logText);
-                    getLogDataPrintWriter().flush();
-                }
-            }
-            else if (appServer.getAppSettings().getString("log_view").equals("console") && appServer.getAppSettings().getString("log_view_data").equals("true") && target.equals("/data")){
-                System.out.println(logText);
-            }
-            else if (appServer.getAppSettings().getString("log_view").equals("console") && !target.equals("/data")){
-                System.out.println(logText);
-            }
-
-             */
-            // System.out.println(logText);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
