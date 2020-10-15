@@ -1,5 +1,7 @@
+import API.GEO2;
 import API.MainAPI;
 import com.intersys.objects.CacheException;
+import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -25,10 +27,8 @@ public class MainAPIAppServer extends AppServer {
         return new DataBaseResponse(DataBaseAnswer);
     }
 
-    private String OpersCalc(String calcString) throws UnsupportedEncodingException {
+    private String OpersCalc(String calcString) throws UnsupportedEncodingException, CacheException {
         String[] calcData = calcString.split("\\|");
-
-
         String[] actions;
         // System.out.println(calcData);
         // System.out.println(calcData[6]);
@@ -43,7 +43,19 @@ public class MainAPIAppServer extends AppServer {
                 String str = calcData[itemID + 2].split(" - ")[0];
                 String urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
                 // System.out.println(urlString);
-                APIServer.httpGet(urlString);
+                JSONObject response = APIServer.httpGet(urlString);
+                if (response.has("status")){
+                    if (response.getString("status").equals("OK")){
+                        JSONObject result = response.getJSONObject("result");
+                        String data = result.getString("name") + "|";
+                        data += result.getString("dsc") + "|";
+                        data += result.getString("lt") + "|";
+                        data += result.getString("ln") + "|";
+
+                        System.out.println(data);
+                        GEO2.SetGeoCode(dataBase, str, result.getString("place_id"), data);
+                    }
+                }
             }
 
         }

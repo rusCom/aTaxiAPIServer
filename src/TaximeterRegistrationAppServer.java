@@ -13,8 +13,6 @@ import java.util.List;
 import java.util.UUID;
 
 public class TaximeterRegistrationAppServer extends AppServer {
-
-
     @Override
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) throws Exception {
         super.response(target, baseRequest);
@@ -44,6 +42,9 @@ public class TaximeterRegistrationAppServer extends AppServer {
                 case "/profile/document":
                     dataBaseAnswer = ProfileDocument(baseRequest);
                     break;
+                case "/profile/check":
+                    dataBaseAnswer = ProfileCheck(baseRequest);
+                    break;
                 case "/send_order":
                     dataBaseAnswer = TaximeterRegistration.SendOrder(dataBase, param("token"));
                     break;
@@ -55,6 +56,15 @@ public class TaximeterRegistrationAppServer extends AppServer {
 
         response.setResponse(dataBaseAnswer);
         return response;
+    }
+
+    private String ProfileCheck(HttpServletRequest baseRequest) throws CacheException {
+        String checkData = "";
+        checkData += bodyField("passport_number", "_") + "|";            // 1
+        checkData += bodyField("driver_license_number", "_") + "|";      // 2
+        checkData += bodyField("gov_number", "_") + "|";                 // 3
+
+        return TaximeterRegistration.ProfileCheck(dataBase, param("driverID"), checkData);
     }
 
     private void ProfilePOST() throws CacheException {

@@ -70,14 +70,14 @@ public class GEO {
 
     private JSONObject distanceDB(String blt, String bln, String elt, String eln, String blunder, String google_key) throws CacheException {
         JSONObject DBAnswer = new JSONObject(GEO2.DistanceGet(dataBase, blt, bln, elt, eln, blunder));
-        APIServer.consoleLog(this, "distanceDB", "google_key = " + google_key);
-        APIServer.consoleLog(this, "distanceDB", DBAnswer);
+        // APIServer.consoleLog(this, "distanceDB", "google_key = " + google_key);
+        // APIServer.consoleLog(this, "distanceDB", DBAnswer);
 
         if (DBAnswer.getString("status").equals("calc") && google_key != null && !google_key.equals("")) {
             String urlString = "http://geo.toptaxi.org/distance?blt=" + DBAnswer.getString("blt") + "&bln=" + DBAnswer.getString("bln") + "&elt=" + DBAnswer.getString("elt") + "&eln=" + DBAnswer.getString("eln") + "&key=" + google_key;
             JSONObject respJSON = APIServer.httpGet(urlString);
-            APIServer.consoleLog(this, "distanceDB", urlString);
-            APIServer.consoleLog(this, "distanceDB", respJSON.getJSONObject("result"));
+            // APIServer.consoleLog(this, "distanceDB", urlString);
+            // APIServer.consoleLog(this, "distanceDB", respJSON.getJSONObject("result"));
             if (respJSON.getString("status").equals("OK")) {
                 JSONObject result = respJSON.getJSONObject("result");
                 DBAnswer = new JSONObject(GEO2.DistanceSet(dataBase, blt, bln, elt, eln, result.getString("distance"), result.getString("duration"), result.getString("status")));

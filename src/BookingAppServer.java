@@ -73,7 +73,7 @@ public class BookingAppServer extends AppServer {
         data += bodyField("orderNote") + "^";           // 6
         data += bodyField("routeNote") + "^";           // 7
         data += param("test") + "^";             // 8
-        APIServer.consoleLog(this, "ordersAdd", data);
+        // APIServer.consoleLog(this, "ordersAdd", data);
 
 
         return Booking.OrdersAdd(dataBase, data, UTF);
@@ -81,19 +81,44 @@ public class BookingAppServer extends AppServer {
 
     String ordersCalc() throws CacheException {
         String data = "";
-        JSONObject distance = getGEO().distanceRoutes(bodyJSONArray("route"), "0", Booking.GoogleKey(dataBase, param("dispatchingID")));
+        JSONObject distance     = getGEO().distanceRoutes(bodyJSONArray("route"), "0", Booking.GoogleKey(dataBase, param("dispatchingID")));
+        JSONObject wishes       = bodyJSONObject("wishes");
+        JSONObject babySeats    = JSONGetObject(wishes, "baby_seats");
 
-        APIServer.consoleLog(this, "ordersCalc", distance);
-        data += param("deviceId") + "^";                        // 1
-        data += param("dispatchingID") + "^";                   // 2
-        data += param("clientID") + "^";                        // 3
-        data += distance.getString("distance") + "^";             // 4
-        data += distance.getString("duration") + "^";             // 5
-        data += bodyJSONArray("route").length() + "^";           // 6
-        data += bodyField("work_date", "") + "^";           // 7
-        data += bodyField("payment", "cash") + "^";         // 8
+        // APIServer.consoleLog(this, "ordersCalc", distance);
+        data += param("deviceId") + "^";                               // 1
+        data += param("dispatchingID") + "^";                          // 2
+        data += param("clientID") + "^";                               // 3
+        data += distance.getString("distance") + "^";                    // 4
+        data += distance.getString("duration") + "^";                    // 5
+        data += bodyJSONArray("route").length() + "^";                  // 6
+        data += "^"; //  7
+        data += "^"; //  8
+        data += "^"; //  9
+        data += "^"; // 10
+
+
+        data += JSONGetString(wishes, "work_date") + "^";               // 11
+        data += JSONGetString(wishes, "driver_note") + "^";             // 12
+        data += JSONGetString(wishes, "pet_transportation") + "^";      // 13
+        data += JSONGetString(wishes, "non_smoking_salon") + "^";       // 14
+        data += JSONGetString(wishes, "conditioner") + "^";             // 15
+        data += JSONGetString(babySeats, "0010") + "^";                 // 16
+        data += JSONGetString(babySeats, "0918") + "^";                 // 17
+        data += JSONGetString(babySeats, "1525") + "^";                 // 18
+        data += JSONGetString(babySeats, "2236") + "^";                 // 19
+
+
+        APIServer.consoleLog(this, "ordersCalc", wishes);
+        APIServer.consoleLog(this, "ordersCalc", babySeats);
+        APIServer.consoleLog(this, "ordersCalc", data);
+
+
+
 
         sendGEOStatistics(bodyJSONArray("route"));
+
+
 
         return Booking.OrdersCalc(dataBase, data, distance.getString("routeString"), UTF);
     }

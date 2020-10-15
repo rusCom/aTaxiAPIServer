@@ -1,4 +1,5 @@
 import API.BaseAPI;
+import API.Booking;
 import com.intersys.objects.CacheException;
 import com.intersys.objects.Database;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
@@ -103,6 +104,16 @@ public class AppServer extends HttpServlet {
         return res;
     }
 
+    JSONObject bodyJSONObject(String field) {
+        if (response.respBody == null) {
+            response.respBody = body();
+        }
+        if (response.respBody.has(field)) {
+            return response.respBody.getJSONObject(field);
+        }
+        return new JSONObject();
+    }
+
     JSONArray bodyJSONArray(String field) {
         if (response.respBody == null) {
             response.respBody = body();
@@ -118,9 +129,35 @@ public class AppServer extends HttpServlet {
             response.respBody = body();
         }
         if (response.respBody.has(field)) {
-            return response.respBody.getString(field);
+            return JSONGetString(response.respBody, field);
         }
         return "";
+    }
+
+    JSONObject JSONGetObject(JSONObject data, String field){
+        if (data.has(field)){
+            return data.getJSONObject(field);
+        }
+        return new JSONObject();
+    }
+
+    String JSONGetString(JSONObject data, String field){
+        String result = "";
+        if (data.has(field)){
+            Object object = data.get(field);
+
+            if (object instanceof Boolean){
+                if (((Boolean)object)){result = "1";}
+                else {result = "0";}
+            }
+            else {
+                // result = data.getString(field);
+                result = String.valueOf(object);
+            }
+            if (result.equals("true")){result = "1";}
+            if (result.equals("false")){result = "0";}
+        }
+        return result;
     }
 
     JSONObject body() {
@@ -162,6 +199,7 @@ public class AppServer extends HttpServlet {
 
         body = stringBuilder.toString();
         // System.out.println(body);
+        if (body.equals("")){body = "{}";}
         JSONObject res = new JSONObject(body);
         return res;
     }

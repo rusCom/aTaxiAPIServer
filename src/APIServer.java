@@ -256,12 +256,6 @@ public class APIServer extends AbstractHandler {
             case "MobileAPP":
                 appServer = new MobileAppServer();
                 break;
-            case "web_app":
-                appServer = new WebAppServer();
-                break;
-            case "aksioma":
-                appServer = new AksiomaAppServer();
-                break;
             case "ckassa":
                 appServer = new CKassaAppServer();
                 break;
