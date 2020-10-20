@@ -259,7 +259,7 @@ public class APIServer extends AbstractHandler {
             case "ckassa":
                 appServer = new CKassaAppServer();
                 break;
-            case "taximeter":
+            case "Taximeter":
                 appServer = new TaximeterAppServer();
                 break;
             case "MainAPI":

@@ -12,10 +12,7 @@ public class TaximeterAppServer extends AppServer {
         if (targets.length == 0)return new DataBaseResponse("400");
         String DataBaseAnswer = "400^^";
 
-
-
         try {
-            System.out.println("!"+baseRequest.getRequestURI()+"!");
 
            if (target.split("=")[0].equals("/gettype")){
                 Map<String, String> params = parseParams(baseRequest.getRequestURI());
