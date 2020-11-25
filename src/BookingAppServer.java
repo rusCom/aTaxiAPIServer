@@ -46,6 +46,12 @@ public class BookingAppServer extends AppServer {
                             case "/orders/deny":
                                 dataBaseAnswer = Booking.OrdersDeny(dataBase, param("token"), param("uid"), param("reason"), UTF);
                                 break;
+                            case "/orders/note":
+                                dataBaseAnswer = Booking.OrdersNote(dataBase, param("clientID"), param("uid"), param("nite"), UTF);
+                                break;
+                            case "/orders/history":
+                                dataBaseAnswer = Booking.OrdersHistory(dataBase, param("clientID"), param("uid"));
+                                break;
                             default:
                                 dataBaseAnswer = "404";
                                 break;

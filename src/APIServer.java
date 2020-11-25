@@ -130,7 +130,11 @@ public class APIServer extends AbstractHandler {
                         try {
                             result.put("result", new JSONObject(dataBaseResponse.getBody(serverResponse)));
                         } catch (JSONException e) {
-                            result.put("result", dataBaseResponse.getBody(serverResponse));
+                            try {
+                                result.put("result", new JSONArray(dataBaseResponse.getBody(serverResponse)));
+                            } catch (JSONException er) {
+                                result.put("result", dataBaseResponse.getBody(serverResponse));
+                            }
                         }
                     }
                 } else if (dataBaseResponse.getBody(serverResponse) != null) {
@@ -382,7 +386,7 @@ public class APIServer extends AbstractHandler {
         return UTF8;
     }
 
-    static void httpGetThread(final String urlString){
+    static void httpGetThread(final String urlString) {
 
         Runnable task = new Runnable() {
             @Override
@@ -396,10 +400,9 @@ public class APIServer extends AbstractHandler {
 
     }
 
-    static void consoleLog(Object TAG, String method, Object message){
+    static void consoleLog(Object TAG, String method, Object message) {
         System.out.println(getCurDateTime() + "##### " + TAG.getClass().getName() + "." + method + "." + message.toString());
     }
-
 
 
     static JSONObject httpGet(String urlString) {

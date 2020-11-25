@@ -141,7 +141,7 @@ public class AppServer extends HttpServlet {
         return new JSONObject();
     }
 
-    String JSONGetString(JSONObject data, String field){
+    static String JSONGetString(JSONObject data, String field){
         String result = "";
         if (data.has(field)){
             Object object = data.get(field);

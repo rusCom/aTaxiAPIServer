@@ -80,7 +80,7 @@ public class GEO {
             // APIServer.consoleLog(this, "distanceDB", respJSON.getJSONObject("result"));
             if (respJSON.getString("status").equals("OK")) {
                 JSONObject result = respJSON.getJSONObject("result");
-                DBAnswer = new JSONObject(GEO2.DistanceSet(dataBase, blt, bln, elt, eln, result.getString("distance"), result.getString("duration"), result.getString("status")));
+                DBAnswer = new JSONObject(GEO2.DistanceSet(dataBase, blt, bln, elt, eln, AppServer.JSONGetString(result,"distance"), AppServer.JSONGetString(result, "duration"), result.getString("status")));
             }
         }
         return DBAnswer;
