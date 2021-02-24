@@ -53,18 +53,35 @@ public class APIServer extends AbstractHandler {
                        HttpServletRequest request,
                        HttpServletResponse response) {
         long startTime = System.currentTimeMillis();
-
         String exceptionAsString = "";
         DataBaseResponse dataBaseResponse;
-        try {
-            dataBaseResponse = appServer.response(target, request);
 
-        } catch (Exception e) {
-            StringWriter sw = new StringWriter();
-            e.printStackTrace(new PrintWriter(sw));
-            exceptionAsString = sw.toString();
-            dataBaseResponse = new DataBaseResponse("500^" + e.getClass().getCanonicalName() + "^");
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        // response.setHeader("Access-Control-Max-Age", "86400");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+
+
+        if (request.getMethod().equals("OPTIONS")){
+
+            dataBaseResponse = new DataBaseResponse("200");
         }
+        else {
+            try {
+                dataBaseResponse = appServer.response(target, request);
+
+            } catch (Exception e) {
+                StringWriter sw = new StringWriter();
+                e.printStackTrace(new PrintWriter(sw));
+                exceptionAsString = sw.toString();
+                dataBaseResponse = new DataBaseResponse("500^" + e.getClass().getCanonicalName() + "^");
+            }
+
+        }
+
+
+
 
         try {
             // System.out.println(target);
@@ -90,7 +107,28 @@ public class APIServer extends AbstractHandler {
                 if (appServer.getAppSettings().getString("log_view").equals("console")) {
                     System.out.println(logText);
                 }
-            } else if (target.equals("/data")) {
+            }
+            else if (dataBaseResponse.getStatus() == 401){
+                switch (appServer.getAppSettings().getString("log_view_401")) {
+                    case "console":
+                        System.out.println(logText);
+                        break;
+                    case "file":
+                        MainUtils.getInstance().printFileLog("401", logText.toString(), false);
+                        break;
+                }
+            }
+            else if (dataBaseResponse.getStatus() == 404){
+                switch (appServer.getAppSettings().getString("log_view_404")) {
+                    case "console":
+                        System.out.println(logText);
+                        break;
+                    case "file":
+                        MainUtils.getInstance().printFileLog("404", logText.toString(), false);
+                        break;
+                }
+            }
+            else if (target.equals("/data")) {
                 switch (appServer.getAppSettings().getString("log_view_data")) {
                     case "console":
                         System.out.println(logText);
@@ -111,7 +149,7 @@ public class APIServer extends AbstractHandler {
                         break;
                 }
             }
-        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
@@ -167,6 +205,7 @@ public class APIServer extends AbstractHandler {
             }
             response.setStatus(dataBaseResponse.getStatus());
             response.setHeader("Server", "aTaxi." + SeverType);
+
             baseRequest.setHandled(true);
 
             if (dataBaseResponse.getFile() == null) {
@@ -277,6 +316,9 @@ public class APIServer extends AbstractHandler {
                 break;
             case "Exchange":
                 appServer = new ExchangeAppServer();
+                break;
+            case "CRM":
+                appServer = new CRMAppServer();
                 break;
         }
 

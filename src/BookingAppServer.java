@@ -129,7 +129,7 @@ public class BookingAppServer extends AppServer {
         return Booking.OrdersCalc(dataBase, data, distance.getString("routeString"), UTF);
     }
 
-    private void sendGEOStatistics(final JSONArray orderRoute){
+    public static void sendGEOStatistics(final JSONArray orderRoute){
         Runnable task = new Runnable() {
             @Override
             public void run() {
