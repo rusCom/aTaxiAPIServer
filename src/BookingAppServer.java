@@ -14,7 +14,7 @@ public class BookingAppServer extends AppServer {
         for (String key : JSONObject.getNames(auth)) {
             authorization.put(key, String.valueOf(auth.get(key)));
         }
-        String dataBaseAnswer = "403";
+        String dataBaseAnswer = "404";
 
         if (!param("dispatchingID").equals("0")) {
             switch (target) {
@@ -63,6 +63,12 @@ public class BookingAppServer extends AppServer {
 
         response.setResponse(dataBaseAnswer);
         return response;
+    }
+
+    String orders() throws CacheException{
+        if (bodyField("uid").equals(""))return "400^Поле UID не установлено";
+        return "200";
+
     }
 
     String ordersAdd() throws CacheException {

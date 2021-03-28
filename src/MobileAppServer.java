@@ -48,14 +48,7 @@ class MobileAppServer extends AppServer {
 
                     }
                     break; // case "orders"
-                case "sravnitaxi":
-                    switch (targets[2]){
-                        case "estimate":DataBaseAnswer = SravnitaxiEstimate(baseRequest);break;
-                        case "manifest":DataBaseAnswer = MobileAPP.SravnitaxiManifest(getDataBase(), getParameter(baseRequest, "token"));break;
-                        case "history":DataBaseAnswer = MobileAPP.SravnitaxiHistory(getDataBase(), getParameter(baseRequest, "token"), getParameter(baseRequest, "from"), getParameter(baseRequest, "to"));break;
 
-                    }
-                    break; //case "sravnitaxi":
             }
         } catch (CacheException | IOException e) {
             e.printStackTrace();
