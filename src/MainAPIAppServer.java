@@ -42,7 +42,6 @@ public class MainAPIAppServer extends AppServer {
             if (calcData[itemID].equals("1") || calcData[itemID].equals("28")){
                 String str = calcData[itemID + 2].split(" - ")[0];
                 String urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                // System.out.println(urlString);
                 JSONObject response = APIServer.httpGet(urlString);
                 if (response.has("status")){
                     if (response.getString("status").equals("OK")){
@@ -51,18 +50,25 @@ public class MainAPIAppServer extends AppServer {
                         data += result.getString("dsc") + "|";
                         data += result.getString("lt") + "|";
                         data += result.getString("ln") + "|";
-
-                        System.out.println(data);
                         GEO2.SetGeoCode(dataBase, str, result.getString("place_id"), data);
                     }
+                }
+
+                if (str.contains("БОРИСОГЛЕБСКОГО")){
+                    str = str.replace("БОРИСОГЛЕБСКОГО", "БОРИСОГЛЕБСКАЯ");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
+                }
+                if (str.contains("(ФРУНЗЕ)")){
+                    str = str.replace(" (ФРУНЗЕ)", "");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
                 }
             }
 
         }
-
-
-
-
         return "200^^";
     }
+
+
 }
