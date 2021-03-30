@@ -64,6 +64,36 @@ public class MainAPIAppServer extends AppServer {
                     urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
                     APIServer.httpGet(urlString);
                 }
+                if (str.contains("КРУПСКАЯ")){
+                    str = str.replace("КРУПСКАЯ", "КРУПСКОЙ");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
+                }
+                if (str.contains("СЕЛЬСКО-БОГОРОДСКАЯ")){
+                    str = str.replace("СЕЛЬСКО-БОГОРОДСКАЯ", "СЕЛЬСКАЯ БОГОРОДСКАЯ");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
+                }
+                if (str.contains("ПЕРЕУЛОК ДАУТА ЮЛТЫЯ")){
+                    str = str.replace("ПЕРЕУЛОК ДАУТА ЮЛТЫЯ", "ДАУТА ЮЛТЫЯ");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
+                }
+                if (str.contains("НАБЕРЕЖНАЯ РЕКИ УФИМКА")){
+                    str = str.replace("НАБЕРЕЖНАЯ РЕКИ УФИМКА", "НАБЕРЕЖНАЯ РЕКИ УФЫ");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
+                }
+                if (str.contains("САЛАВАТА ПРОСПЕКТ")){
+                    str = str.replace("САЛАВАТА ПРОСПЕКТ", "ПРОСПЕКТ САЛАВАТА ЮЛАЕВА");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
+                }
+                if (str.contains("НАБЕРЕЖНАЯ МОТОРОСТРОИТЕЛЕЙ(ДОК)")){
+                    str = str.replace("НАБЕРЕЖНАЯ МОТОРОСТРОИТЕЛЕЙ(ДОК)", "НАБЕРЕЖНАЯ МОТОРОСТРОИТЕЛЕЙ");
+                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
+                    APIServer.httpGet(urlString);
+                }
             }
 
         }
