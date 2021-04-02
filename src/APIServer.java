@@ -320,6 +320,9 @@ public class APIServer extends AbstractHandler {
             case "CRM":
                 appServer = new CRMAppServer();
                 break;
+            case "Taxsee":
+                appServer = new TaxseeAppServer();
+                break;
         }
 
 

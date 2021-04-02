@@ -217,6 +217,10 @@ public class AppServer extends HttpServlet {
         return result;
     }
 
+    void paramSet(String name, String value){
+        authorization.put(name, value);
+    }
+
 
     List<String> getTargets(String target) {
         List<String> list = new ArrayList<>(Arrays.asList(target.split("/")));

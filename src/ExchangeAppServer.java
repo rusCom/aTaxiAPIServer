@@ -14,8 +14,6 @@ public class ExchangeAppServer extends AppServer {
         }
         String dataBaseAnswer = "403";
 
-        System.out.println("@" + param("order") + "@");
-
         if (!param("organizationID").equals("0")){
             switch (target){
                 case "/orders":dataBaseAnswer = Exchange.Orders(dataBase, param("organizationID"),  param("dispatchingID"), param("order", " "));break;

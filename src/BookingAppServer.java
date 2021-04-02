@@ -119,6 +119,9 @@ public class BookingAppServer extends AppServer {
         data += JSONGetString(babySeats, "0918") + "^";                 // 17
         data += JSONGetString(babySeats, "1525") + "^";                 // 18
         data += JSONGetString(babySeats, "2236") + "^";                 // 19
+        data += JSONGetString(wishes, "smoking_salon") + "^";           // 20
+        data += JSONGetString(wishes, "receipt") + "^";                 // 21
+        data += JSONGetString(wishes, "baggage") + "^";                 // 22
 
 
         APIServer.consoleLog(this, "ordersCalc", wishes);
