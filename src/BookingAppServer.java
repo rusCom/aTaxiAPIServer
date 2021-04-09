@@ -124,16 +124,11 @@ public class BookingAppServer extends AppServer {
         data += JSONGetString(wishes, "baggage") + "^";                 // 22
 
 
-        APIServer.consoleLog(this, "ordersCalc", wishes);
-        APIServer.consoleLog(this, "ordersCalc", babySeats);
-        APIServer.consoleLog(this, "ordersCalc", data);
-
-
-
+        // APIServer.consoleLog(this, "ordersCalc", wishes);
+        // APIServer.consoleLog(this, "ordersCalc", babySeats);
+        // APIServer.consoleLog(this, "ordersCalc", data);
 
         sendGEOStatistics(bodyJSONArray("route"));
-
-
 
         return Booking.OrdersCalc(dataBase, data, distance.getString("routeString"), UTF);
     }

@@ -71,6 +71,17 @@ public class MainUtils {
         return printWriterMap.get(logType);
     }
 
+    static Boolean isJsonObject(String data){
+        Boolean result = false;
+        try {
+            JSONObject jsonObject = new JSONObject(data);
+            result = true;
+        }
+        catch (Error error){}
+
+        return result;
+    }
+
     static String JSONGetString(JSONObject data, String field) {
         String result = "";
         if (data.has(field)) {

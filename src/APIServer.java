@@ -1,6 +1,5 @@
 import API.BaseAPI;
 
-
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,12 +24,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-
 import static java.lang.Thread.sleep;
 
 public class APIServer extends AbstractHandler {
     private static Database dataBase;
-    private static String SeverType;
+    private static String ServerType;
     private static AppServer appServer;
     private static Boolean IsTest = false, UTF8 = false;
     private static Integer Port;
@@ -41,10 +39,6 @@ public class APIServer extends AbstractHandler {
 
     public static Boolean getIsTest() {
         return IsTest;
-    }
-
-    public static Database getDataBase() {
-        return dataBase;
     }
 
     @Override
@@ -58,16 +52,14 @@ public class APIServer extends AbstractHandler {
 
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
-        // response.setHeader("Access-Control-Max-Age", "86400");
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY");
 
 
-        if (request.getMethod().equals("OPTIONS")){
+        if (request.getMethod().equals("OPTIONS")) {
 
             dataBaseResponse = new DataBaseResponse("200");
-        }
-        else {
+        } else {
             try {
                 dataBaseResponse = appServer.response(target, request);
 
@@ -77,10 +69,7 @@ public class APIServer extends AbstractHandler {
                 exceptionAsString = sw.toString();
                 dataBaseResponse = new DataBaseResponse("500^" + e.getClass().getCanonicalName() + "^");
             }
-
         }
-
-
 
 
         try {
@@ -104,12 +93,11 @@ public class APIServer extends AbstractHandler {
             if (!exceptionAsString.equals("")) {
                 getExceptionPrintWriter().println(logText);
                 getExceptionPrintWriter().flush();
-                if (appServer.getAppSettings().getString("log_view").equals("console")) {
+                if (appServer.getSetting("log_view").equals("console")) {
                     System.out.println(logText);
                 }
-            }
-            else if (dataBaseResponse.getStatus() == 401){
-                switch (appServer.getAppSettings().getString("log_view_401")) {
+            } else if (dataBaseResponse.getStatus() == 401) {
+                switch (appServer.getSetting("log_view_401")) {
                     case "console":
                         System.out.println(logText);
                         break;
@@ -117,9 +105,8 @@ public class APIServer extends AbstractHandler {
                         MainUtils.getInstance().printFileLog("401", logText.toString(), false);
                         break;
                 }
-            }
-            else if (dataBaseResponse.getStatus() == 404){
-                switch (appServer.getAppSettings().getString("log_view_404")) {
+            } else if (dataBaseResponse.getStatus() == 404) {
+                switch (appServer.getSetting("log_view_404")) {
                     case "console":
                         System.out.println(logText);
                         break;
@@ -127,9 +114,8 @@ public class APIServer extends AbstractHandler {
                         MainUtils.getInstance().printFileLog("404", logText.toString(), false);
                         break;
                 }
-            }
-            else if (target.equals("/data")) {
-                switch (appServer.getAppSettings().getString("log_view_data")) {
+            } else if (target.equals("/data")) {
+                switch (appServer.getSetting("log_view_data")) {
                     case "console":
                         System.out.println(logText);
                         break;
@@ -139,7 +125,7 @@ public class APIServer extends AbstractHandler {
                         break;
                 }
             } else {
-                switch (appServer.getAppSettings().getString("log_view")) {
+                switch (appServer.getSetting("log_view")) {
                     case "console":
                         System.out.println(logText);
                         break;
@@ -158,39 +144,59 @@ public class APIServer extends AbstractHandler {
 
             if (serverResponse.equals("json")) {
                 response.setStatus(HttpServletResponse.SC_OK);
-                response.setHeader("Server", "aTaxi." + SeverType);
+                response.setHeader("Server", "aTaxi." + ServerType);
                 response.setContentType("application/json;charset=utf-8");
                 JSONObject result = new JSONObject();
-                result.put("status", dataBaseResponse.getStatusName());
-                result.put("status_code", dataBaseResponse.getStatusCode());
-                if (dataBaseResponse.getStatusCode().equals("200")) {
-                    if (dataBaseResponse.getBody(serverResponse) != null) {
-                        try {
-                            result.put("result", new JSONObject(dataBaseResponse.getBody(serverResponse)));
-                        } catch (JSONException e) {
+
+                if (ServerType.equals("Taxsee")) { // если сервер для Максим, то делаем ворзрат по их шаблону
+                    if (dataBaseResponse.getStatusCode().equals("200")){
+                        if (dataBaseResponse.getBody(serverResponse) == null){
+                            result.put("success", "1");
+                        }
+                        else {
                             try {
-                                result.put("result", new JSONArray(dataBaseResponse.getBody(serverResponse)));
-                            } catch (JSONException er) {
-                                result.put("result", dataBaseResponse.getBody(serverResponse));
+                                result = new JSONObject(dataBaseResponse.getBody(serverResponse));
+                            }
+                            catch (JSONException e){
+                                result.put("success", "1");
+                                result.put("message", dataBaseResponse.getBody(""));
                             }
                         }
                     }
-                } else if (dataBaseResponse.getBody(serverResponse) != null) {
-                    try {
-                        result.put("error", new JSONObject(dataBaseResponse.getBody(serverResponse)));
-                    } catch (JSONException e) {
-                        result.put("error", dataBaseResponse.getBody(serverResponse));
+                    else {
+                        result.put("success", "-" + dataBaseResponse.getStatusCode());
+                        result.put("message", dataBaseResponse.getBody(""));
                     }
+                } else {
+                    result.put("status", dataBaseResponse.getStatusName());
+                    result.put("status_code", dataBaseResponse.getStatusCode());
+                    if (dataBaseResponse.getStatusCode().equals("200")) {
+                        if (dataBaseResponse.getBody(serverResponse) != null) {
+                            try {
+                                result.put("result", new JSONObject(dataBaseResponse.getBody(serverResponse)));
+                            } catch (JSONException e) {
+                                try {
+                                    result.put("result", new JSONArray(dataBaseResponse.getBody(serverResponse)));
+                                } catch (JSONException er) {
+                                    result.put("result", dataBaseResponse.getBody(serverResponse));
+                                }
+                            }
+                        }
+                    } else if (dataBaseResponse.getBody(serverResponse) != null) {
+                        try {
+                            result.put("error", new JSONObject(dataBaseResponse.getBody(serverResponse)));
+                        } catch (JSONException e) {
+                            result.put("error", dataBaseResponse.getBody(serverResponse));
+                        }
+                    }
+                    result.put("time", (System.currentTimeMillis() - startTime) / 1000.0);
 
-                    // result.put("error", dataBaseResponse.getBody(serverResponse));
                 }
-                result.put("time", (System.currentTimeMillis() - startTime) / 1000.0);
+
 
                 baseRequest.setHandled(true);
                 response.getWriter().print(result.toString());
-
                 return;
-
             } // if (appServer.getAppSettings().getString("response").equals("json")){
 
 
@@ -204,7 +210,7 @@ public class APIServer extends AbstractHandler {
                 response.setContentType("application/text;charset=utf-8");
             }
             response.setStatus(dataBaseResponse.getStatus());
-            response.setHeader("Server", "aTaxi." + SeverType);
+            response.setHeader("Server", "aTaxi." + ServerType);
 
             baseRequest.setHandled(true);
 
@@ -272,7 +278,7 @@ public class APIServer extends AbstractHandler {
         String dataBasePwd = properties.getProperty("db.password");
 
         Port = Integer.parseInt(properties.getProperty("server.port"));
-        SeverType = properties.getProperty("server.type");
+        ServerType = properties.getProperty("server.type");
 
         serverResponse = properties.getProperty("server.response", "");
 
@@ -292,7 +298,7 @@ public class APIServer extends AbstractHandler {
         System.out.println(getCurDateTime() + "Connecting to DataBase " + dataBaseURL + " success");
 
 
-        switch (SeverType) {
+        switch (ServerType) {
             case "TaximeterRegistration":
                 appServer = new TaximeterRegistrationAppServer();
                 break;
@@ -327,17 +333,18 @@ public class APIServer extends AbstractHandler {
 
 
         appServer.setDataBase(dataBase);
-        appServer.setSeverType(SeverType);
+        appServer.setSeverType(ServerType);
         appServer.setTest(IsTest);
         appServer.UTF = UTF8.toString();
+        appServer.paramSet("utf", UTF8.toString());
         try {
-            BaseAPI.Initialize(dataBase, SeverType);
+            BaseAPI.Initialize(dataBase, ServerType);
 
         } catch (CacheException e) {
             e.printStackTrace();
         }
 
-        System.out.println(getCurDateTime() + "Start " + SeverType + " server at port " + Port);
+        System.out.println(getCurDateTime() + "Start " + ServerType + " server at port " + Port);
 
 
         Server server = new Server(new QueuedThreadPool(512, 32, 120));
@@ -370,7 +377,7 @@ public class APIServer extends AbstractHandler {
                 sleep(5 * 1000);
             }
         }
-        System.out.println(getCurDateTime() + "Started " + SeverType + " server at port " + String.valueOf(Port) + " success");
+        System.out.println(getCurDateTime() + "Started " + ServerType + " server at port " + String.valueOf(Port) + " success");
 
         try {
             server.join();

@@ -91,7 +91,7 @@ public class TaximeterRegistrationAppServer extends AppServer {
                     if (DataBaseAnswers.length == 1) {
                         DataBaseAnswer = "404";
                     } else {
-                        DataBaseAnswer = "200^^" + getAppSettings().getString("file_path") + DataBaseAnswers[1];
+                        DataBaseAnswer = "200^^" + getSetting("file_path") + DataBaseAnswers[1];
                     }
                     break;
                 case "POST":
@@ -108,7 +108,7 @@ public class TaximeterRegistrationAppServer extends AppServer {
                                         FileName = UUID.randomUUID().toString();
                                     }
                                     FileName += getFileExtension(fileItem.getName());
-                                    File file = new File(getAppSettings().getString("file_path") + FileName);
+                                    File file = new File( getSetting("file_path") + FileName);
                                     fileItem.write(file);
                                     TaximeterRegistration.ProfelDocumentSet(getDataBase(), getParameter(baseRequest, "token"), getParameter(baseRequest, "type"), FileName);
                                     DataBaseAnswer = "200^";

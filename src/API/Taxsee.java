@@ -8,7 +8,7 @@ package API;
 **/
 
 public class Taxsee extends com.intersys.classes.RegisteredObject implements java.io.Serializable {
-    private static final long serialVersionUID = 5229;
+    private static final long serialVersionUID = 3016;
     private static String CACHE_CLASS_NAME = "API.Taxsee";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
@@ -231,6 +231,19 @@ That is 'isclass' is a primary superclass of this object.</p>
         return;
     }
     /**
+     <p>Runs method OrderInfo in Cache.</p>
+     @param db represented as com.intersys.objects.Database
+     @param inOrderUID represented as java.lang.String
+     @throws com.intersys.objects.CacheException if any error occured while running the method.
+     @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Taxsee#OrderInfo"> Method OrderInfo</A>
+    */
+    public static java.lang.String OrderInfo (com.intersys.objects.Database db, java.lang.String inOrderUID) throws com.intersys.objects.CacheException {
+        com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[1];
+        args[0] = new com.intersys.cache.Dataholder(inOrderUID);
+        com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"OrderInfo",args,com.intersys.objects.Database.RET_PRIM);
+        return res.getString();
+    }
+    /**
      <p>Runs method ProcessingClientCoord in Cache.</p>
      @param db represented as com.intersys.objects.Database
      @param inOrderUID represented as java.lang.String
@@ -248,37 +261,37 @@ That is 'isclass' is a primary superclass of this object.</p>
     /**
      <p>Runs method ProcessingCreateOrUpdate in Cache.</p>
      @param db represented as com.intersys.objects.Database
-     @param inDispatchingID represented as java.lang.String
      @param inData represented as java.lang.String
      @param inRoute represented as java.lang.String
+     @param inAddPrice represented as java.lang.String
      default argument inUTF set to "false"
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see #ProcessingCreateOrUpdate(com.intersys.objects.Database,java.lang.String,java.lang.String,java.lang.String,java.lang.String)
      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Taxsee#ProcessingCreateOrUpdate"> Method ProcessingCreateOrUpdate</A>
     */
-    public static java.lang.String ProcessingCreateOrUpdate (com.intersys.objects.Database db, java.lang.String inDispatchingID, java.lang.String inData, java.lang.String inRoute) throws com.intersys.objects.CacheException {
+    public static java.lang.String ProcessingCreateOrUpdate (com.intersys.objects.Database db, java.lang.String inData, java.lang.String inRoute, java.lang.String inAddPrice) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[3];
-        args[0] = new com.intersys.cache.Dataholder(inDispatchingID);
-        args[1] = new com.intersys.cache.Dataholder(inData);
-        args[2] = new com.intersys.cache.Dataholder(inRoute);
+        args[0] = new com.intersys.cache.Dataholder(inData);
+        args[1] = new com.intersys.cache.Dataholder(inRoute);
+        args[2] = new com.intersys.cache.Dataholder(inAddPrice);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"ProcessingCreateOrUpdate",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();
     }
     /**
      <p>Runs method ProcessingCreateOrUpdate in Cache.</p>
      @param db represented as com.intersys.objects.Database
-     @param inDispatchingID represented as java.lang.String
      @param inData represented as java.lang.String
      @param inRoute represented as java.lang.String
+     @param inAddPrice represented as java.lang.String
      @param inUTF represented as java.lang.String
      @throws com.intersys.objects.CacheException if any error occured while running the method.
      @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Taxsee#ProcessingCreateOrUpdate"> Method ProcessingCreateOrUpdate</A>
     */
-    public static java.lang.String ProcessingCreateOrUpdate (com.intersys.objects.Database db, java.lang.String inDispatchingID, java.lang.String inData, java.lang.String inRoute, java.lang.String inUTF) throws com.intersys.objects.CacheException {
+    public static java.lang.String ProcessingCreateOrUpdate (com.intersys.objects.Database db, java.lang.String inData, java.lang.String inRoute, java.lang.String inAddPrice, java.lang.String inUTF) throws com.intersys.objects.CacheException {
         com.intersys.cache.Dataholder[] args = new com.intersys.cache.Dataholder[4];
-        args[0] = new com.intersys.cache.Dataholder(inDispatchingID);
-        args[1] = new com.intersys.cache.Dataholder(inData);
-        args[2] = new com.intersys.cache.Dataholder(inRoute);
+        args[0] = new com.intersys.cache.Dataholder(inData);
+        args[1] = new com.intersys.cache.Dataholder(inRoute);
+        args[2] = new com.intersys.cache.Dataholder(inAddPrice);
         args[3] = new com.intersys.cache.Dataholder(inUTF);
         com.intersys.cache.Dataholder res=db.runClassMethod(CACHE_CLASS_NAME,"ProcessingCreateOrUpdate",args,com.intersys.objects.Database.RET_PRIM);
         return res.getString();

@@ -193,10 +193,10 @@ class MobileAppServer extends AppServer {
         logText.append("result").append("\t").append("= ").append(result.toString()).append("\n");
         logText.append("********************************************************").append("\n");
 
-        if (getAppSettings().getString("log_view").equals("console")){
+        if (getSetting("log_view").equals("console")){
             System.out.println(logText);
         }
-        else if (getAppSettings().getString("log_view").equals("file")){
+        else if (getSetting("log_view").equals("file")){
             getlogCalcPrintWriter().println(logText);
             getlogCalcPrintWriter().flush();
         }

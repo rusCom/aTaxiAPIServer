@@ -1,10 +1,8 @@
 import API.BaseAPI;
-import API.Booking;
 import com.intersys.objects.CacheException;
 import com.intersys.objects.Database;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,19 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import java.io.*;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 
 public class AppServer extends HttpServlet {
     protected Database dataBase;
     private JSONObject appSettings = null;
-    String SeverType, body = "", target;
+    String SeverType, target;
     private Distance distance;
     private GEO geo;
     private DataBaseResponse staticPreferences;
@@ -34,9 +29,7 @@ public class AppServer extends HttpServlet {
     JSONObject authorization;
     HttpServletRequest baseRequest;
     DataBaseResponse response;
-    JSONObject bodyData;
-    boolean consolePrint = false;
-
+    private Map<String, String> params = new HashMap<String, String>();
 
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) throws Exception {
         this.target = target;
@@ -85,14 +78,18 @@ public class AppServer extends HttpServlet {
 
         if (authorization == null) {
             authorization = new JSONObject();
-            if (baseRequest.getParameter("token") != null) {
-                authorization.put("token", baseRequest.getParameter("token"));
-            } else {
-                authorization.put("token", "");
-            }
         }
 
-        // System.out.println(authorization.toString());
+        if (!authorization.has("token")) {
+            if (baseRequest.getParameter("token") != null) {
+                authorization.put("token", baseRequest.getParameter("token"));
+            }
+        }
+        if (baseRequest.getHeader("x-api-key") != null) {
+            authorization.put("x-api-key", baseRequest.getHeader("x-api-key"));
+        }
+
+        // System.out.println(baseRequest.getHeader("x-api-key"));
 
         response = new DataBaseResponse("500", authorization);
         return response;
@@ -118,10 +115,37 @@ public class AppServer extends HttpServlet {
         if (response.respBody == null) {
             response.respBody = body();
         }
-        if (response.respBody.has(field)) {
+        try {
             return response.respBody.getJSONArray(field);
+        } catch (Exception e) {
+            return new JSONArray();
+        }
+
+
+        /*
+
+
+        if (response.respBody.has(field)) {
+            if (response.respBody.get(field) == null){
+                return new JSONArray();
+            }
+            try{
+                if (response.respBody.getString(field).equals("null")){
+                    return new JSONArray();
+                }
+            }
+            catch (Exception e){}
+
+            // System.out.println(response.respBody.get(field));
+            try {
+                return response.respBody.getJSONArray(field);
+            }
+            catch (Exception e){}
+
         }
         return new JSONArray();
+
+         */
     }
 
     String bodyField(String field) {
@@ -134,28 +158,34 @@ public class AppServer extends HttpServlet {
         return "";
     }
 
-    JSONObject JSONGetObject(JSONObject data, String field){
-        if (data.has(field)){
+    JSONObject JSONGetObject(JSONObject data, String field) {
+        if (data.has(field)) {
             return data.getJSONObject(field);
         }
         return new JSONObject();
     }
 
-    static String JSONGetString(JSONObject data, String field){
+    static String JSONGetString(JSONObject data, String field) {
         String result = "";
-        if (data.has(field)){
+        if (data.has(field)) {
             Object object = data.get(field);
 
-            if (object instanceof Boolean){
-                if (((Boolean)object)){result = "1";}
-                else {result = "0";}
-            }
-            else {
+            if (object instanceof Boolean) {
+                if (((Boolean) object)) {
+                    result = "1";
+                } else {
+                    result = "0";
+                }
+            } else {
                 // result = data.getString(field);
                 result = String.valueOf(object);
             }
-            if (result.equals("true")){result = "1";}
-            if (result.equals("false")){result = "0";}
+            if (result.equals("true")) {
+                result = "1";
+            }
+            if (result.equals("false")) {
+                result = "0";
+            }
         }
         return result;
     }
@@ -198,8 +228,9 @@ public class AppServer extends HttpServlet {
         }
 
         body = stringBuilder.toString();
-        // System.out.println(body);
-        if (body.equals("")){body = "{}";}
+        if (body.equals("")) {
+            body = "{}";
+        }
         JSONObject res = new JSONObject(body);
         return res;
     }
@@ -208,6 +239,7 @@ public class AppServer extends HttpServlet {
         String result = "";
         if (baseRequest.getParameter(name) != null) result = baseRequest.getParameter(name);
         else if (authorization.has(name)) result = authorization.getString(name);
+        else if (params.containsKey(name)) result = params.get(name);
         return result;
     }
 
@@ -217,8 +249,8 @@ public class AppServer extends HttpServlet {
         return result;
     }
 
-    void paramSet(String name, String value){
-        authorization.put(name, value);
+    void paramSet(String name, String value) {
+        params.put(name, value);
     }
 
 
@@ -238,11 +270,6 @@ public class AppServer extends HttpServlet {
         IsTest = test;
     }
 
-    String isTest() {
-        if (IsTest) return "1";
-        return "0";
-    }
-
     private String getSeverType() {
         return SeverType;
     }
@@ -255,7 +282,7 @@ public class AppServer extends HttpServlet {
         return dataBase;
     }
 
-    JSONObject getAppSettings() {
+    private JSONObject getAppSettings() {
         if (appSettings == null) {
             try {
                 appSettings = new JSONObject(BaseAPI.AppServerSettings(getDataBase(), getSeverType()));
@@ -267,7 +294,7 @@ public class AppServer extends HttpServlet {
     }
 
     String getSetting(String param) {
-        if (getAppSettings().equals(param)) return getAppSettings().getString(param);
+        if (getAppSettings().has(param)) return getAppSettings().getString(param);
         return "";
     }
 
@@ -349,16 +376,7 @@ public class AppServer extends HttpServlet {
                     getSeverType(),
                     APIServer.getUTF8());
 
-            /*
 
-            DataBaseAnswer = BaseAPI.ProfileSet(getDataBase(),
-                    getParameter(baseRequest, "token"),
-                    getParameter(baseRequest, "lt"),
-                    getParameter(baseRequest, "ln"),
-                    data.toString(),
-                    UpdateSQLString.toString(),
-                    getSeverType());
-                    */
         }
 
 
