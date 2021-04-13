@@ -53,6 +53,8 @@ public class TaxseeAppServer extends AppServer {
         JSONArray addPrices = bodyJSONArray("add_price");
 
 
+
+
         String Data = "";
         Data += bodyField("id") +"^";                       // 01. id
         Data += (routePoints.length() + 1) +"^";            // 02. routeCount
@@ -77,21 +79,28 @@ public class TaxseeAppServer extends AppServer {
         Data += bodyField("time_calc") +"^";                // 21. timeCalc
         Data += bodyField("sum_add_prices_from_drv") +"^";  // 22. sumAddPricesFromDrv
         Data += bodyField("id_organization_order") +"^";    // 23. idOrganizationOrder
-        Data += param("test") +"^";                  // 24. isTest
-        Data += routePoints.toString() +"^";                // 25. jsonRoutePoints
-        Data += addPrices.toString() +"^";                  // 26. jsonAddPrice
-        Data += pointStart.toString() +"^";                 // 27. jsonPointStart
+        Data += param("test") +"^";                   // 24. isTest
+
+
+
 
         String Routes = "";
+        Routes += JSONGetString(pointStart,"address") + "^";
+        Routes += "^";
         Routes += JSONGetString(pointStart,"latitude") + "^";
         Routes += JSONGetString(pointStart,"longitude") + "^";
-        Routes += JSONGetString(pointStart,"address") + "^|";
+        Routes += bodyField("comment_start") + "^";
+        Routes += "^|";
         for (int itemID = 0; itemID < routePoints.length(); itemID++) {
             JSONObject routePoint = routePoints.getJSONObject(itemID);
+            Routes += JSONGetString(routePoint,"address") + "^";
+            Routes += "^";
             Routes += JSONGetString(routePoint,"latitude") + "^";
             Routes += JSONGetString(routePoint,"longitude") + "^";
-            Routes += JSONGetString(routePoint,"address") + "^|";
+            Routes += "^";
+            Routes += "^|";
         }
+
         String AddPrices = "";
         for (int itemID = 0; itemID < addPrices.length(); itemID++) {
             JSONObject addPrice = addPrices.getJSONObject(itemID);
@@ -99,6 +108,7 @@ public class TaxseeAppServer extends AppServer {
             AddPrices += JSONGetString(addPrice, "name") + "^";
             AddPrices += JSONGetString(addPrice, "number") + "^|";
         }
+
 
 
 

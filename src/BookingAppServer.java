@@ -19,7 +19,7 @@ public class BookingAppServer extends AppServer {
         if (!param("dispatchingID").equals("0")) {
             switch (target) {
                 case "/profile/auth":
-                    dataBaseAnswer = Booking.ProfileAuth(dataBase, param("dispatchingID"), param("clientID"), param("cityID"));
+                    dataBaseAnswer = Booking.ProfileAuth(dataBase, param("dispatchingID"), param("clientID"), param("cityID"), param("push_token"));
                     break;
                 case "/profile/login":
                     dataBaseAnswer = Booking.ProfileLogin(dataBase, param("dispatchingID"), param("phone"), param("type", "sms"), param("test"));
@@ -47,7 +47,7 @@ public class BookingAppServer extends AppServer {
                                 dataBaseAnswer = Booking.OrdersDeny(dataBase, param("token"), param("uid"), param("reason"), UTF);
                                 break;
                             case "/orders/note":
-                                dataBaseAnswer = Booking.OrdersNote(dataBase, param("clientID"), param("uid"), param("nite"), UTF);
+                                dataBaseAnswer = Booking.OrdersNote(dataBase, param("clientID"), param("token"), param("uid"), param("note"), UTF);
                                 break;
                             case "/orders/history":
                                 dataBaseAnswer = Booking.OrdersHistory(dataBase, param("clientID"), param("uid"));

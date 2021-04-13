@@ -187,6 +187,9 @@ public class AppServer extends HttpServlet {
                 result = "0";
             }
         }
+        if (result.equals("null")){
+            result = "";
+        }
         return result;
     }
 
