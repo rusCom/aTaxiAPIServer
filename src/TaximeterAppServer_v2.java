@@ -1,8 +1,9 @@
-import API.Taximeter2;
+import ataxi.API.Taximeter2;
 import com.intersys.objects.CacheException;
 
 import javax.servlet.http.HttpServletRequest;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
 
 import static org.apache.commons.codec.binary.Base64.decodeBase64;
 

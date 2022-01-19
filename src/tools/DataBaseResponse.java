@@ -1,3 +1,5 @@
+package tools;
+
 import org.json.JSONObject;
 
 import javax.servlet.http.HttpServletResponse;
@@ -5,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 public class DataBaseResponse {
     private String status = "", body = "", file = null;
     private Integer version = 1;
-    JSONObject authorization;
-    JSONObject respBody;
+    public JSONObject authorization;
+    public JSONObject respBody;
 
     public DataBaseResponse(String DataBaseAnswer) {
         String[] DataBaseAnswers = DataBaseAnswer.split("\\^");
@@ -88,7 +90,7 @@ public class DataBaseResponse {
         if(status.equals("403"))return "FORBIDDEN";
         if(status.equals("404"))return "NOT_FOUND";
 
-        return "NTERNAL_SERVER_ERROR";
+        return "INTERNAL_SERVER_ERROR";
     }
 
     public String getBody(String response) {

@@ -1,9 +1,9 @@
 
-import API.Booking;
-import API.MobileAPP;
+import ataxi.API.MobileAPP;
 import com.intersys.objects.CacheException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
@@ -60,34 +60,6 @@ class MobileAppServer extends AppServer {
 
     }
 
-    private String SravnitaxiEstimate(HttpServletRequest baseRequest) throws CacheException, IOException {
-        String DataBaseAnswer = "400";
-        String token = getParameter(baseRequest, "token");
-        if (token.trim().equals("")){return "400^incorrect dispatching token^";}
-        String from = getParameter(baseRequest, "from");
-        if (from.trim().equals("")){return "400^incorrect from location^";}
-        String to = getParameter(baseRequest, "to");
-        if (to.trim().equals("")){return "400^incorrect to location^";}
-        String blt = from.split(",")[0];
-        String bln = from.split(",")[1];
-        String elt = to.split(",")[0];
-        String eln = to.split(",")[1];
-        JSONObject distance = getDistance().DistanceGet(blt, bln, elt, eln);
-        //System.out.println(distance);
-        if (distance.getString("result").equals("OK")){
-            DataBaseAnswer = MobileAPP.SravnitaxiEstimate(getDataBase(), token, blt, bln, elt, eln, String.valueOf(distance.getInt("distance")));
-            if (DataBaseAnswer.split("\\^")[0].equals("200")){
-                JSONObject databaseResult = new JSONObject(DataBaseAnswer.split("\\^")[1]);
-                System.out.println(databaseResult.toString());
-                JSONObject result = new JSONObject();
-                result.put("price", databaseResult.getJSONObject("calc").getString("price_rounded"));
-                result.put("currency", "RUR");
-                DataBaseAnswer = "200^" + result.toString() + "^";
-            }
-        }
-        else {DataBaseAnswer = "500";}
-        return DataBaseAnswer;
-    }
 
 
     private String OrdersAdd(HttpServletRequest baseRequest) throws CacheException {
@@ -110,15 +82,9 @@ class MobileAppServer extends AppServer {
             if (data.has("date"))DataString += data.getString("date") + "^";
             else {DataString += "^";}
             routes = data.getJSONArray("route");
-            // System.out.println(data);
-            if (data.has("distance")){
-                if (String.valueOf(data.get("distance")).equals("0")){distance = String.valueOf(getDistance().DistanceGet(routes).get("distance"));}
-                else if (String.valueOf(data.get("distance")).equals("")){distance = String.valueOf(getDistance().DistanceGet(routes).get("distance"));}
-                else {distance = String.valueOf(data.get("distance"));}
-            }
-            else {
-                distance = String.valueOf(getDistance().DistanceGet(routes).get("distance"));
-            }
+
+
+            distance = JSONGetString(data, "distance");
 
             for (int itemID = 0; itemID < routes.length(); itemID++){
                 JSONObject route = routes.getJSONObject(itemID);

@@ -1,10 +1,11 @@
-import API.BaseAPI;
+import ataxi.API.BaseAPI;
 import com.intersys.objects.CacheException;
 import com.intersys.objects.Database;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -20,7 +21,6 @@ public class AppServer extends HttpServlet {
     protected Database dataBase;
     private JSONObject appSettings = null;
     String SeverType, target;
-    private Distance distance;
     private GEO geo;
     private DataBaseResponse staticPreferences;
     private ServletFileUpload uploader = null;
@@ -30,6 +30,7 @@ public class AppServer extends HttpServlet {
     HttpServletRequest baseRequest;
     DataBaseResponse response;
     private Map<String, String> params = new HashMap<String, String>();
+    final Random random = new Random();
 
     public DataBaseResponse response(String target, HttpServletRequest baseRequest) throws Exception {
         this.target = target;
@@ -120,32 +121,6 @@ public class AppServer extends HttpServlet {
         } catch (Exception e) {
             return new JSONArray();
         }
-
-
-        /*
-
-
-        if (response.respBody.has(field)) {
-            if (response.respBody.get(field) == null){
-                return new JSONArray();
-            }
-            try{
-                if (response.respBody.getString(field).equals("null")){
-                    return new JSONArray();
-                }
-            }
-            catch (Exception e){}
-
-            // System.out.println(response.respBody.get(field));
-            try {
-                return response.respBody.getJSONArray(field);
-            }
-            catch (Exception e){}
-
-        }
-        return new JSONArray();
-
-         */
     }
 
     String bodyField(String field) {
@@ -169,7 +144,6 @@ public class AppServer extends HttpServlet {
         String result = "";
         if (data.has(field)) {
             Object object = data.get(field);
-
             if (object instanceof Boolean) {
                 if (((Boolean) object)) {
                     result = "1";
@@ -177,7 +151,6 @@ public class AppServer extends HttpServlet {
                     result = "0";
                 }
             } else {
-                // result = data.getString(field);
                 result = String.valueOf(object);
             }
             if (result.equals("true")) {
@@ -187,7 +160,7 @@ public class AppServer extends HttpServlet {
                 result = "0";
             }
         }
-        if (result.equals("null")){
+        if (result.equals("null")) {
             result = "";
         }
         return result;
@@ -432,12 +405,6 @@ public class AppServer extends HttpServlet {
         return result;
     }
 
-    Distance getDistance() {
-        if (distance == null) {
-            distance = new Distance(getDataBase());
-        }
-        return distance;
-    }
 
     GEO getGEO() {
         if (geo == null) {

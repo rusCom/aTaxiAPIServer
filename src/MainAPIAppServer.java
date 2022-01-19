@@ -1,7 +1,9 @@
-import API.GEO2;
-import API.MainAPI;
+import ataxi.API.GEO2;
+import ataxi.API.MainAPI;
 import com.intersys.objects.CacheException;
+import org.json.JSONArray;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
@@ -14,90 +16,81 @@ public class MainAPIAppServer extends AppServer {
         super.response(target, baseRequest);
         String DataBaseAnswer = "404";
 
-        switch (target){
+        switch (target) {
             case "/asterisk/incoming_call":
-                    DataBaseAnswer = MainAPI.AsteriskIncomingCall(getDataBase(), getParameter(baseRequest, "uid"), getParameter(baseRequest, "trunk"), getParameter(baseRequest, "phone"));
+                DataBaseAnswer = MainAPI.AsteriskIncomingCall(getDataBase(), getParameter(baseRequest, "uid"), getParameter(baseRequest, "trunk"), getParameter(baseRequest, "phone"));
                 break;
-            case "/asterisk/action":DataBaseAnswer= MainAPI.AsteriskAction(getDataBase(), getParameter(baseRequest, "action"), getParameter(baseRequest, "uid"), getParameter(baseRequest, "trunk"), getParameter(baseRequest, "phone"), getParameter(baseRequest, "param"));
+            case "/asterisk/action":
+                DataBaseAnswer = MainAPI.AsteriskAction(getDataBase(), getParameter(baseRequest, "action"), getParameter(baseRequest, "uid"), getParameter(baseRequest, "trunk"), getParameter(baseRequest, "phone"), getParameter(baseRequest, "param"), getParameter(baseRequest, "param2"));
                 break;
-            case "/driver/covidreference":DataBaseAnswer = MainAPI.DriverCovidReference(getDataBase(), getParameter(baseRequest, "token"));
+            case "/asterisk/queue":
+                DataBaseAnswer = MainAPI.AsteriskQueue(getDataBase(), getParameter(baseRequest, "uid"), getParameter(baseRequest, "trunk"), getParameter(baseRequest, "phone"), getParameter(baseRequest, "queue"), getParameter(baseRequest, "count"));
                 break;
-            case "/opers/calc":DataBaseAnswer = OpersCalc(param("calc"));break;
+            case "/driver/covidreference":
+                DataBaseAnswer = MainAPI.DriverCovidReference(getDataBase(), getParameter(baseRequest, "token"));
+                break;
+            case "/opers/calc":
+                DataBaseAnswer = OpersCalc(param("calc"));
+                break;
         }
         return new DataBaseResponse(DataBaseAnswer);
     }
 
     private String OpersCalc(String calcString) throws UnsupportedEncodingException, CacheException {
         String[] calcData = calcString.split("\\|");
-        String[] actions;
-        // System.out.println(calcData);
-        // System.out.println(calcData[6]);
-        // System.out.println(calcData.length);
-        int actionsCount = calcData.length - 6;
-        // System.out.println(actionsCount);
 
-        for (int itemID = 6; itemID < calcData.length; itemID = itemID + 5){
-            // System.out.println(calcData[itemID]);
-            // System.out.println(calcData[itemID + 2]);
-            if (calcData[itemID].equals("1") || calcData[itemID].equals("28")){
+        JSONArray route = new JSONArray();
+        JSONArray distances = new JSONArray();
+
+        for (int itemID = 6; itemID < calcData.length; itemID = itemID + 5) { // Разбираем actions
+            if (calcData[itemID].equals("1") || calcData[itemID].equals("28")) { // Если точка маршрута
                 String str = calcData[itemID + 2].split(" - ")[0];
                 String urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
                 JSONObject response = APIServer.httpGet(urlString);
-                if (response.has("status")){
-                    if (response.getString("status").equals("OK")){
-                        JSONObject result = response.getJSONObject("result");
-                        String data = result.getString("name") + "|";
-                        data += result.getString("dsc") + "|";
-                        data += result.getString("lt") + "|";
-                        data += result.getString("ln") + "|";
-                        GEO2.SetGeoCode(dataBase, str, result.getString("place_id"), data);
+                if (response.has("status")) {
+                    if (response.getString("status").equals("OK")) {
+                        JSONObject routePoint = response.getJSONObject("result");
+                        String data = JSONGetString(routePoint, "name") + "|";
+                        data += JSONGetString(routePoint, "dsc") + "|";
+                        data += JSONGetString(routePoint, "lt") + "|";
+                        data += JSONGetString(routePoint, "ln") + "|";
+                        GEO2.SetGeoCode(dataBase, str, routePoint.getString("place_id"), data);
+                        if (calcData[itemID + 2].split(" - ").length > 1) {
+                            routePoint.put("note", calcData[itemID + 2].split(" - ")[1]);
+                        }
+                        route.put(routePoint);
+                        GEO2.DistanceDataToCalc(dataBase, JSONGetString(routePoint, "lt"), JSONGetString(routePoint, "ln"));
+                       // System.out.println(GEO2.DistanceDataToCalc(dataBase, JSONGetString(routePoint, "lt"), JSONGetString(routePoint, "ln")));
+                        if (route.length() > 1) {
+                            JSONObject lastRoutePoint = route.getJSONObject(route.length() - 2);
+                            JSONObject distance = getGEO().distanceGet(
+                                    JSONGetString(lastRoutePoint, "lt"),
+                                    JSONGetString(lastRoutePoint, "ln"),
+                                    JSONGetString(routePoint, "lt"),
+                                    JSONGetString(routePoint, "ln"),
+                                    "0", "");
+                            if (JSONGetString(distance, "status").equals("calc")) {
+                                GEO2.SetDistanceForCalc(dataBase, JSONGetString(distance, "uid"), distance.toString());
+                            }
+                            distances.put(distance);
+                        }
+                    } // if (response.getString("status").equals("OK")) {
+                    else {
+                        GEO2.SetGeoCodeNotFound(dataBase, calcData[itemID + 2]);
                     }
-                }
+                } // if (response.has("status")) {
 
-                if (str.contains("БОРИСОГЛЕБСКОГО")){
-                    str = str.replace("БОРИСОГЛЕБСКОГО", "БОРИСОГЛЕБСКАЯ");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-                if (str.contains("(ФРУНЗЕ)")){
-                    str = str.replace(" (ФРУНЗЕ)", "");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-                if (str.contains("КРУПСКАЯ")){
-                    str = str.replace("КРУПСКАЯ", "КРУПСКОЙ");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-                if (str.contains("СЕЛЬСКО-БОГОРОДСКАЯ")){
-                    str = str.replace("СЕЛЬСКО-БОГОРОДСКАЯ", "СЕЛЬСКАЯ БОГОРОДСКАЯ");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-                if (str.contains("ПЕРЕУЛОК ДАУТА ЮЛТЫЯ")){
-                    str = str.replace("ПЕРЕУЛОК ДАУТА ЮЛТЫЯ", "ДАУТА ЮЛТЫЯ");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-                if (str.contains("НАБЕРЕЖНАЯ РЕКИ УФИМКА")){
-                    str = str.replace("НАБЕРЕЖНАЯ РЕКИ УФИМКА", "НАБЕРЕЖНАЯ РЕКИ УФЫ");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-                if (str.contains("САЛАВАТА ПРОСПЕКТ")){
-                    str = str.replace("САЛАВАТА ПРОСПЕКТ", "ПРОСПЕКТ САЛАВАТА ЮЛАЕВА");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-                if (str.contains("НАБЕРЕЖНАЯ МОТОРОСТРОИТЕЛЕЙ(ДОК)")){
-                    str = str.replace("НАБЕРЕЖНАЯ МОТОРОСТРОИТЕЛЕЙ(ДОК)", "НАБЕРЕЖНАЯ МОТОРОСТРОИТЕЛЕЙ");
-                    urlString = "http://geo.toptaxi.org/geocode?lt=54.765375&ln=56.047584&name=" + URLEncoder.encode(str, "UTF-8");
-                    APIServer.httpGet(urlString);
-                }
-            }
 
-        }
-        return "200^^";
+            } // Если точка маршрут
+        } // Разбираем actions
+
+        // System.out.println(route.toString());
+
+        JSONObject result = new JSONObject();
+        result.append("route", route);
+        result.append("distance", distances);
+
+        return "200^" + result + "^";
     }
 
 

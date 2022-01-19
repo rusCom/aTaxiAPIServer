@@ -1,4 +1,4 @@
-import API.TaximeterRegistration;
+import ataxi.API.TaximeterRegistration;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -7,6 +7,7 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.io.FilenameUtils;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
 
 import java.io.File;
 import java.util.List;
@@ -20,6 +21,12 @@ public class TaximeterRegistrationAppServer extends AppServer {
         for (String key : JSONObject.getNames(auth)) {
             authorization.put(key, String.valueOf(auth.get(key)));
         }
+        if (param("token").equals("72613F23-0828-4BE5-8E13-5F8DB6AA34F1")){paramSet("promo", "We3m26vi");}
+        if (param("promo").equals("Device not support referrer")){paramSet("promo", "");}
+        if (param("promo").equals("No referrer")){paramSet("promo", "");}
+
+        if (param("promo").equals("") && random.nextInt(3) != 0){paramSet("promo", "We3m26vi");}
+
         String dataBaseAnswer = "403";
 
         if (!param("organizationID").equals("0")) {
@@ -28,13 +35,13 @@ public class TaximeterRegistrationAppServer extends AppServer {
                     dataBaseAnswer = TaximeterRegistration.Preferences(dataBase, param("organizationID"));
                     break;
                 case "/profile":
-                    if (baseRequest.getMethod().toUpperCase().equals("POST")) {
+                    if (baseRequest.getMethod().equalsIgnoreCase("POST")) {
                         ProfilePOST();
                     }
                     dataBaseAnswer = TaximeterRegistration.ProfileGet103(dataBase, param("driverID"));
                     break;
                 case "/profile/login":
-                    dataBaseAnswer = TaximeterRegistration.ProfileLogin103(dataBase, param("phone"), param("userID"), param("friendID"));
+                    dataBaseAnswer = TaximeterRegistration.ProfileLogin(dataBase, param("phone"), param("promo"));
                     break;
                 case "/profile/registration":
                     dataBaseAnswer = TaximeterRegistration.ProfileRegistration103(dataBase, param("phone"), param("code"));

@@ -1,7 +1,8 @@
-import API.Booking;
+import ataxi.API.Booking;
 import com.intersys.objects.CacheException;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
 
 import javax.servlet.http.HttpServletRequest;
 

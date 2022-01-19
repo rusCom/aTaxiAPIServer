@@ -1,18 +1,18 @@
-package API;
+package ataxi.API;
 
 
 /**
- * Cache' Java Class Generated for class API.Taximeter2 on version Cache for Windows (x86-32) 2010.2.2 (Build 600) Wed Dec 8 2010 16:51:00 EST.<br>
+ * Cache' Java Class Generated for class ataxi.API.Taximeter2 on version Cache for Windows (x86-32) 2010.2.2 (Build 600) Wed Dec 8 2010 16:51:00 EST.<br>
  *
  * @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Taximeter2</A>
 **/
 
 public class Taximeter2 extends com.intersys.classes.RegisteredObject implements java.io.Serializable {
     private static final long serialVersionUID = 3782;
-    private static String CACHE_CLASS_NAME = "API.Taximeter2";
+    private static String CACHE_CLASS_NAME = "ataxi.API.Taximeter2";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
-           <br>Use <code>API.Taximeter2.open</code> instead!</br></p>
+           <br>Use <code>ataxi.API.Taximeter2.open</code> instead!</br></p>
            <p>
            Used to construct a Java object, corresponding to existing object
            in Cache database.
@@ -27,9 +27,9 @@ public class Taximeter2 extends com.intersys.classes.RegisteredObject implements
         super (((com.intersys.cache.SysDatabase)db).newCacheObject (CACHE_CLASS_NAME,initstr));
     }
     /**
-       Creates a new instance of object "API.Taximeter2" in Cache
+       Creates a new instance of object "ataxi.API.Taximeter2" in Cache
        database and corresponding object of class
-       <code>API.Taximeter2</code>.
+       <code>ataxi.API.Taximeter2</code>.
 
        @param db <code>Database</code> object used for connection with
        Cache database.
@@ -43,7 +43,7 @@ public class Taximeter2 extends com.intersys.classes.RegisteredObject implements
         super (((com.intersys.cache.SysDatabase)db).newCacheObject (CACHE_CLASS_NAME));
     }
     /**
-       Returns class name of the class API.Taximeter2 as it is in
+       Returns class name of the class ataxi.API.Taximeter2 as it is in
       Cache Database. Note, that this is a static method, so no
       object specific information can be returned. Use
       <code>getCacheClass().getName()</code> to get the class name

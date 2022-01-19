@@ -1,4 +1,4 @@
-import API.CKassa;
+import ataxi.API.CKassa;
 import com.intersys.objects.CacheException;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.w3c.dom.Document;
@@ -6,6 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
+import tools.DataBaseResponse;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.parsers.DocumentBuilder;
@@ -27,7 +28,7 @@ class CKassaAppServer extends AppServer {
         Document responseDocument = null;
         String signCode;
         String[] targets = target.split("/");
-        //if (targets.length == 0)return new DataBaseResponse("400");
+        //if (targets.length == 0)return new tools.DataBaseResponse("400");
         if (targets.length > 0)
         {
             // ООО Сервис

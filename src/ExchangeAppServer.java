@@ -1,6 +1,6 @@
-import API.Booking;
-import API.Exchange;
+import ataxi.API.Exchange;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
 
 import javax.servlet.http.HttpServletRequest;
 

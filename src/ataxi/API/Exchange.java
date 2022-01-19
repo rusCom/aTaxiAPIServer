@@ -1,18 +1,18 @@
-package API;
+package ataxi.API;
 
 
 /**
- * Cache' Java Class Generated for class API.Exchange on version Cache for Windows (x86-32) 2010.2.2 (Build 600) Wed Dec 8 2010 16:51:00 EST.<br>
+ * Cache' Java Class Generated for class ataxi.API.Exchange on version Cache for Windows (x86-32) 2010.2.2 (Build 600) Wed Dec 8 2010 16:51:00 EST.<br>
  *
  * @see <a href = "http://WIN-SXXN5RR5F37:57772/csp/documatic/%25CSP.Documatic.cls?APP=1&PAGE=CLASS&LIBRARY=ATAXI&CLASSNAME=API.Exchange</A>
 **/
 
 public class Exchange extends com.intersys.classes.RegisteredObject implements java.io.Serializable {
     private static final long serialVersionUID = 195;
-    private static String CACHE_CLASS_NAME = "API.Exchange";
+    private static String CACHE_CLASS_NAME = "ataxi.API.Exchange";
     /**
            <p>NB: DO NOT USE IN APPLICATION(!!!).
-           <br>Use <code>API.Exchange.open</code> instead!</br></p>
+           <br>Use <code>ataxi.API.Exchange.open</code> instead!</br></p>
            <p>
            Used to construct a Java object, corresponding to existing object
            in Cache database.
@@ -27,9 +27,9 @@ public class Exchange extends com.intersys.classes.RegisteredObject implements j
         super (((com.intersys.cache.SysDatabase)db).newCacheObject (CACHE_CLASS_NAME,initstr));
     }
     /**
-       Creates a new instance of object "API.Exchange" in Cache
+       Creates a new instance of object "ataxi.API.Exchange" in Cache
        database and corresponding object of class
-       <code>API.Exchange</code>.
+       <code>ataxi.API.Exchange</code>.
 
        @param db <code>Database</code> object used for connection with
        Cache database.
@@ -43,7 +43,7 @@ public class Exchange extends com.intersys.classes.RegisteredObject implements j
         super (((com.intersys.cache.SysDatabase)db).newCacheObject (CACHE_CLASS_NAME));
     }
     /**
-       Returns class name of the class API.Exchange as it is in
+       Returns class name of the class ataxi.API.Exchange as it is in
       Cache Database. Note, that this is a static method, so no
       object specific information can be returned. Use
       <code>getCacheClass().getName()</code> to get the class name

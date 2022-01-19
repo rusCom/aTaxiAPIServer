@@ -1,4 +1,4 @@
-import API.BaseAPI;
+import ataxi.API.BaseAPI;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +23,8 @@ import org.eclipse.jetty.util.thread.QueuedThreadPool;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import tools.DataBaseResponse;
+import tools.MainUtils;
 
 import static java.lang.Thread.sleep;
 
@@ -35,235 +37,6 @@ public class APIServer extends AbstractHandler {
     private static PrintWriter logPrintWriter, logDataPrintWriter, exceptionPrintWriter;
     private static String curDir;
     private static String serverResponse;
-
-
-    public static Boolean getIsTest() {
-        return IsTest;
-    }
-
-    @Override
-    public void handle(String target,
-                       Request baseRequest,
-                       HttpServletRequest request,
-                       HttpServletResponse response) {
-        long startTime = System.currentTimeMillis();
-        String exceptionAsString = "";
-        DataBaseResponse dataBaseResponse;
-
-        response.setHeader("Access-Control-Allow-Origin", "*");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
-        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-API-KEY");
-
-
-        if (request.getMethod().equals("OPTIONS")) {
-
-            dataBaseResponse = new DataBaseResponse("200");
-        } else {
-            try {
-                dataBaseResponse = appServer.response(target, request);
-
-            } catch (Exception e) {
-                StringWriter sw = new StringWriter();
-                e.printStackTrace(new PrintWriter(sw));
-                exceptionAsString = sw.toString();
-                dataBaseResponse = new DataBaseResponse("500^" + e.getClass().getCanonicalName() + "^");
-            }
-        }
-
-
-        try {
-            // System.out.println(target);
-            // System.out.println(appServer.getAppSettings().toString());
-            StringBuilder logText = new StringBuilder();
-            logText.append("date").append("\t").append("= ").append(getCurDateTime()).append("\n");
-            logText.append("address").append("\t").append("= ").append(request.getRemoteAddr()).append("\n");
-            logText.append("target").append("\t").append("= ").append(target).append("\n");
-            logText.append("method").append("\t").append("= ").append(request.getMethod()).append("\n");
-            logText.append("auth").append("\t").append("= ").append(dataBaseResponse.getAuthorization()).append("\n");
-            logText.append("rBody").append("\t").append("= ").append(dataBaseResponse.getRespBody()).append("\n");
-            logText.append("params").append("\t").append("= ").append(request.getParameterMap().toString()).append("\n");
-
-            logText.append("status").append("\t").append("= ").append(dataBaseResponse.getStatus()).append("\n");
-            logText.append("body").append("\t").append("= ").append(dataBaseResponse.getBody(serverResponse)).append("\n");
-            logText.append("excep").append("\t").append("= ").append(exceptionAsString).append("\n");
-            logText.append("********************************************************").append("\n");
-            // System.out.println(logText);
-
-            if (!exceptionAsString.equals("")) {
-                getExceptionPrintWriter().println(logText);
-                getExceptionPrintWriter().flush();
-                if (appServer.getSetting("log_view").equals("console")) {
-                    System.out.println(logText);
-                }
-            } else if (dataBaseResponse.getStatus() == 401) {
-                switch (appServer.getSetting("log_view_401")) {
-                    case "console":
-                        System.out.println(logText);
-                        break;
-                    case "file":
-                        MainUtils.getInstance().printFileLog("401", logText.toString(), false);
-                        break;
-                }
-            } else if (dataBaseResponse.getStatus() == 404) {
-                switch (appServer.getSetting("log_view_404")) {
-                    case "console":
-                        System.out.println(logText);
-                        break;
-                    case "file":
-                        MainUtils.getInstance().printFileLog("404", logText.toString(), false);
-                        break;
-                }
-            } else if (target.equals("/data")) {
-                switch (appServer.getSetting("log_view_data")) {
-                    case "console":
-                        System.out.println(logText);
-                        break;
-                    case "file":
-                        getLogDataPrintWriter().println(logText);
-                        getLogDataPrintWriter().flush();
-                        break;
-                }
-            } else {
-                switch (appServer.getSetting("log_view")) {
-                    case "console":
-                        System.out.println(logText);
-                        break;
-                    case "file":
-                        getLogPrintWriter().println(logText);
-                        getLogPrintWriter().flush();
-                        break;
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-        try {
-
-            if (serverResponse.equals("json")) {
-                response.setStatus(HttpServletResponse.SC_OK);
-                response.setHeader("Server", "aTaxi." + ServerType);
-                response.setContentType("application/json;charset=utf-8");
-                JSONObject result = new JSONObject();
-
-                if (ServerType.equals("Taxsee")) { // если сервер для Максим, то делаем ворзрат по их шаблону
-                    if (dataBaseResponse.getStatusCode().equals("200")){
-                        if (dataBaseResponse.getBody(serverResponse) == null){
-                            result.put("success", "1");
-                        }
-                        else {
-                            try {
-                                result = new JSONObject(dataBaseResponse.getBody(serverResponse));
-                            }
-                            catch (JSONException e){
-                                result.put("success", "1");
-                                result.put("message", dataBaseResponse.getBody(""));
-                            }
-                        }
-                    }
-                    else {
-                        result.put("success", "-" + dataBaseResponse.getStatusCode());
-                        result.put("message", dataBaseResponse.getBody(""));
-                    }
-                } else {
-                    result.put("status", dataBaseResponse.getStatusName());
-                    result.put("status_code", dataBaseResponse.getStatusCode());
-                    if (dataBaseResponse.getStatusCode().equals("200")) {
-                        if (dataBaseResponse.getBody(serverResponse) != null) {
-                            try {
-                                result.put("result", new JSONObject(dataBaseResponse.getBody(serverResponse)));
-                            } catch (JSONException e) {
-                                try {
-                                    result.put("result", new JSONArray(dataBaseResponse.getBody(serverResponse)));
-                                } catch (JSONException er) {
-                                    result.put("result", dataBaseResponse.getBody(serverResponse));
-                                }
-                            }
-                        }
-                    } else if (dataBaseResponse.getBody(serverResponse) != null) {
-                        try {
-                            result.put("error", new JSONObject(dataBaseResponse.getBody(serverResponse)));
-                        } catch (JSONException e) {
-                            result.put("error", dataBaseResponse.getBody(serverResponse));
-                        }
-                    }
-                    result.put("time", (System.currentTimeMillis() - startTime) / 1000.0);
-
-                }
-
-
-                baseRequest.setHandled(true);
-                response.getWriter().print(result.toString());
-                return;
-            } // if (appServer.getAppSettings().getString("response").equals("json")){
-
-
-            if (dataBaseResponse.getStatus() == HttpServletResponse.SC_OK) {
-                if (dataBaseResponse.getBody(serverResponse).equals("200 OK")) {
-                    response.setContentType("application/text;charset=utf-8");
-                } else {
-                    response.setContentType("application/json;charset=utf-8");
-                }
-            } else {
-                response.setContentType("application/text;charset=utf-8");
-            }
-            response.setStatus(dataBaseResponse.getStatus());
-            response.setHeader("Server", "aTaxi." + ServerType);
-
-            baseRequest.setHandled(true);
-
-            if (dataBaseResponse.getFile() == null) {
-
-                try {
-                    response.getWriter().print(dataBaseResponse.getBody(serverResponse));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } else {
-                File file = new File(dataBaseResponse.getFile());
-                String mimeType = URLConnection.guessContentTypeFromName(file.getName());
-                //System.out.println("File location on server: " + file.getAbsolutePath());
-                //System.out.println("File mimeType: " + mimeType);
-                InputStream fis = new FileInputStream(file);
-                response.setContentType(mimeType != null ? mimeType : "application/octet-stream");
-                response.setContentLength((int) file.length());
-                response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
-                ServletOutputStream os = response.getOutputStream();
-                byte[] bufferData = new byte[1024];
-                int read;
-                while ((read = fis.read(bufferData)) != -1) {
-                    os.write(bufferData, 0, read);
-                }
-                os.flush();
-                os.close();
-                fis.close();
-                //System.out.println("File downloaded at client successfully");
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-    public boolean isJSONValid(String test) {
-        try {
-            new JSONObject(test);
-        } catch (JSONException ex) {
-            // edited, to include @Arthur's comment
-            // e.g. in case JSONArray is valid as well...
-            try {
-                new JSONArray(test);
-            } catch (JSONException ex1) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
     public static void main(String[] args) throws InterruptedException, CacheException, IOException {
@@ -368,6 +141,8 @@ public class APIServer extends AbstractHandler {
             connector.setPort(Port);
             server.setConnectors(new Connector[]{connector});
         }
+
+
         server.setHandler(new APIServer());
         while (!server.isStarted()) {
             try {
@@ -386,6 +161,243 @@ public class APIServer extends AbstractHandler {
             e.printStackTrace();
         }
     }
+
+    public static Boolean getIsTest() {
+        return IsTest;
+    }
+
+    @Override
+    public void handle(String target,
+                       Request baseRequest,
+                       HttpServletRequest request,
+                       HttpServletResponse response) {
+        long startTime = System.currentTimeMillis();
+        String exceptionAsString = "";
+        DataBaseResponse dataBaseResponse;
+
+        response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+        response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-ataxi.API-KEY");
+
+
+        if (request.getMethod().equals("OPTIONS")) {
+
+            dataBaseResponse = new DataBaseResponse("200");
+        } else {
+            try {
+                dataBaseResponse = appServer.response(target, request);
+
+            } catch (Exception e) {
+                StringWriter sw = new StringWriter();
+                e.printStackTrace(new PrintWriter(sw));
+                exceptionAsString = sw.toString();
+                dataBaseResponse = new DataBaseResponse("500^" + e.getClass().getCanonicalName() + "^");
+            }
+        }
+
+
+        try {
+            // System.out.println(target);
+            // System.out.println(appServer.getAppSettings().toString());
+            StringBuilder logText = new StringBuilder();
+            logText.append("date").append("\t").append("= ").append(getCurDateTime()).append("\n");
+            logText.append("address").append("\t").append("= ").append(request.getRemoteAddr()).append("\n");
+            logText.append("target").append("\t").append("= ").append(target).append("\n");
+            logText.append("method").append("\t").append("= ").append(request.getMethod()).append("\n");
+            logText.append("auth").append("\t").append("= ").append(dataBaseResponse.getAuthorization()).append("\n");
+            logText.append("rBody").append("\t").append("= ").append(dataBaseResponse.getRespBody()).append("\n");
+            logText.append("params").append("\t").append("= ").append(request.getParameterMap().toString()).append("\n");
+
+            logText.append("status").append("\t").append("= ").append(dataBaseResponse.getStatus()).append("\n");
+            logText.append("body").append("\t").append("= ").append(dataBaseResponse.getBody(serverResponse)).append("\n");
+            logText.append("excep").append("\t").append("= ").append(exceptionAsString).append("\n");
+            logText.append("********************************************************").append("\n");
+            // System.out.println(logText);
+
+            if (!exceptionAsString.equals("")) {
+                getExceptionPrintWriter().println(logText);
+                getExceptionPrintWriter().flush();
+                if (appServer.getSetting("log_view").equals("console")) {
+                    System.out.println(logText);
+                }
+            } else if (dataBaseResponse.getStatus() == 401) {
+                switch (appServer.getSetting("log_view_401")) {
+                    case "console":
+                        System.out.println(logText);
+                        break;
+                    case "file":
+                        MainUtils.getInstance().printFileLog("401", logText.toString(), false);
+                        break;
+                }
+            } else if (dataBaseResponse.getStatus() == 404) {
+                switch (appServer.getSetting("log_view_404")) {
+                    case "console":
+                        System.out.println(logText);
+                        break;
+                    case "file":
+                        MainUtils.getInstance().printFileLog("404", logText.toString(), false);
+                        break;
+                }
+            } else if (target.equals("/data")) {
+                switch (appServer.getSetting("log_view_data")) {
+                    case "console":
+                        System.out.println(logText);
+                        break;
+                    case "file":
+                        getLogDataPrintWriter().println(logText);
+                        getLogDataPrintWriter().flush();
+                        break;
+                }
+            } else {
+                switch (appServer.getSetting("log_view")) {
+                    case "console":
+                        System.out.println(logText);
+                        break;
+                    case "file":
+                        getLogPrintWriter().println(logText);
+                        getLogPrintWriter().flush();
+                        break;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        try {
+
+            if (serverResponse.equals("json")) {
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setHeader("Server", "aTaxi." + ServerType);
+                response.setContentType("application/json;charset=utf-8");
+                JSONObject result = new JSONObject();
+
+                if (ServerType.equals("Taxsee")) { // если сервер для Максим, то делаем ворзрат по их шаблону
+                    if (dataBaseResponse.getStatusCode().equals("401")){
+                        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        result = null;
+                    }
+                    else if (dataBaseResponse.getStatusCode().equals("200")){
+                        if (dataBaseResponse.getBody(serverResponse) == null){
+                            result.put("success", 1);
+                        }
+                        else {
+                            try {
+                                result = new JSONObject(dataBaseResponse.getBody(serverResponse));
+                            }
+                            catch (JSONException e){
+                                result.put("success", 1);
+                                result.put("message", dataBaseResponse.getBody(""));
+                            }
+                        }
+                    }
+                    else {
+                        result.put("success", Integer.parseInt(dataBaseResponse.getStatusCode()));
+                        result.put("message", dataBaseResponse.getBody(""));
+                    }
+                } // Сервер для aTaxi
+                else {
+                    result.put("status", dataBaseResponse.getStatusName());
+                    result.put("status_code", dataBaseResponse.getStatusCode());
+                    if (dataBaseResponse.getStatusCode().equals("200")) {
+                        if (dataBaseResponse.getBody(serverResponse) != null) {
+                            try {
+                                result.put("result", new JSONObject(dataBaseResponse.getBody(serverResponse)));
+                            } catch (JSONException e) {
+                                try {
+                                    result.put("result", new JSONArray(dataBaseResponse.getBody(serverResponse)));
+                                } catch (JSONException er) {
+                                    result.put("result", dataBaseResponse.getBody(serverResponse));
+                                }
+                            }
+                        }
+                    } else if (dataBaseResponse.getBody(serverResponse) != null) {
+                        try {
+                            result.put("error", new JSONObject(dataBaseResponse.getBody(serverResponse)));
+                        } catch (JSONException e) {
+                            result.put("error", dataBaseResponse.getBody(serverResponse));
+                        }
+                    }
+                    result.put("time", (System.currentTimeMillis() - startTime) / 1000.0);
+
+                }
+
+
+                baseRequest.setHandled(true);
+                if (result != null){
+                    response.getWriter().print(result);
+                }
+
+                return;
+            } // if (appServer.getAppSettings().getString("response").equals("json")){
+
+
+            if (dataBaseResponse.getStatus() == HttpServletResponse.SC_OK) {
+                if (dataBaseResponse.getBody(serverResponse).equals("200 OK")) {
+                    response.setContentType("application/text;charset=utf-8");
+                } else {
+                    response.setContentType("application/json;charset=utf-8");
+                }
+            } else {
+                response.setContentType("application/text;charset=utf-8");
+            }
+            response.setStatus(dataBaseResponse.getStatus());
+            response.setHeader("Server", "aTaxi." + ServerType);
+
+            baseRequest.setHandled(true);
+
+            if (dataBaseResponse.getFile() == null) {
+
+                try {
+                    response.getWriter().print(dataBaseResponse.getBody(serverResponse));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                File file = new File(dataBaseResponse.getFile());
+                String mimeType = URLConnection.guessContentTypeFromName(file.getName());
+                //System.out.println("File location on server: " + file.getAbsolutePath());
+                //System.out.println("File mimeType: " + mimeType);
+                InputStream fis = new FileInputStream(file);
+                response.setContentType(mimeType != null ? mimeType : "application/octet-stream");
+                response.setContentLength((int) file.length());
+                response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getName() + "\"");
+                ServletOutputStream os = response.getOutputStream();
+                byte[] bufferData = new byte[1024];
+                int read;
+                while ((read = fis.read(bufferData)) != -1) {
+                    os.write(bufferData, 0, read);
+                }
+                os.flush();
+                os.close();
+                fis.close();
+                //System.out.println("File downloaded at client successfully");
+            }
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public boolean isJSONValid(String test) {
+        try {
+            new JSONObject(test);
+        } catch (JSONException ex) {
+            // edited, to include @Arthur's comment
+            // e.g. in case JSONArray is valid as well...
+            try {
+                new JSONArray(test);
+            } catch (JSONException ex1) {
+                return false;
+            }
+        }
+        return true;
+    }
+
 
     static JSONArray getMergeJsonArrays(ArrayList<JSONArray> jsonArrays) throws JSONException {
         JSONArray MergedJsonArrays = new JSONArray();

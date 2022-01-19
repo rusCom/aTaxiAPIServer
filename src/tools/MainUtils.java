@@ -1,3 +1,5 @@
+package tools;
+
 import org.apache.commons.io.IOUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +19,7 @@ public class MainUtils {
     private String curDir, severType;
     private Map<String, PrintWriter> printWriterMap;
     private static volatile MainUtils instance;
+    private Boolean consoleLog;
 
     public static MainUtils getInstance() throws IOException {
         MainUtils localInstance = instance;
@@ -37,7 +40,8 @@ public class MainUtils {
         curDir = new File("").getAbsolutePath();
         FileInputStream fis = new FileInputStream(curDir + "/server.properties");
         properties.load(fis);
-        severType = properties.getProperty("server.type");
+        severType = properties.getProperty("server.type", "aTaxi");
+        consoleLog = Boolean.valueOf(properties.getProperty("server.consoleLog", "false"));
 
         new File(curDir + "/log/").mkdir();
 
@@ -53,7 +57,11 @@ public class MainUtils {
             logString = getCurDateTime() + logString;
         }
         getLogPrintWriter(logType).println(logString);
+        if (consoleLog){
+            System.out.println(logType + " - " + logString);
+        }
         getLogPrintWriter(logType).flush();
+
     }
 
     public void printException(String logType, Exception exception) throws FileNotFoundException {
@@ -71,18 +79,8 @@ public class MainUtils {
         return printWriterMap.get(logType);
     }
 
-    static Boolean isJsonObject(String data){
-        Boolean result = false;
-        try {
-            JSONObject jsonObject = new JSONObject(data);
-            result = true;
-        }
-        catch (Error error){}
 
-        return result;
-    }
-
-    static String JSONGetString(JSONObject data, String field) {
+    public static String JSONGetString(JSONObject data, String field) {
         String result = "";
         if (data.has(field)) {
             Object object = data.get(field);
@@ -106,18 +104,25 @@ public class MainUtils {
         return result;
     }
 
-    static JSONObject httpPost(String urlString, String data, String authorization) {
+    public static JSONObject httpPost(String urlString, String data, String authorization) {
         JSONObject result = new JSONObject();
         try {
             URL url = new URL(urlString);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             if (!authorization.equals("")) {
-                conn.setRequestProperty("Authorization", authorization);
+                if (urlString.contains("taxsee.com")){
+                    conn.setRequestProperty("X-ataxi.API-KEY", authorization);
+                }
+                else {
+                    conn.setRequestProperty("Authorization", authorization);
+                }
+
             }
             conn.setRequestProperty("Content-Type", "application/json");
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
             OutputStream os = conn.getOutputStream();
+
             byte[] input = data.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
             InputStream inputStream = conn.getInputStream();
@@ -144,7 +149,42 @@ public class MainUtils {
         return result;
     }
 
-    static String getCurDateTime() {
+    public static JSONObject httpGet(String urlString) {
+        JSONObject result = new JSONObject();
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            InputStream inputStream = conn.getInputStream();
+            String resp = IOUtils.toString(inputStream);
+            result = new JSONObject(resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static JSONObject httpGet(String urlString, String Authorization) {
+        JSONObject result = new JSONObject();
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            if (!Authorization.equals("")) {
+                conn.setRequestProperty("Authorization", Authorization);
+            }
+            conn.setRequestMethod("GET");
+            conn.setDoOutput(true);
+            InputStream inputStream = conn.getInputStream();
+            String resp = IOUtils.toString(inputStream);
+            result = new JSONObject(resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public static String getCurDateTime() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + " - ";
     }
 }
